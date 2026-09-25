@@ -681,41 +681,42 @@ html[data-view="creative"] body::before {
   </div>
 
   <script>
+    // ─── SVG ICON LIBRARY ────────────────────────────────────────────────────
     const ICONS = {
-  linkedin: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
-  github: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
-  instagram: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
-  facebook: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
-  mapPin: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
-  phone: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
-  mail: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>`,
-  shieldCheck: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
-  code2: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-  settings: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
-  cpu: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>`,
-  aperture: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>`,
-  film: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`,
-  share2: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
-  layers: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
-  award: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
-  briefcase: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-  camera: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
-  oracleLogo: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="64" height="26"><rect width="100" height="40" rx="5" fill="#C74634"/><text x="50" y="27" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="white" text-anchor="middle">ORACLE</text></svg>`,
-  awsLogo: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40" width="56" height="28"><rect width="80" height="40" rx="5" fill="#232F3E"/><text x="40" y="27" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#FF9900" text-anchor="middle">AWS</text></svg>`,
-  globe: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
-  testTube: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg>`,
-  bot: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>`,
-  laptop: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>`,
-  play: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
-  x: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
-};
+      linkedin:    `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+      github:      `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
+      instagram:   `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+      facebook:    `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+      mapPin:      `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      phone:       `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+      mail:        `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>`,
+      shieldCheck: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
+      code2:       `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+      settings:    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+      cpu:         `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>`,
+      aperture:    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>`,
+      film:        `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`,
+      share2:      `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
+      layers:      `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+      briefcase:   `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+      camera:      `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
+      oracleLogo:  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="64" height="26"><rect width="100" height="40" rx="5" fill="#C74634"/><text x="50" y="27" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="white" text-anchor="middle">ORACLE</text></svg>`,
+      awsLogo:     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40" width="56" height="28"><rect width="80" height="40" rx="5" fill="#232F3E"/><text x="40" y="27" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#FF9900" text-anchor="middle">AWS</text></svg>`,
+      globe:       `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+      testTube:    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg>`,
+      bot:         `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>`,
+      laptop:      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>`,
+      play:        `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+      x:           `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    };
 
-const CONTENT = {
+    // ─── CONTENT ─────────────────────────────────────────────────────────────
+    const CONTENT = {
       en: {
         nav: { home:'Home', about:'About', skills:'Skills', resume:'Resume', portfolio:'Portfolio', services:'Services', certifications:'Certifications', testimonials:'Testimonials', contact:'Contact' },
         viewToggle: { tech:'Tech', creative:'Creative' },
         langToggle: { en:'EN', fr:'FR' },
-        meta: { title: 'Mohamad Ali · QA Engineer & Creative Director' },
+        meta: { title: 'Mohamad Ali \u00b7 QA Engineer & Creative Director' },
         hero: {
           greeting: 'Hello, I am',
           name: 'Mohamad Ali',
@@ -726,7 +727,7 @@ const CONTENT = {
         },
         about: {
           sectionTitle: 'About Me',
-          techBio: 'QA Engineer and software developer with 2+ years of hands-on experience in test automation using Selenium, Cypress, and Azure DevOps. Currently pursuing a Master 1 in Software Engineering for Data Science (MIAGE) at Université Paris-Saclay. I have delivered QA on AI platforms, ERP/SaaS integrations, and Agile development teams, bringing the same precision-first mindset to every product I touch.',
+          techBio: 'QA Engineer and software developer with 2+ years of hands-on experience in test automation using Selenium, Cypress, and Azure DevOps. Currently pursuing a Master 1 in Software Engineering for Data Science (MIAGE) at Universit\u00e9 Paris-Saclay. I have delivered QA on AI platforms, ERP/SaaS integrations, and Agile development teams, bringing the same precision-first mindset to every product I touch.',
           creativeBio: 'Multimedia Specialist and visual storyteller with 3+ years of professional photography and videography across Lebanon and Dubai. Over 100 professional sessions for MENA-region brands. I combine a technical eye with genuine creative instinct. Every frame is intentional.',
           items: [
             { label: 'Nationality', value: 'Lebanese' },
@@ -738,8 +739,8 @@ const CONTENT = {
           ],
           languages: [
             { name: 'Arabic', level: 'Native' },
-            { name: 'English', level: 'Fluent · British Council' },
-            { name: 'French', level: 'Fluent · DELF B2' },
+            { name: 'English', level: 'Fluent \u00b7 British Council' },
+            { name: 'French', level: 'Fluent \u00b7 DELF B2' },
             { name: 'Spanish', level: 'Beginner' },
           ],
         },
@@ -784,21 +785,21 @@ const CONTENT = {
           experienceLabel: 'Professional Experience',
           educationLabel: 'Education',
           experience: [
-            { role: 'Product QA Engineer', company: 'Grower AI', location: 'Beirut, Lebanon', period: 'Jan 2026 – May 2026', type: 'tech',
+            { role: 'Product QA Engineer', company: 'Grower AI', location: 'Beirut, Lebanon', period: 'Jan 2026 \u2013 May 2026', type: 'tech',
               bullets: ['Led QA for an AI-powered digital marketing platform, validating segmentation models and predictive analytics pipelines.', 'Agile collaboration with developers and data scientists to resolve complex anomalies and optimize SEO and UX/UI.'] },
-            { role: 'QA Engineer | Software Tester', company: 'Nordstar Solutions LLC', location: 'Beirut, Lebanon', period: 'Jan 2024 – Mar 2025', type: 'tech',
+            { role: 'QA Engineer | Software Tester', company: 'Nordstar Solutions LLC', location: 'Beirut, Lebanon', period: 'Jan 2024 \u2013 Mar 2025', type: 'tech',
               bullets: ['Automated functional testing with Selenium (Java) and Cypress covering all critical scenarios, significantly reducing defects.', 'Built test suites for CRM, sales, payments, reporting/analytics, ERP, and SaaS integrations.', 'Integrated Azure DevOps to track 600+ defects with full traceability.'] },
-            { role: 'Multimedia Specialist · Videographer & Photographer', company: 'Hovi Digital Lab / Al Ahmar Marketing Hub', location: 'Beirut & Dubai', period: 'Jul 2023 – Jul 2026', type: 'creative',
+            { role: 'Multimedia Specialist \u00b7 Videographer & Photographer', company: 'Hovi Digital Lab / Al Ahmar Marketing Hub', location: 'Beirut & Dubai', period: 'Jul 2023 \u2013 Jul 2026', type: 'creative',
               bullets: ['Delivered 100+ professional photo and video sessions, driving measurable increases in client engagement across MENA brands.', 'Translated complex technical features into clear, dynamic visual narratives for enterprise clients.'] },
-            { role: 'Customer Service Representative', company: 'Amb Group – Dikkanji', location: 'Beirut, Lebanon', period: 'Jul 2022 – Dec 2022', type: 'both',
+            { role: 'Customer Service Representative', company: 'Amb Group \u2013 Dikkanji', location: 'Beirut, Lebanon', period: 'Jul 2022 \u2013 Dec 2022', type: 'both',
               bullets: ['Resolved client inquiries efficiently, contributing to improved customer satisfaction scores.'] },
           ],
           education: [
-            { degree: 'Master 1 · Software Engineering for Data Science (MIAGE)', institution: 'Université Paris-Saclay', location: '', period: 'Sep 2026 – Present',
+            { degree: 'Master 1 \u00b7 Software Engineering for Data Science (MIAGE)', institution: 'Universit\u00e9 Paris-Saclay, France', location: '', period: 'Sep 2026 \u2013 Present',
               desc: 'MIAGE: software development, data science, and information systems engineering. Seeking a part-time position compatible with coursework.' },
-            { degree: 'Bachelor of Computer Sciences (2 credits remaining)', institution: 'Cnam Liban / Cnam Paris', location: 'Lebanon → France', period: 'Oct 2024 – Present',
+            { degree: 'Bachelor of Computer Sciences (2 credits remaining)', institution: 'Cnam Liban / Cnam Paris', location: 'Lebanon \u2192 France', period: 'Oct 2024 \u2013 Present',
               desc: 'Program initiated at Cnam Liban, continuing at Cnam Paris for final two credits.' },
-            { degree: 'Bachelor in Management Information Systems (MIS)', institution: 'Université Libanaise', location: 'Lebanon', period: 'Sep 2020 – Nov 2023',
+            { degree: 'Bachelor in Management Information Systems (MIS)', institution: 'Universit\u00e9 Libanaise', location: 'Lebanon', period: 'Sep 2020 \u2013 Nov 2023',
               desc: 'Database management, systems analysis, business intelligence, and strategic IT alignment.' },
           ],
         },
@@ -810,16 +811,14 @@ const CONTENT = {
             { title: 'E-Portfolio Website', desc: 'Personal portfolio built from scratch with HTML/CSS/JS. Bilingual dual-identity design. Hosted on GitHub Pages.', tags: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'], icon: 'globe', link: 'https://mohamadali2023.github.io/E-Portfolio/' },
             { title: 'CRM Test Automation Suite', desc: 'Selenium + Cypress test framework covering CRM, payments, ERP, and SaaS integrations for Nordstar Solutions. 600+ defects tracked via Azure DevOps.', tags: ['Selenium', 'Cypress', 'Java', 'Azure DevOps'], icon: 'testTube' },
             { title: 'AI Marketing Platform QA', desc: 'End-to-end QA for Grower AI digital marketing platform. Validated ML segmentation models, predictive analytics, and UX/UI flows.', tags: ['AI Testing', 'QA', 'SEO', 'Agile'], icon: 'bot' },
-            { title: 'MENA E-Commerce Web Projects', desc: 'Freelance full-stack web development for MENA-region clients · WordPress, PHP, SEO optimization and analytics integration.', tags: ['WordPress', 'PHP', 'SEO'], icon: 'laptop' },
+            { title: 'MENA E-Commerce Web Projects', desc: 'Freelance full-stack web development for MENA-region clients. WordPress, PHP, SEO optimization and analytics integration.', tags: ['WordPress', 'PHP', 'SEO'], icon: 'laptop' },
           ],
           photos: [
-            { title: 'Carat Boutique', file: 'Carat1.jpg', tags: ['Commercial', 'Produit'] }
+            { title: 'Carat Boutique', file: 'Carat1.jpg', tags: ['Commercial', 'Product'] },
           ],
-          
-          
           videos: [
             { title: 'Crazy Video', file: 'Crazyvideo.mp4', category: 'Brand Commercial', tags: ['Commercial', 'Brand'] },
-            { title: "Poule d'Or Reel", file: "Poule d_or 2.mp4", category: 'Brand Commercial', tags: ['Restaurant', 'Brand'] },
+            { title: "Poule d'Or Reel", file: 'Poule d_or 2.mp4', category: 'Brand Commercial', tags: ['Restaurant', 'Brand'] },
             { title: 'Zeus Production', file: 'Zeus Reel 1.mp4', category: 'Event Aftermovie', tags: ['Event', 'Cinematic'] },
           ],
         },
@@ -829,14 +828,13 @@ const CONTENT = {
             { icon: 'shieldCheck', title: 'QA & Test Automation', desc: 'End-to-end automated testing with Selenium, Cypress, and Azure DevOps. I catch bugs before your users do.' },
             { icon: 'code2', title: 'Web Development', desc: 'Full-stack: WordPress, PHP, JavaScript. SEO-optimized, responsive, and fast.' },
             { icon: 'settings', title: 'ERP/SaaS Integration Testing', desc: 'Specialized test coverage for CRM, payments, reporting, and enterprise SaaS platforms.' },
-            { icon: 'cpu', title: 'AI Platform Validation', desc: 'QA for AI-driven products. Validating ML models, analytics pipelines, and data-driven UX flows.' }
+            { icon: 'cpu', title: 'AI Platform Validation', desc: 'QA for AI-driven products. Validating ML models, analytics pipelines, and data-driven UX flows.' },
           ],
-          
           creative: [
             { icon: 'aperture', title: 'Professional Photography', desc: 'Corporate, event, portrait, and product photography. 100+ sessions across MENA.' },
             { icon: 'film', title: 'Videography & Production', desc: 'From concept to final cut. Corporate videos, social media reels, and brand films.' },
             { icon: 'share2', title: 'Digital Marketing Content', desc: 'Scroll-stopping visual content strategy for MENA-region brands.' },
-            { icon: 'layers', title: 'Post-Production & Editing', desc: 'Lightroom, Premiere Pro, After Effects motion graphics, and Photoshop compositing.' }
+            { icon: 'layers', title: 'Post-Production & Editing', desc: 'Lightroom, Premiere Pro, After Effects motion graphics, and Photoshop compositing.' },
           ],
         },
         certifications: {
@@ -844,8 +842,8 @@ const CONTENT = {
           items: [
             { icon: 'oracleLogo', title: 'Oracle APEX: Professional Cloud Developer (1Z0-771)', issuer: 'Oracle', date: 'Apr 2025' },
             { icon: 'awsLogo', title: 'AWS: Advanced Testing Using AWS DevOps Tools', issuer: 'Amazon Web Services', date: 'Dec 2024' },
-            { icon: 'briefcase', title: 'Developer & QA Intern', issuer: 'Astrolabe ICT – Beirut', date: 'Jul – Dec 2023' },
-            { icon: 'camera', title: 'Digital Photography Certificate', issuer: 'Smart Guide Institute', date: 'Jan 2018 – Aug 2019' },
+            { icon: 'briefcase', title: 'Developer & QA Intern', issuer: 'Astrolabe ICT \u2013 Beirut', date: 'Jul \u2013 Dec 2023' },
+            { icon: 'camera', title: 'Digital Photography Certificate', issuer: 'Smart Guide Institute', date: 'Jan 2018 \u2013 Aug 2019' },
           ],
         },
         testimonials: {
@@ -868,39 +866,39 @@ const CONTENT = {
         },
       },
       fr: {
-        nav: { home:'Accueil', about:'À propos', skills:'Compétences', resume:'Parcours', portfolio:'Portfolio', services:'Services', certifications:'Certifications', testimonials:'Témoignages', contact:'Contact' },
-        viewToggle: { tech:'Tech', creative:'Créatif' },
+        nav: { home:'Accueil', about:'\u00c0 propos', skills:'Comp\u00e9tences', resume:'Parcours', portfolio:'Portfolio', services:'Services', certifications:'Certifications', testimonials:'T\u00e9moignages', contact:'Contact' },
+        viewToggle: { tech:'Tech', creative:'Cr\u00e9atif' },
         langToggle: { en:'EN', fr:'FR' },
-        meta: { title: 'Mohamad Ali · Ingénieur QA & Directeur Créatif' },
+        meta: { title: 'Mohamad Ali \u00b7 Ing\u00e9nieur QA & Directeur Cr\u00e9atif' },
         hero: {
           greeting: 'Bonjour, je suis',
           name: 'Mohamad Ali',
-          techRoles: ['Ingénieur QA', 'Ingénieur Logiciel', 'Expert en Tests Automatisés'],
-          creativeRoles: ['Photographe', 'Vidéaste', 'Spécialiste Multimédia', 'Directeur Créatif'],
+          techRoles: ['Ing\u00e9nieur QA', 'Ing\u00e9nieur Logiciel', 'Expert en Tests Automatis\u00e9s'],
+          creativeRoles: ['Photographe', 'Vid\u00e9aste', 'Sp\u00e9cialiste Multim\u00e9dia', 'Directeur Cr\u00e9atif'],
           techCta: 'Voir le travail tech',
-          creativeCta: 'Voir le portfolio créatif',
+          creativeCta: 'Voir le portfolio cr\u00e9atif',
         },
         about: {
-          sectionTitle: 'À Propos',
-          techBio: "Ingénieur QA avec plus de 2 ans d'expérience en test logiciel et automatisation (Selenium, Cypress, Azure DevOps). Actuellement en Master 1 Ingénierie Logicielle - Science des Données à l'Université Paris-Saclay. J'ai assuré la QA sur des plateformes d'IA, des intégrations ERP/SaaS et avec des équipes de développement Agile, en apportant le même souci de précision à chaque produit que je touche.",
-          creativeBio: "Spécialiste Multimédia et directeur créatif avec plus de 3 ans d'expérience en photographie et vidéographie professionnelle au Liban et à Dubaï. Plus de 100 sessions réalisées pour des marques de la région MENA. Je combine un œil technique avec un véritable instinct créatif. Chaque image est intentionnelle.",
+          sectionTitle: '\u00c0 Propos',
+          techBio: "Ing\u00e9nieur QA avec plus de 2 ans d'exp\u00e9rience en test logiciel et automatisation (Selenium, Cypress, Azure DevOps). Actuellement en Master 1 Ing\u00e9nierie Logicielle - Science des Donn\u00e9es \u00e0 l'Universit\u00e9 Paris-Saclay. J'ai assur\u00e9 la QA sur des plateformes d'IA, des int\u00e9grations ERP/SaaS et avec des \u00e9quipes Agile.",
+          creativeBio: "Sp\u00e9cialiste Multim\u00e9dia et directeur cr\u00e9atif avec plus de 3 ans d'exp\u00e9rience en photographie et vid\u00e9ographie professionnelle au Liban et \u00e0 Duba\u00ef. Plus de 100 sessions r\u00e9alis\u00e9es pour des marques de la r\u00e9gion MENA. Je combine un \u0153il technique avec un v\u00e9ritable instinct cr\u00e9atif.",
           items: [
-            { label: 'Nationalité', value: 'Libanaise' },
+            { label: 'Nationalit\u00e9', value: 'Libanaise' },
             { label: 'Formation', value: 'Master 1 (en cours)' },
             { label: 'Localisation', value: 'Paris, France' },
-            { label: 'Téléphone', value: '+33 6 12 05 96 53' },
+            { label: 'T\u00e9l\u00e9phone', value: '+33 6 12 05 96 53' },
             { label: 'E-mail', value: 'hassanmhamad777@gmail.com' },
             { label: 'Freelance', value: 'Disponible' },
           ],
           languages: [
             { name: 'Arabe', level: 'Natif' },
-            { name: 'Anglais', level: 'Courant · British Council' },
-            { name: 'Français', level: 'Courant · DELF B2' },
-            { name: 'Espagnol', level: 'Débutant' },
+            { name: 'Anglais', level: 'Courant \u00b7 British Council' },
+            { name: 'Fran\u00e7ais', level: 'Courant \u00b7 DELF B2' },
+            { name: 'Espagnol', level: 'D\u00e9butant' },
           ],
         },
         skills: {
-          sectionTitle: 'Compétences',
+          sectionTitle: 'Comp\u00e9tences',
           techCategories: [
             { name: 'Tests & QA', skills: [
               { name: 'Selenium (Java)', level: 90 }, { name: 'Cypress', level: 88 },
@@ -912,7 +910,7 @@ const CONTENT = {
               { name: 'PHP', level: 70 }, { name: 'C/C++/C#', level: 65 },
               { name: 'WordPress', level: 85 },
             ]},
-            { name: 'Cloud & Bases de données', skills: [
+            { name: 'Cloud & Bases de donn\u00e9es', skills: [
               { name: 'Oracle DB / APEX', level: 80 }, { name: 'MSSQL', level: 75 },
               { name: 'AWS', level: 72 }, { name: 'Azure', level: 78 },
             ]},
@@ -922,714 +920,382 @@ const CONTENT = {
           ],
           creativeCategories: [
             { name: 'Photographie', skills: [
-              { name: 'Portrait & Événementiel', level: 92 }, { name: 'Adobe Lightroom', level: 90 },
+              { name: 'Portrait & \u00c9v\u00e9nementiel', level: 92 }, { name: 'Adobe Lightroom', level: 90 },
               { name: 'Photoshop', level: 85 }, { name: 'Photographie commerciale', level: 88 },
             ]},
-            { name: 'Vidéographie & Montage', skills: [
+            { name: 'Vid\u00e9ographie & Montage', skills: [
               { name: 'Premiere Pro', level: 88 }, { name: 'After Effects', level: 80 },
-              { name: 'Vidéo corporate', level: 85 }, { name: 'Motion Graphics', level: 75 },
+              { name: 'Vid\u00e9o corporate', level: 85 }, { name: 'Motion Graphics', level: 75 },
             ]},
             { name: 'Marketing Digital', skills: [
-              { name: 'Stratégie de contenu', level: 82 }, { name: 'Visuel réseaux sociaux', level: 85 },
+              { name: 'Strat\u00e9gie de contenu', level: 82 }, { name: 'Visuel r\u00e9seaux sociaux', level: 85 },
               { name: 'SEO & Analytics', level: 78 }, { name: 'Narration de marque', level: 88 },
             ]},
           ],
         },
         resume: {
           sectionTitle: 'Parcours',
-          experienceLabel: 'Expérience Professionnelle',
+          experienceLabel: 'Exp\u00e9rience Professionnelle',
           educationLabel: 'Formation',
           experience: [
-            { role: 'Product QA', company: 'Grower AI', location: 'Beyrouth, Liban', period: 'Jan 2026 – Mai 2026', type: 'tech',
-              bullets: ["Pilotage de l'assurance qualité d'une plateforme de marketing digital basée sur l'IA, avec validation des modèles de segmentation et d'analytique prédictive.", "Collaboration Agile avec développeurs et data scientists pour la résolution d'anomalies complexes et l'optimisation SEO et UX/UI."] },
-            { role: 'Ingénieur QA | Testeur Logiciel', company: 'Nordstar Solutions LLC', location: 'Beyrouth, Liban', period: 'Jan 2024 – Mar 2025', type: 'tech',
-              bullets: ['Pilotage des tests fonctionnels automatisés avec Selenium (Java) et Cypress, couvrant tous les scénarios critiques.', 'Développement et maintenance des cas de test pour CRM, ventes, paiement, reporting, intégrations ERP et SaaS.', "Intégration d'Azure DevOps pour le suivi de +600 défauts."] },
-            { role: 'Spécialiste Multimédia · Vidéaste & Photographe', company: 'Hovi Digital Lab / Al Ahmar Marketing Hub', location: 'Beyrouth & Dubaï', period: 'Juil 2023 – Juil 2026', type: 'creative',
-              bullets: ["Réalisation de plus de 100 sessions professionnelles photo et vidéo, augmentant l'engagement client.", 'Traduction de fonctionnalités techniques complexes en récits visuels clairs et dynamiques.'] },
-            { role: 'Représentant du Service Client', company: 'Amb Group – Dikkanji', location: 'Beyrouth, Liban', period: 'Juil 2022 – Déc 2022', type: 'both',
-              bullets: ["Résolution efficace des demandes clients, contribuant à l'amélioration de la satisfaction client."] },
+            { role: 'Product QA', company: 'Grower AI', location: 'Beyrouth, Liban', period: 'Jan 2026 \u2013 Mai 2026', type: 'tech',
+              bullets: ["Pilotage de l'assurance qualit\u00e9 d'une plateforme de marketing digital bas\u00e9e sur l'IA.", "Collaboration Agile avec d\u00e9veloppeurs et data scientists pour l'optimisation SEO et UX/UI."] },
+            { role: 'Ing\u00e9nieur QA | Testeur Logiciel', company: 'Nordstar Solutions LLC', location: 'Beyrouth, Liban', period: 'Jan 2024 \u2013 Mar 2025', type: 'tech',
+              bullets: ['Pilotage des tests fonctionnels automatis\u00e9s avec Selenium (Java) et Cypress.', 'D\u00e9veloppement et maintenance des cas de test pour CRM, ventes, paiement, reporting, ERP et SaaS.', "Int\u00e9gration d'Azure DevOps pour le suivi de +600 d\u00e9fauts."] },
+            { role: 'Sp\u00e9cialiste Multim\u00e9dia \u00b7 Vid\u00e9aste & Photographe', company: 'Hovi Digital Lab / Al Ahmar Marketing Hub', location: 'Beyrouth & Duba\u00ef', period: 'Juil 2023 \u2013 Juil 2026', type: 'creative',
+              bullets: ["R\u00e9alisation de plus de 100 sessions professionnelles photo et vid\u00e9o, augmentant l'engagement client.", 'Traduction de fonctionnalit\u00e9s techniques complexes en r\u00e9cits visuels clairs et dynamiques.'] },
+            { role: 'Repr\u00e9sentant du Service Client', company: 'Amb Group \u2013 Dikkanji', location: 'Beyrouth, Liban', period: 'Juil 2022 \u2013 D\u00e9c 2022', type: 'both',
+              bullets: ["R\u00e9solution efficace des demandes clients, contribuant \u00e0 l'am\u00e9lioration de la satisfaction client."] },
           ],
           education: [
-            { degree: 'Master 1 · Ingénierie Logicielle pour la Science des Données (MIAGE)', institution: 'Université Paris-Saclay', location: '', period: 'Sep 2026 – Présent',
-              desc: "Parcours MIAGE : développement logiciel, science des données et ingénierie des systèmes d'information. En recherche d'un poste à temps partiel compatible avec les études." },
-            { degree: 'Bachelor of Computer Sciences (2 U.E. restantes)', institution: 'Cnam Liban / Cnam Paris', location: 'Liban → France', period: 'Oct 2024 – Présent',
-              desc: 'Formation initiée au Cnam Liban, poursuivie au Cnam Paris pour la validation des deux dernières unités.' },
-            { degree: 'Bachelor en Informatique de Gestion (MIS)', institution: 'Université Libanaise', location: 'Liban', period: 'Sep 2020 – Nov 2023',
-              desc: "Gestion de bases de données, analyse des systèmes, intelligence d'affaires et alignement IT stratégique." },
+            { degree: 'Master 1 \u00b7 Ing\u00e9nierie Logicielle pour la Science des Donn\u00e9es (MIAGE)', institution: 'Universit\u00e9 Paris-Saclay, France', location: '', period: 'Sep 2026 \u2013 Pr\u00e9sent',
+              desc: "Parcours MIAGE : d\u00e9veloppement logiciel, science des donn\u00e9es et ing\u00e9nierie des syst\u00e8mes d'information. En recherche d'un poste \u00e0 temps partiel compatible avec les \u00e9tudes." },
+            { degree: 'Bachelor of Computer Sciences (2 U.E. restantes)', institution: 'Cnam Liban / Cnam Paris', location: 'Liban \u2192 France', period: 'Oct 2024 \u2013 Pr\u00e9sent',
+              desc: 'Formation initi\u00e9e au Cnam Liban, poursuivie au Cnam Paris pour la validation des deux derni\u00e8res unit\u00e9s.' },
+            { degree: 'Bachelor en Informatique de Gestion (MIS)', institution: 'Universit\u00e9 Libanaise', location: 'Liban', period: 'Sep 2020 \u2013 Nov 2023',
+              desc: "Gestion de bases de donn\u00e9es, analyse des syst\u00e8mes, intelligence d'affaires et alignement IT strat\u00e9gique." },
           ],
         },
         portfolio: {
           sectionTitle: 'Portfolio',
           techTab: 'Projets Tech',
-          creativeTab: 'Travaux Créatifs',
+          creativeTab: 'Travaux Cr\u00e9atifs',
           techProjects: [
-            { title: 'Site E-Portfolio', desc: 'Portfolio personnel développé de zéro en HTML/CSS/JS. Design bilingue double identité. Hébergé sur GitHub Pages.', tags: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'], icon: 'globe', link: 'https://mohamadali2023.github.io/E-Portfolio/' },
-            { title: 'Suite de Tests CRM Automatisés', desc: 'Framework Selenium + Cypress couvrant CRM, paiements, ERP et intégrations SaaS. Plus de 600 défauts suivis via Azure DevOps.', tags: ['Selenium', 'Cypress', 'Java', 'Azure DevOps'], icon: 'testTube' },
-            { title: 'QA Plateforme Marketing IA', desc: "QA pour la plateforme marketing de Grower AI. Validation des modèles ML, pipelines analytiques et flux UX/UI.", tags: ['Tests IA', 'QA', 'SEO', 'Agile'], icon: 'bot' },
-            { title: 'Projets Web MENA', desc: 'Développement web freelance pour des clients MENA · WordPress, PHP, optimisation SEO et intégration analytics.', tags: ['WordPress', 'PHP', 'SEO'], icon: 'laptop' },
+            { title: 'Site E-Portfolio', desc: 'Portfolio personnel d\u00e9velopp\u00e9 de z\u00e9ro en HTML/CSS/JS. Design bilingue double identit\u00e9. H\u00e9berg\u00e9 sur GitHub Pages.', tags: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'], icon: 'globe', link: 'https://mohamadali2023.github.io/E-Portfolio/' },
+            { title: 'Suite de Tests CRM Automatis\u00e9s', desc: 'Framework Selenium + Cypress couvrant CRM, paiements, ERP et int\u00e9grations SaaS. Plus de 600 d\u00e9fauts suivis via Azure DevOps.', tags: ['Selenium', 'Cypress', 'Java', 'Azure DevOps'], icon: 'testTube' },
+            { title: 'QA Plateforme Marketing IA', desc: "QA pour la plateforme marketing de Grower AI. Validation des mod\u00e8les ML, pipelines analytiques et flux UX/UI.", tags: ['Tests IA', 'QA', 'SEO', 'Agile'], icon: 'bot' },
+            { title: 'Projets Web MENA', desc: 'D\u00e9veloppement web freelance pour des clients MENA. WordPress, PHP, optimisation SEO et int\u00e9gration analytics.', tags: ['WordPress', 'PHP', 'SEO'], icon: 'laptop' },
           ],
           photos: [
             { title: 'Carat Boutique', file: 'Carat1.jpg', tags: ['Commercial', 'Produit'] },
           ],
           videos: [
             { title: 'Crazy Video', file: 'Crazyvideo.mp4', category: 'Commercial de Marque', tags: ['Commercial', 'Marque'] },
-            { title: "Poule d'Or Reel", file: "Poule d_or 2.mp4", category: 'Commercial de Marque', tags: ['Restaurant', 'Marque'] },
-            { title: 'Zeus Production', file: 'Zeus Reel 1.mp4', category: 'Aftermovie Événementiel', tags: ['Événement', 'Cinématique'] },
+            { title: "Poule d'Or Reel", file: 'Poule d_or 2.mp4', category: 'Commercial de Marque', tags: ['Restaurant', 'Marque'] },
+            { title: 'Zeus Production', file: 'Zeus Reel 1.mp4', category: 'Aftermovie \u00c9v\u00e9nementiel', tags: ['\u00c9v\u00e9nement', 'Cin\u00e9matique'] },
           ],
         },
         services: {
           sectionTitle: 'Services',
           tech: [
-            { icon: 'shieldCheck', title: 'QA & Test Automation', desc: 'End-to-end automated testing with Selenium, Cypress, and Azure DevOps. I catch bugs before your users do.' },
-            { icon: 'code2', title: 'Web Development', desc: 'Full-stack: WordPress, PHP, JavaScript. SEO-optimized, responsive, and fast.' },
-            { icon: 'settings', title: 'ERP/SaaS Integration Testing', desc: 'Specialized test coverage for CRM, payments, reporting, and enterprise SaaS platforms.' },
-            { icon: 'cpu', title: 'AI Platform Validation', desc: 'QA for AI-driven products. Validating ML models, analytics pipelines, and data-driven UX flows.' }
+            { icon: 'shieldCheck', title: 'QA & Automatisation des Tests', desc: 'Tests automatis\u00e9s de bout en bout avec Selenium, Cypress et Azure DevOps.' },
+            { icon: 'code2', title: 'D\u00e9veloppement Web', desc: 'Full-stack : WordPress, PHP, JavaScript. Optimis\u00e9 SEO, responsive et rapide.' },
+            { icon: 'settings', title: "Tests d'Int\u00e9gration ERP/SaaS", desc: 'Couverture de tests sp\u00e9cialis\u00e9e pour CRM, paiements, reporting et plateformes SaaS.' },
+            { icon: 'cpu', title: 'Validation de Plateformes IA', desc: 'QA pour produits IA. Validation de mod\u00e8les ML, pipelines analytiques et flux UX/UI.' },
           ],
-          
           creative: [
-            { icon: 'aperture', title: 'Professional Photography', desc: 'Corporate, event, portrait, and product photography. 100+ sessions across MENA.' },
-            { icon: 'film', title: 'Videography & Production', desc: 'From concept to final cut. Corporate videos, social media reels, and brand films.' },
-            { icon: 'share2', title: 'Digital Marketing Content', desc: 'Scroll-stopping visual content strategy for MENA-region brands.' },
-            { icon: 'layers', title: 'Post-Production & Editing', desc: 'Lightroom, Premiere Pro, After Effects motion graphics, and Photoshop compositing.' }
+            { icon: 'aperture', title: 'Photographie Professionnelle', desc: 'Corporate, \u00e9v\u00e9nementielle, portrait et produit. Plus de 100 sessions MENA.' },
+            { icon: 'film', title: 'Vid\u00e9ographie & Production', desc: 'Du concept au montage final. Vid\u00e9os corporate, reels et films de marque.' },
+            { icon: 'share2', title: 'Contenu Marketing Digital', desc: 'Strat\u00e9gie de contenu visuel impactant pour les marques de la r\u00e9gion MENA.' },
+            { icon: 'layers', title: 'Post-Production & Retouche', desc: 'Lightroom, Premiere Pro, After Effects motion graphics et compositing Photoshop.' },
           ],
         },
         certifications: {
           sectionTitle: 'Certifications & Stages',
           items: [
-            { icon: 'oracleLogo', title: 'Oracle APEX : Développeur Cloud Professionnel (1Z0-771)', issuer: 'Oracle', date: 'Avr 2025' },
-            { icon: 'awsLogo', title: 'AWS : Pratiques Avancées de Tests Utilisant les Outils AWS DevOps', issuer: 'Amazon Web Services', date: 'Déc 2024' },
-            { icon: 'briefcase', title: 'Stagiaire Développeur & QA', issuer: 'Astrolabe ICT – Beyrouth', date: 'Juil – Déc 2023' },
-            { icon: 'camera', title: 'Certificat en Photographie Digitale', issuer: 'Smart Guide Institute', date: 'Jan 2018 – Août 2019' },
+            { icon: 'oracleLogo', title: 'Oracle APEX : D\u00e9veloppeur Cloud Professionnel (1Z0-771)', issuer: 'Oracle', date: 'Avr 2025' },
+            { icon: 'awsLogo', title: 'AWS : Pratiques Avanc\u00e9es de Tests avec AWS DevOps', issuer: 'Amazon Web Services', date: 'D\u00e9c 2024' },
+            { icon: 'briefcase', title: 'Stagiaire D\u00e9veloppeur & QA', issuer: 'Astrolabe ICT \u2013 Beyrouth', date: 'Juil \u2013 D\u00e9c 2023' },
+            { icon: 'camera', title: 'Certificat en Photographie Digitale', issuer: 'Smart Guide Institute', date: 'Jan 2018 \u2013 Ao\u00fbt 2019' },
           ],
         },
         testimonials: {
-          sectionTitle: 'Témoignages',
+          sectionTitle: 'T\u00e9moignages',
           items: [
-            { quote: "L'attention de Mohammad aux détails dans notre processus QA était exceptionnelle. Il a identifié des problèmes critiques dans notre flux de paiement.", author: 'Développeur Senior', role: 'Équipe Engineering', company: 'Nordstar Solutions LLC' },
-            { quote: "Le contenu visuel que Mohammad a produit pour notre campagne a dépassé nos attentes. Sa capacité à capturer l'essence d'une marque est remarquable.", author: 'Directeur Marketing', role: 'Département Créatif', company: 'Al Ahmar Marketing Hub' },
-            { quote: "Travailler avec Mohammad sur le QA de notre plateforme IA a été excellent. Il a apporté une approche systématique et data-driven parfaitement adaptée.", author: 'Chef de Produit', role: 'Équipe Produit', company: 'Grower AI' },
+            { quote: "L'attention de Mohammad aux d\u00e9tails dans notre processus QA \u00e9tait exceptionnelle. Il a identifi\u00e9 des probl\u00e8mes critiques dans notre flux de paiement.", author: 'D\u00e9veloppeur Senior', role: '\u00c9quipe Engineering', company: 'Nordstar Solutions LLC' },
+            { quote: "Le contenu visuel que Mohammad a produit pour notre campagne a d\u00e9pass\u00e9 nos attentes. Sa capacit\u00e9 \u00e0 capturer l'essence d'une marque est remarquable.", author: 'Directeur Marketing', role: 'D\u00e9partement Cr\u00e9atif', company: 'Al Ahmar Marketing Hub' },
+            { quote: "Travailler avec Mohammad sur le QA de notre plateforme IA a \u00e9t\u00e9 excellent. Il a apport\u00e9 une approche syst\u00e9matique et data-driven parfaitement adapt\u00e9e.", author: 'Chef de Produit', role: '\u00c9quipe Produit', company: 'Grower AI' },
           ],
         },
         contact: {
           sectionTitle: 'Contact',
-          availability: 'Ouvert aux missions freelance et postes à temps partiel',
+          availability: 'Ouvert aux missions freelance et postes \u00e0 temps partiel',
           items: [
             { icon: 'mapPin', label: 'Localisation', value: 'Paris, France' },
-            { icon: 'phone', label: 'Téléphone', value: '+33 6 12 05 96 53' },
+            { icon: 'phone', label: 'T\u00e9l\u00e9phone', value: '+33 6 12 05 96 53' },
             { icon: 'mail', label: 'E-mail', value: 'hassanmhamad777@gmail.com' },
           ],
-          form: { name: 'Votre nom', email: 'Votre e-mail', subject: 'Sujet', message: 'Votre message', submit: 'Envoyer', success: 'Message envoyé ! Je vous répondrai très prochainement.' },
+          form: { name: 'Votre nom', email: 'Votre e-mail', subject: 'Sujet', message: 'Votre message', submit: 'Envoyer', success: 'Message envoy\u00e9 ! Je vous r\u00e9pondrai tr\u00e8s prochainement.' },
         },
       },
     };
 
-    // State
+    // ─── STATE ───────────────────────────────────────────────────────────────
     let currentView = 'tech';
     let currentLang = 'en';
-    
-    // Elements
     const htmlEl = document.documentElement;
     const sectionsContainer = document.getElementById('sections-container');
     const navMenu = document.getElementById('nav-menu');
     const typedTextEl = document.getElementById('typed-text');
-    
-    const TECH_ORDER = ['hero', 'about', 'skills', 'resume', 'portfolio', 'services', 'certifications', 'testimonials', 'contact'];
-    const CREATIVE_ORDER = ['hero', 'about', 'portfolio', 'services', 'skills', 'testimonials', 'resume', 'certifications', 'contact'];
+    const TECH_ORDER     = ['hero','about','skills','resume','portfolio','services','certifications','testimonials','contact'];
+    const CREATIVE_ORDER = ['hero','about','portfolio','services','skills','testimonials','resume','certifications','contact'];
+    let typeRoleIndex = 0, typeCharIndex = 0, isDeleting = false, typeTimeout = null;
+    const DC_ANSWER = { lut: 'cinematic', ar: '2.35:1' };
+    let dcState = { lut: null, ar: null };
+    const LUT_FILTERS = { raw:'none', cinematic:'contrast(1.15) saturate(0.85) sepia(0.12) brightness(0.95)', bw:'grayscale(1) contrast(1.3) brightness(0.9)', neon:'saturate(1.8) hue-rotate(180deg) contrast(1.1)' };
 
-    // Typing animation state
-    let typeRoleIndex = 0;
-    let typeCharIndex = 0;
-    let isDeleting = false;
-    let typeTimeout;
-
-    // Initialization
+    // ─── INIT ────────────────────────────────────────────────────────────────
     function init() {
-      // Parse URL params
       const params = new URLSearchParams(window.location.search);
-      const urlView = params.get('view');
-      const urlLang = params.get('lang');
-      
+      const urlView = params.get('view'), urlLang = params.get('lang');
       const savedLang = localStorage.getItem('portfolio-lang');
-      
       if (urlView === 'tech' || urlView === 'creative') currentView = urlView;
       if (urlLang === 'en' || urlLang === 'fr') currentLang = urlLang;
       else if (savedLang === 'en' || savedLang === 'fr') currentLang = savedLang;
-
       updateUrl();
       htmlEl.setAttribute('data-view', currentView);
-      
-      // Setup toggles
-      setupToggles();
-      setupMobileMenu();
-      setupPortfolioTabs();
-      setupContactForm();
-      
-      // Render
-      renderAll();
-      reorderSections(false);
-      
-      // Scroll spy
-      setupScrollSpy();
-      setupSkillAnimation();
-      setupDirectorsCut();
-}
+      setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut();
+      renderAll(); reorderSections(false); setupScrollSpy();
+    }
 
     function updateUrl() {
       const url = new URL(window.location);
-      url.searchParams.set('view', currentView);
-      url.searchParams.set('lang', currentLang);
+      url.searchParams.set('view', currentView); url.searchParams.set('lang', currentLang);
       window.history.replaceState({}, '', url);
     }
 
-    // Set View
+    // ─── VIEW & LANG ─────────────────────────────────────────────────────────
     function setView(v) {
       if (currentView === v) return;
       currentView = v;
-      htmlEl.setAttribute('data-view', currentView);
-      updateUrl();
-      
-      document.querySelectorAll('#view-toggle .pill-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.val === v);
-      });
-      
-      // Switch CTA
-      const heroCta = document.getElementById('hero-cta-primary');
+      htmlEl.setAttribute('data-view', v); updateUrl();
+      document.querySelectorAll('#view-toggle .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === v));
       const c = CONTENT[currentLang];
-      heroCta.innerText = currentView === 'tech' ? c.hero.techCta : c.hero.creativeCta;
-      
-      // Restart typing
-      clearTimeout(typeTimeout);
-      typeRoleIndex = 0;
-      typeCharIndex = 0;
-      isDeleting = false;
-      typedTextEl.textContent = '';
-      typeWriter();
-
-      reorderSections(true);
-      renderViewSpecific();
-      
-      // Switch portfolio tab
-      document.querySelector(`.portfolio-tab[data-tab="${currentView}"]`).click();
+      const heroCta = document.getElementById('hero-cta-primary');
+      if (heroCta) heroCta.innerText = v === 'tech' ? c.hero.techCta : c.hero.creativeCta;
+      clearTimeout(typeTimeout); typeTimeout = null; typeRoleIndex = 0; typeCharIndex = 0; isDeleting = false;
+      if (typedTextEl) typedTextEl.textContent = '';
+      typeWriter(); reorderSections(true); renderViewSpecific();
+      const tab = document.querySelector('.portfolio-tab[data-tab="' + v + '"]');
+      if (tab) tab.click();
     }
 
-    // Set Lang
     function setLang(l) {
       if (currentLang === l) return;
-      currentLang = l;
-      localStorage.setItem('portfolio-lang', l);
-      updateUrl();
-      
-      document.querySelectorAll('#lang-toggle .pill-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.val === l);
-      });
-      
+      currentLang = l; localStorage.setItem('portfolio-lang', l); updateUrl();
+      document.querySelectorAll('#lang-toggle .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === l));
       renderAll();
     }
 
-    // Render everything
-    
-function renderCreativePortfolio() {
-  const c = CONTENT[currentLang];
-
-  // Photo strip heading
-  const ph = document.getElementById('photo-strip-heading');
-  if (ph) ph.textContent = currentLang === 'fr' ? 'Photographie' : 'Photography';
-  const vh = document.getElementById('video-strip-heading');
-  if (vh) vh.textContent = currentLang === 'fr' ? 'Vidéographie' : 'Videography';
-
-  // Photo strip
-  const photoStrip = document.getElementById('creative-photo-strip');
-  if (photoStrip) {
-    photoStrip.innerHTML = c.portfolio.photos.map(p => `
-      <div class="photo-strip-card">
-        <img src="assets/img/portfolio/${p.file}" alt="${p.title}" loading="lazy">
-        <div class="photo-strip-overlay"><div class="photo-strip-title">${p.title}</div></div>
-      </div>
-    `).join('');
-  }
-
-  // Filmstrip
-  const filmstrip = document.getElementById('creative-filmstrip');
-  if (filmstrip) {
-    filmstrip.innerHTML = c.portfolio.videos.map(v => {
-      const safeSrc = v.file;
-      return `
-        <div class="film-card" onclick="openVideoModal('assets/img/portfolio/${safeSrc.replace(/'/g, "\'")}', '${v.title.replace(/'/g, "\'")}')">
-          <div class="film-thumb-placeholder">${ICONS.film}</div>
-          <div class="film-play-btn">${ICONS.play}</div>
-          <div class="film-info">
-            <div class="film-category">${v.category}</div>
-            <div class="film-title">${v.title}</div>
-            <div class="film-tags">${v.tags.map(t => `<span class="film-tag">${t}</span>`).join('')}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  setupFilmstripDrag();
-  renderDCLabels();
-
-  const dcVid = document.getElementById('dc-video');
-  if (dcVid && dcVid.paused) dcVid.play().catch(() => {});
-}
-
-function setupFilmstripDrag() {
-  document.querySelectorAll('.filmstrip, .photo-strip').forEach(el => {
-    if (el._dragSetup) return;
-    el._dragSetup = true;
-    let isDown = false, startX, scrollLeft;
-    el.addEventListener('mousedown', e => { isDown = true; el.style.cursor='grabbing'; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
-    el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor='grab'; });
-    el.addEventListener('mouseup', () => { isDown = false; el.style.cursor='grab'; });
-    el.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - el.offsetLeft; el.scrollLeft = scrollLeft - (x - startX) * 1.5; });
-  });
-}
-
-function openVideoModal(src, title) {
-  const modal = document.getElementById('media-modal');
-  const video = document.getElementById('modal-video');
-  if (!modal || !video) return;
-  video.src = src;
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  video.play().catch(() => {});
-}
-
-function closeVideoModal() {
-  const modal = document.getElementById('media-modal');
-  const video = document.getElementById('modal-video');
-  if (!modal || !video) return;
-  video.pause(); video.src = '';
-  modal.style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-const DC_ANSWER = { lut: 'cinematic', ar: '2.35:1' };
-let dcState = { lut: null, ar: null };
-const LUT_FILTERS = {
-  raw: 'none',
-  cinematic: 'contrast(1.15) saturate(0.85) sepia(0.12) brightness(0.95)',
-  bw: 'grayscale(1) contrast(1.3) brightness(0.9)',
-  neon: 'saturate(1.8) hue-rotate(180deg) contrast(1.1)',
-};
-
-function dcApplyLut(lut) {
-  dcState.lut = lut;
-  const vid = document.getElementById('dc-video');
-  if (vid) vid.style.filter = LUT_FILTERS[lut] || 'none';
-  document.querySelectorAll('[data-lut]').forEach(b => b.classList.toggle('selected', b.dataset.lut === lut));
-}
-
-function dcApplyAR(ar) {
-  dcState.ar = ar;
-  const top = document.getElementById('dc-lb-top');
-  const bot = document.getElementById('dc-lb-bot');
-  if (top && bot) {
-    const h = ar === '2.35:1' ? '12%' : '0';
-    top.style.height = h; bot.style.height = h;
-  }
-  document.querySelectorAll('[data-ar]').forEach(b => b.classList.toggle('selected', b.dataset.ar === ar));
-}
-
-function dcCheckAnswer() {
-  const correct = dcState.lut === DC_ANSWER.lut && dcState.ar === DC_ANSWER.ar;
-  const result = document.getElementById('dc-result');
-  if (!result) return;
-  document.getElementById('dc-result-icon').textContent = correct ? '🎬' : '🎥';
-  document.getElementById('dc-result-text').textContent = correct
-    ? (currentLang === 'fr' ? 'Approuvé par le Directeur !' : 'Director Approved!')
-    : (currentLang === 'fr' ? 'Pas tout à fait... Réessayez.' : 'Not quite... Try again.');
-  result.style.borderColor = correct ? 'var(--accent-color)' : '#ef4444';
-  result.classList.add('show');
-  setTimeout(() => result.classList.remove('show'), 3000);
-}
-
-function dcReset() {
-  dcState = { lut: null, ar: null };
-  const vid = document.getElementById('dc-video');
-  if (vid) vid.style.filter = 'none';
-  const top = document.getElementById('dc-lb-top');
-  const bot = document.getElementById('dc-lb-bot');
-  if (top) top.style.height = '0';
-  if (bot) bot.style.height = '0';
-  document.querySelectorAll('.dc-opt').forEach(b => b.classList.remove('selected'));
-  const r = document.getElementById('dc-result');
-  if (r) r.classList.remove('show');
-}
-
-function renderDCLabels() {
-  const isFR = currentLang === 'fr';
-  const el = (id) => document.getElementById(id);
-  if (!el('dc-label-text')) return;
-  el('dc-label-text').textContent = isFR ? 'Expérience Interactive' : 'Interactive Experience';
-  el('dc-title-text').textContent = isFR ? 'La Coupe du Directeur' : "The Director's Cut";
-  el('dc-subtitle-text').textContent = isFR ? 'Vous êtes le Directeur Créatif. Réglez la colorimétrie et le format pour correspondre au brief.' : "You're the Creative Director. Set the grade and format to match the client brief.";
-  el('dc-brief-text').textContent = isFR ? 'Publicité de Luxe' : 'Luxury Brand Commercial';
-  el('dc-submit-btn').textContent = isFR ? 'Valider' : 'Submit Cut';
-  el('dc-reset-btn').textContent = isFR ? 'Réinitialiser' : 'Reset';
-  el('dc-lut-label').textContent = isFR ? 'Colorimétrie' : 'Color Grade';
-  el('dc-ar-label').textContent = isFR ? "Format d'image" : 'Aspect Ratio';
-  const lutLabels = isFR ? ['Brut','Cinématique','N&B Drama','Neon Nuit'] : ['Raw','Cinematic','B&W Drama','Neon Night'];
-  document.querySelectorAll('[data-lut]').forEach((b, i) => { if (lutLabels[i]) b.textContent = lutLabels[i]; });
-}
-
-function setupDirectorsCut() {
-  document.querySelectorAll('[data-lut]').forEach(btn => btn.addEventListener('click', () => dcApplyLut(btn.dataset.lut)));
-  document.querySelectorAll('[data-ar]').forEach(btn => btn.addEventListener('click', () => dcApplyAR(btn.dataset.ar)));
-  const closeBtn = document.getElementById('modal-close-btn');
-  if (closeBtn) closeBtn.addEventListener('click', closeVideoModal);
-  const modal = document.getElementById('media-modal');
-  if (modal) modal.addEventListener('click', e => { if (e.target === modal) closeVideoModal(); });
-}
-
-function renderServicesSection() {
-  const c = CONTENT[currentLang];
-  const services = currentView === 'tech' ? c.services.tech : c.services.creative;
-  document.getElementById('services-grid').innerHTML = services.map(s => `
-    <div class="service-card">
-      <div class="service-icon">${ICONS[s.icon] || ''}</div>
-      <h3 class="service-title">${s.title}</h3>
-      <p class="service-desc">${s.desc}</p>
-    </div>
-  `).join('');
-}
-
-function renderAll() {
+    // ─── RENDER ALL ──────────────────────────────────────────────────────────
+    function renderAll() {
       const c = CONTENT[currentLang];
-      
-      // Simple i18n data attrs
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const keys = el.dataset.i18n.split('.');
         let val = c;
-        keys.forEach(k => val = val[k]);
-        if (val) el.textContent = val;
+        for (const k of keys) { if (val && typeof val === 'object') val = val[k]; else { val = null; break; } }
+        if (val && typeof val === 'string') el.textContent = val;
       });
-      
       document.title = c.meta.title;
-      
-      renderNav();
-      renderViewSpecific(); // Bio, skills, resume etc. that depend on BOTH view and lang
-      
-      // Static complex renders (depend on lang mostly)
-      renderResume();
-      renderPortfolio();
-      renderCertifications();
-      renderTestimonials();
-      renderContact();
-      
-      // CTA
+      renderNav(); renderViewSpecific(); renderResume(); renderPortfolio(); renderCertifications(); renderTestimonials(); renderContact();
       const heroCta = document.getElementById('hero-cta-primary');
-      heroCta.innerText = currentView === 'tech' ? c.hero.techCta : c.hero.creativeCta;
-
-      if (!typeTimeout) typeWriter();
+      if (heroCta) heroCta.innerText = currentView === 'tech' ? c.hero.techCta : c.hero.creativeCta;
       const aboutBtn = document.getElementById('about-resume-btn');
       if (aboutBtn) aboutBtn.textContent = c.nav.resume;
-
+      if (!typeTimeout) typeWriter();
     }
 
-    // Render sections that change heavily based on View+Lang
+    // ─── RENDER VIEW-SPECIFIC ────────────────────────────────────────────────
     function renderViewSpecific() {
       const c = CONTENT[currentLang];
-      
-      // Update Hero CTA
       const heroCta = document.getElementById('hero-cta-primary');
-      if (heroCta) {
-        heroCta.textContent = currentView === 'tech' ? c.hero.techCta : c.hero.creativeCta;
-        heroCta.href = '#portfolio';
-      }
-      
-      // Update About bio
+      if (heroCta) { heroCta.textContent = currentView === 'tech' ? c.hero.techCta : c.hero.creativeCta; heroCta.href = '#portfolio'; }
       const bioEl = document.getElementById('about-bio');
       if (bioEl) bioEl.textContent = currentView === 'tech' ? c.about.techBio : c.about.creativeBio;
-      
-      renderServicesSection();
-      renderPortfolio();
-      renderCreativePortfolio();
-
-      // Render about info list
-      const c = CONTENT[currentLang];
-      document.getElementById('about-info-list').innerHTML = c.about.items.map(item =>
-        `<li><span class="info-label">${item.label}</span><span>${item.value}</span></li>`
-      ).join('');
-
-      document.getElementById('about-lang-list').innerHTML = c.about.languages.map(lang =>
-        `<div class="lang-item">
-          <div class="lang-item-header"><strong>${lang.name}</strong><span class="lang-level">${lang.level}</span></div>
-        </div>`
-      ).join('');
-
-      // Skills
-      const categories = currentView === 'tech' ? c.skills.techCategories : c.skills.creativeCategories;
-      document.getElementById('skills-grid').innerHTML = categories.map(cat => `
-        <div>
-          <h3 class="skill-category-title">${cat.name}</h3>
-          ${cat.skills.map(skill => `
-            <div class="skill-item">
-              <div class="skill-info"><span>${skill.name}</span><span>${skill.level}%</span></div>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" data-level="${skill.level}%"></div></div>
-            </div>
-          `).join('')}
-        </div>
-      `).join('');
-
+      const infoList = document.getElementById('about-info-list');
+      if (infoList) infoList.innerHTML = c.about.items.map(item => '<li><span class="info-label">' + item.label + '</span><span>' + item.value + '</span></li>').join('');
+      const langList = document.getElementById('about-lang-list');
+      if (langList) langList.innerHTML = c.about.languages.map(lang => '<div class="lang-item"><div class="lang-item-header"><strong>' + lang.name + '</strong><span class="lang-level">' + lang.level + '</span></div></div>').join('');
+      const cats = currentView === 'tech' ? c.skills.techCategories : c.skills.creativeCategories;
+      const sg = document.getElementById('skills-grid');
+      if (sg) sg.innerHTML = cats.map(cat => '<div><h3 class="skill-category-title">' + cat.name + '</h3>' + cat.skills.map(s => '<div class="skill-item"><div class="skill-info"><span>' + s.name + '</span><span>' + s.level + '%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-level="' + s.level + '%"></div></div></div>').join('') + '</div>').join('');
       setTimeout(triggerSkillAnimation, 100);
+      const svcs = currentView === 'tech' ? c.services.tech : c.services.creative;
+      const svgrid = document.getElementById('services-grid');
+      if (svgrid) svgrid.innerHTML = svcs.map(s => '<div class="service-card"><div class="service-icon">' + (ICONS[s.icon] || '') + '</div><h3 class="service-title">' + s.title + '</h3><p class="service-desc">' + s.desc + '</p></div>').join('');
+      renderCreativePortfolio();
     }
 
-    // Render static complex sections
+    // ─── RENDER NAV ──────────────────────────────────────────────────────────
     function renderNav() {
       const c = CONTENT[currentLang];
-      navMenu.innerHTML = `
-        <li><a href="#hero" class="active">${c.nav.home}</a></li>
-        <li><a href="#about">${c.nav.about}</a></li>
-        <li><a href="#skills">${c.nav.skills}</a></li>
-        <li><a href="#resume">${c.nav.resume}</a></li>
-        <li><a href="#portfolio">${c.nav.portfolio}</a></li>
-        <li><a href="#services">${c.nav.services}</a></li>
-        <li><a href="#certifications">${c.nav.certifications}</a></li>
-        <li><a href="#testimonials">${c.nav.testimonials}</a></li>
-        <li><a href="#contact">${c.nav.contact}</a></li>
-      `;
-      // setup smooth scroll
+      const keys = ['home','about','skills','resume','portfolio','services','certifications','testimonials','contact'];
+      const ids  = ['hero','about','skills','resume','portfolio','services','certifications','testimonials','contact'];
+      navMenu.innerHTML = keys.map((k, i) => '<li><a href="#' + ids[i] + '">' + c.nav[k] + '</a></li>').join('');
       navMenu.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', (e) => {
+        a.addEventListener('click', e => {
           e.preventDefault();
-          const target = document.querySelector(a.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-            if(window.innerWidth <= 1024) document.getElementById('sidebar').classList.remove('open');
-          }
+          const t = document.querySelector(a.getAttribute('href'));
+          if (t) { t.scrollIntoView({ behavior: 'smooth' }); if (window.innerWidth <= 1024) document.getElementById('sidebar').classList.remove('open'); }
         });
       });
     }
 
+    // ─── RENDER RESUME ───────────────────────────────────────────────────────
     function renderResume() {
       const c = CONTENT[currentLang];
-      
-      // Filter experience by type (show all for now, or style by badge)
-      document.getElementById('resume-experience').innerHTML = c.resume.experience.map(exp => {
-        let badgeCls = exp.type === 'tech' ? 'badge-tech' : exp.type === 'creative' ? 'badge-creative' : 'badge-both';
-        let badgeTxt = currentLang === 'en' ? exp.type.toUpperCase() : (exp.type === 'creative' ? 'CRÉATIF' : exp.type.toUpperCase());
-        return `
-        <div class="timeline-item">
-          <div class="timeline-period">${exp.period}</div>
-          <h4 class="timeline-title">${exp.role} <span class="type-badge ${badgeCls}">${badgeTxt}</span></h4>
-          <div class="timeline-company">${exp.company} · ${exp.location}</div>
-          <ul class="timeline-bullets">
-            ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
-          </ul>
-        </div>
-      `}).join('');
-
-      document.getElementById('resume-education').innerHTML = c.resume.education.map(ed => `
-        <div class="timeline-item">
-          <div class="timeline-period">${ed.period}</div>
-          <h4 class="timeline-title">${ed.degree}</h4>
-          <div class="timeline-company">${ed.institution} ${ed.location ? ' · ' + ed.location : ''}</div>
-          <div class="timeline-desc">${ed.desc}</div>
-        </div>
-      `).join('');
+      const expEl = document.getElementById('resume-experience');
+      if (expEl) expEl.innerHTML = c.resume.experience.map(exp => {
+        const cls = exp.type === 'tech' ? 'badge-tech' : exp.type === 'creative' ? 'badge-creative' : 'badge-both';
+        const txt = currentLang === 'en' ? exp.type.toUpperCase() : (exp.type === 'creative' ? 'CR\u00c9ATIF' : exp.type.toUpperCase());
+        return '<div class="timeline-item"><div class="timeline-period">' + exp.period + '</div><h4 class="timeline-title">' + exp.role + ' <span class="type-badge ' + cls + '">' + txt + '</span></h4><div class="timeline-company">' + exp.company + ' \u00b7 ' + exp.location + '</div><ul class="timeline-bullets">' + exp.bullets.map(b => '<li>' + b + '</li>').join('') + '</ul></div>';
+      }).join('');
+      const eduEl = document.getElementById('resume-education');
+      if (eduEl) eduEl.innerHTML = c.resume.education.map(ed => '<div class="timeline-item"><div class="timeline-period">' + ed.period + '</div><h4 class="timeline-title">' + ed.degree + '</h4><div class="timeline-company">' + ed.institution + (ed.location ? ' \u00b7 ' + ed.location : '') + '</div><div class="timeline-desc">' + ed.desc + '</div></div>').join('');
     }
 
+    // ─── RENDER PORTFOLIO ────────────────────────────────────────────────────
     function renderPortfolio() {
       const c = CONTENT[currentLang];
-
-      document.getElementById('tech-projects-grid').innerHTML = c.portfolio.techProjects.map(p => `
-        <div class="portfolio-card">
-          <div class="card-content">
-            <div class="card-icon" style="color:var(--accent-color);">${ICONS[p.icon] || ''}</div>
-            <h4 class="card-title">${p.title}</h4>
-            <p class="card-desc">${p.desc}</p>
-            <div class="card-tags">
-              ${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
-            </div>
-            ${p.link ? `<a href="${p.link}" target="_blank" style="display:inline-block; margin-top:15px; color:var(--accent-color); font-size:0.9rem; text-decoration:underline;">View Project ↗</a>` : ''}
-          </div>
-        </div>
-      `).join('');
-
+      const tg = document.getElementById('tech-projects-grid');
+      if (tg) tg.innerHTML = c.portfolio.techProjects.map(p => '<div class="portfolio-card"><div class="card-content"><div class="card-icon" style="color:var(--accent-color);">' + (ICONS[p.icon] || '') + '</div><h4 class="card-title">' + p.title + '</h4><p class="card-desc">' + p.desc + '</p><div class="card-tags">' + p.tags.map(t => '<span class="card-tag">' + t + '</span>').join('') + '</div>' + (p.link ? '<a href="' + p.link + '" target="_blank" style="display:inline-block;margin-top:15px;color:var(--accent-color);font-size:0.9rem;text-decoration:underline;">View Project \u2197</a>' : '') + '</div></div>').join('');
       renderCreativePortfolio();
     }
 
-    function renderCertifications() {
-  const c = CONTENT[currentLang];
-  const grid = document.getElementById('certs-grid');
-  if (grid) {
-    grid.innerHTML = c.certifications.items.map(cert => `
-      <div class="cert-item">
-        <div class="cert-icon">${ICONS[cert.icon] || ''}</div>
-        <div class="cert-info"><h4>${cert.title}</h4><p>${cert.issuer} · ${cert.date}</p></div>
-      </div>
-    `).join('');
-  }
-}
+    // ─── RENDER CREATIVE PORTFOLIO ───────────────────────────────────────────
+    function renderCreativePortfolio() {
+      const c = CONTENT[currentLang];
+      const ph = document.getElementById('photo-strip-heading'); if (ph) ph.textContent = currentLang === 'fr' ? 'Photographie' : 'Photography';
+      const vh2 = document.getElementById('video-strip-heading'); if (vh2) vh2.textContent = currentLang === 'fr' ? 'Vid\u00e9ographie' : 'Videography';
+      const ps = document.getElementById('creative-photo-strip');
+      if (ps) ps.innerHTML = c.portfolio.photos.map(p => '<div class="photo-strip-card"><img src="assets/img/portfolio/' + p.file + '" alt="' + p.title + '" loading="lazy"><div class="photo-strip-overlay"><div class="photo-strip-title">' + p.title + '</div></div></div>').join('');
+      const fs2 = document.getElementById('creative-filmstrip');
+      if (fs2) fs2.innerHTML = c.portfolio.videos.map(v => '<div class="film-card" onclick="openVideoModal(\'assets/img/portfolio/' + v.file.replace(/'/g, "\\'") + '\',\'' + v.title.replace(/'/g, "\\'") + '\')"><div class="film-thumb-placeholder">' + ICONS.film + '</div><div class="film-play-btn">' + ICONS.play + '</div><div class="film-info"><div class="film-category">' + v.category + '</div><div class="film-title">' + v.title + '</div><div class="film-tags">' + v.tags.map(t => '<span class="film-tag">' + t + '</span>').join('') + '</div></div></div>').join('');
+      setupFilmstripDrag(); renderDCLabels();
+      const dcv = document.getElementById('dc-video'); if (dcv && dcv.paused) dcv.play().catch(() => {});
+    }
 
+    // ─── RENDER CERTIFICATIONS ───────────────────────────────────────────────
+    function renderCertifications() {
+      const c = CONTENT[currentLang];
+      const g = document.getElementById('certs-grid');
+      if (g) g.innerHTML = c.certifications.items.map(cert => '<div class="cert-item"><div class="cert-icon">' + (ICONS[cert.icon] || '') + '</div><div class="cert-info"><h4>' + cert.title + '</h4><p>' + cert.issuer + ' \u00b7 ' + cert.date + '</p></div></div>').join('');
+    }
+
+    // ─── RENDER TESTIMONIALS ─────────────────────────────────────────────────
     function renderTestimonials() {
       const c = CONTENT[currentLang];
-      document.getElementById('testimonials-grid').innerHTML = c.testimonials.items.map(t => `
-        <div class="testimonial-card">
-          <p class="testimonial-quote">${t.quote}</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">${t.author.charAt(0)}</div>
-            <div class="author-info">
-              <h4>${t.author}</h4>
-              <p>${t.role}, ${t.company}</p>
-            </div>
-          </div>
-        </div>
-      `).join('');
+      const g = document.getElementById('testimonials-grid');
+      if (g) g.innerHTML = c.testimonials.items.map(t => '<div class="testimonial-card"><p class="testimonial-quote">' + t.quote + '</p><div class="testimonial-author"><div class="author-avatar">' + t.author.charAt(0) + '</div><div class="author-info"><h4>' + t.author + '</h4><p>' + t.role + ', ' + t.company + '</p></div></div></div>').join('');
     }
 
+    // ─── RENDER CONTACT ──────────────────────────────────────────────────────
     function renderContact() {
       const c = CONTENT[currentLang];
-      document.getElementById('contact-avail').textContent = c.contact.availability;
-      
-      document.getElementById('contact-info-list').innerHTML = c.contact.items.map(item => `
-        <div class="contact-info-item">
-          <div class="contact-icon">${ICONS[item.icon] || ''}</div>
-          <div class="contact-details">
-            <h4>${item.label}</h4>
-            <p>${item.value}</p>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('form-name').placeholder = c.contact.form.name;
-      document.getElementById('form-email').placeholder = c.contact.form.email;
-      document.getElementById('form-subject').placeholder = c.contact.form.subject;
-      document.getElementById('form-message').placeholder = c.contact.form.message;
-      document.getElementById('form-submit').textContent = c.contact.form.submit;
+      const av = document.getElementById('contact-avail'); if (av) av.textContent = c.contact.availability;
+      const il = document.getElementById('contact-info-list');
+      if (il) il.innerHTML = c.contact.items.map(item => '<div class="contact-info-item"><div class="contact-icon">' + (ICONS[item.icon] || '') + '</div><div class="contact-details"><h4>' + item.label + '</h4><p>' + item.value + '</p></div></div>').join('');
+      const fn = document.getElementById('form-name');    if (fn) fn.placeholder = c.contact.form.name;
+      const fe = document.getElementById('form-email');   if (fe) fe.placeholder = c.contact.form.email;
+      const fs = document.getElementById('form-subject'); if (fs) fs.placeholder = c.contact.form.subject;
+      const fm = document.getElementById('form-message'); if (fm) fm.placeholder = c.contact.form.message;
+      const fb = document.getElementById('form-submit');  if (fb) fb.textContent  = c.contact.form.submit;
     }
 
-    // Reorder sections based on view
+    // ─── SECTION REORDER ─────────────────────────────────────────────────────
     function reorderSections(animate) {
       const order = currentView === 'tech' ? TECH_ORDER : CREATIVE_ORDER;
-      
-      if (animate) {
-        sectionsContainer.style.opacity = '0';
-        setTimeout(() => {
-          doReorder(order);
-          sectionsContainer.style.opacity = '1';
-        }, 300);
-      } else {
-        doReorder(order);
-      }
+      if (animate) { sectionsContainer.style.opacity = '0'; setTimeout(() => { doReorder(order); sectionsContainer.style.opacity = '1'; }, 300); }
+      else doReorder(order);
     }
-
     function doReorder(order) {
-      order.forEach(id => {
-        const sec = document.getElementById(id);
-        if (sec) sectionsContainer.appendChild(sec);
-      });
-      // Update nav order as well to match
-      const navLiMap = {};
-      navMenu.querySelectorAll('li').forEach(li => {
-        const href = li.querySelector('a').getAttribute('href').replace('#', '');
-        navLiMap[href] = li;
-      });
-      order.forEach(id => {
-        if (navLiMap[id]) navMenu.appendChild(navLiMap[id]);
-      });
+      order.forEach(id => { const s = document.getElementById(id); if (s) sectionsContainer.appendChild(s); });
+      const nm = {}; navMenu.querySelectorAll('li').forEach(li => { nm[li.querySelector('a').getAttribute('href').replace('#','')] = li; });
+      order.forEach(id => { if (nm[id]) navMenu.appendChild(nm[id]); });
     }
 
-    // Typing Animation
+    // ─── TYPEWRITER ───────────────────────────────────────────────────────────
     function typeWriter() {
+      if (!typedTextEl) return;
       const c = CONTENT[currentLang];
       const roles = currentView === 'tech' ? c.hero.techRoles : c.hero.creativeRoles;
-      const currentRole = roles[typeRoleIndex % roles.length];
-      
-      if (isDeleting) {
-        typedTextEl.textContent = currentRole.substring(0, typeCharIndex - 1);
-        typeCharIndex--;
-      } else {
-        typedTextEl.textContent = currentRole.substring(0, typeCharIndex + 1);
-        typeCharIndex++;
-      }
-
+      const role = roles[typeRoleIndex % roles.length];
+      typedTextEl.textContent = isDeleting ? role.substring(0, typeCharIndex - 1) : role.substring(0, typeCharIndex + 1);
+      if (isDeleting) typeCharIndex--; else typeCharIndex++;
       let speed = isDeleting ? 30 : 50;
-      
-      if (!isDeleting && typeCharIndex === currentRole.length) {
-        speed = 2000;
-        isDeleting = true;
-      } else if (isDeleting && typeCharIndex === 0) {
-        isDeleting = false;
-        typeRoleIndex++;
-        speed = 500;
-      }
-      
+      if (!isDeleting && typeCharIndex === role.length) { speed = 2000; isDeleting = true; }
+      else if (isDeleting && typeCharIndex === 0) { isDeleting = false; typeRoleIndex++; speed = 500; }
       typeTimeout = setTimeout(typeWriter, speed);
     }
 
-    // Setup event listeners
+    // ─── SETUP ───────────────────────────────────────────────────────────────
     function setupToggles() {
-      document.querySelectorAll('#view-toggle .pill-btn').forEach(btn => {
-        btn.addEventListener('click', () => setView(btn.dataset.val));
-      });
-      document.querySelectorAll('#lang-toggle .pill-btn').forEach(btn => {
-        btn.addEventListener('click', () => setLang(btn.dataset.val));
-      });
+      document.querySelectorAll('#view-toggle .pill-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.val)));
+      document.querySelectorAll('#lang-toggle .pill-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.val)));
     }
-
     function setupMobileMenu() {
-      document.getElementById('hamburger').addEventListener('click', () => {
-        document.getElementById('sidebar').classList.toggle('open');
-      });
+      const h = document.getElementById('hamburger'); if (h) h.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
     }
-
     function setupPortfolioTabs() {
       document.querySelectorAll('.portfolio-tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-          document.querySelectorAll('.portfolio-tab').forEach(t => t.classList.remove('active'));
-          e.target.classList.add('active');
-          const t = e.target.dataset.tab;
-          document.getElementById('portfolio-tech-content').style.display = t === 'tech' ? 'block' : 'none';
-          document.getElementById('portfolio-creative-content').style.display = t === 'creative' ? 'block' : 'none';
+        tab.addEventListener('click', e => {
+          document.querySelectorAll('.portfolio-tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active');
+          const tv = e.target.dataset.tab;
+          const te = document.getElementById('portfolio-tech-content'); if (te) te.style.display = tv === 'tech' ? 'block' : 'none';
+          const ce = document.getElementById('portfolio-creative-content'); if (ce) ce.style.display = tv === 'creative' ? 'block' : 'none';
         });
       });
     }
-
     function setupContactForm() {
-      const form = document.getElementById('contact-form');
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('form-submit');
-        const c = CONTENT[currentLang];
-        btn.textContent = '...';
-        setTimeout(() => {
-          btn.textContent = c.contact.form.submit;
-          form.reset();
-          const success = document.getElementById('form-success');
-          success.textContent = c.contact.form.success;
-          success.style.display = 'block';
-          setTimeout(() => success.style.display = 'none', 5000);
-        }, 1000);
+      const form = document.getElementById('contact-form'); if (!form) return;
+      form.addEventListener('submit', e => {
+        e.preventDefault(); const btn = document.getElementById('form-submit'); const c = CONTENT[currentLang];
+        if (btn) btn.textContent = '...';
+        setTimeout(() => { if (btn) btn.textContent = c.contact.form.submit; form.reset(); const s = document.getElementById('form-success'); if (s) { s.textContent = c.contact.form.success; s.style.display = 'block'; setTimeout(() => s.style.display = 'none', 5000); } }, 1000);
       });
     }
-
-    // Scroll Spy & Skill Animation
     function setupScrollSpy() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            navMenu.querySelectorAll('a').forEach(a => {
-              a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
-            });
-            if (id === 'skills') triggerSkillAnimation();
-          }
-        });
-      }, { threshold: 0.3 });
-      
-      document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+      const obs = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { const id = entry.target.id; navMenu.querySelectorAll('a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id)); if (id === 'skills') triggerSkillAnimation(); } }); }, { threshold: 0.3 });
+      document.querySelectorAll('.section').forEach(s => obs.observe(s));
     }
-
-    function triggerSkillAnimation() {
-      document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-        bar.style.width = bar.dataset.level;
+    function triggerSkillAnimation() { document.querySelectorAll('.skill-bar-fill').forEach(b => { b.style.width = b.dataset.level; }); }
+    function setupFilmstripDrag() {
+      document.querySelectorAll('.filmstrip, .photo-strip').forEach(el => {
+        if (el._dragSetup) return; el._dragSetup = true;
+        let isDown = false, startX, scrollLeft;
+        el.addEventListener('mousedown', e => { isDown = true; el.style.cursor = 'grabbing'; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+        el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+        el.addEventListener('mouseup', () => { isDown = false; el.style.cursor = 'grab'; });
+        el.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.5; });
       });
     }
+    function openVideoModal(src, title) {
+      const m = document.getElementById('media-modal'), v = document.getElementById('modal-video');
+      if (!m || !v) return; v.src = src; m.style.display = 'flex'; document.body.style.overflow = 'hidden'; v.play().catch(() => {});
+    }
+    function closeVideoModal() {
+      const m = document.getElementById('media-modal'), v = document.getElementById('modal-video');
+      if (!m || !v) return; v.pause(); v.src = ''; m.style.display = 'none'; document.body.style.overflow = '';
+    }
+    function dcApplyLut(lut) { dcState.lut = lut; const v = document.getElementById('dc-video'); if (v) v.style.filter = LUT_FILTERS[lut] || 'none'; document.querySelectorAll('[data-lut]').forEach(b => b.classList.toggle('selected', b.dataset.lut === lut)); }
+    function dcApplyAR(ar) { dcState.ar = ar; const top = document.getElementById('dc-lb-top'), bot = document.getElementById('dc-lb-bot'), h = ar === '2.35:1' ? '12%' : '0'; if (top) top.style.height = h; if (bot) bot.style.height = h; document.querySelectorAll('[data-ar]').forEach(b => b.classList.toggle('selected', b.dataset.ar === ar)); }
+    function dcCheckAnswer() {
+      const ok = dcState.lut === DC_ANSWER.lut && dcState.ar === DC_ANSWER.ar, r = document.getElementById('dc-result'); if (!r) return;
+      document.getElementById('dc-result-icon').textContent = ok ? '\ud83c\udfac' : '\ud83c\udfa5';
+      document.getElementById('dc-result-text').textContent = ok ? (currentLang === 'fr' ? 'Approuv\u00e9 par le Directeur !' : 'Director Approved!') : (currentLang === 'fr' ? 'Pas tout \u00e0 fait... R\u00e9essayez.' : 'Not quite... Try again.');
+      r.style.borderColor = ok ? 'var(--accent-color)' : '#ef4444'; r.classList.add('show'); setTimeout(() => r.classList.remove('show'), 3000);
+    }
+    function dcReset() { dcState = {lut:null,ar:null}; const v=document.getElementById('dc-video'); if(v) v.style.filter='none'; const top=document.getElementById('dc-lb-top'),bot=document.getElementById('dc-lb-bot'); if(top) top.style.height='0'; if(bot) bot.style.height='0'; document.querySelectorAll('.dc-opt').forEach(b=>b.classList.remove('selected')); const r=document.getElementById('dc-result'); if(r) r.classList.remove('show'); }
+    function renderDCLabels() {
+      const fr = currentLang === 'fr', g = id => document.getElementById(id); if (!g('dc-label-text')) return;
+      g('dc-label-text').textContent = fr ? 'Exp\u00e9rience Interactive' : 'Interactive Experience';
+      g('dc-title-text').textContent = fr ? 'La Coupe du Directeur' : "The Director's Cut";
+      g('dc-subtitle-text').textContent = fr ? 'Vous \u00eates le Directeur Cr\u00e9atif. R\u00e9glez la colorim\u00e9trie et le format pour correspondre au brief.' : "You're the Creative Director. Set the grade and format to match the client brief.";
+      g('dc-brief-text').textContent = fr ? 'Publicit\u00e9 de Luxe' : 'Luxury Brand Commercial';
+      g('dc-submit-btn').textContent = fr ? 'Valider' : 'Submit Cut';
+      g('dc-reset-btn').textContent = fr ? 'R\u00e9initialiser' : 'Reset';
+      g('dc-lut-label').textContent = fr ? 'Colorim\u00e9trie' : 'Color Grade';
+      g('dc-ar-label').textContent = fr ? "Format d'image" : 'Aspect Ratio';
+      const ll = fr ? ['Brut','Cin\u00e9matique','N&B Drama','Neon Nuit'] : ['Raw','Cinematic','B&W Drama','Neon Night'];
+      document.querySelectorAll('[data-lut]').forEach((b,i) => { if(ll[i]) b.textContent = ll[i]; });
+    }
+    function setupDirectorsCut() {
+      document.querySelectorAll('[data-lut]').forEach(b => b.addEventListener('click', () => dcApplyLut(b.dataset.lut)));
+      document.querySelectorAll('[data-ar]').forEach(b => b.addEventListener('click', () => dcApplyAR(b.dataset.ar)));
+      const cb = document.getElementById('modal-close-btn'); if (cb) cb.addEventListener('click', closeVideoModal);
+      const mm = document.getElementById('media-modal'); if (mm) mm.addEventListener('click', e => { if(e.target===mm) closeVideoModal(); });
+    }
 
-    // Start
     document.addEventListener('DOMContentLoaded', init);
   </script>
 <div id="media-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(12px);">
