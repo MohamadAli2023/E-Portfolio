@@ -682,16 +682,7 @@ html[data-view="creative"] body::before {
 
   <script>
     const ICONS = {
-  linkedin: `
-      <a href="${p.link || \'#\'}" target="_blank" class="portfolio-card">
-        <div class="card-content">
-          <div class="card-icon">${ICONS[p.icon] || \'\'}</div>
-          <h3 class="card-title">${p.title}</h3>
-          <p class="card-desc">${p.desc}</p>
-          <div class="card-tags">${p.tags.map(t => `<span class="card-tag">${t}</span>`).join(\'\')}</div>
-        </div>
-      </a>
-    `,
+  linkedin: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
   github: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
   instagram: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
   facebook: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
@@ -979,12 +970,6 @@ const CONTENT = {
           ],
           photos: [
             { title: 'Carat Boutique', file: 'Carat1.jpg', tags: ['Commercial', 'Produit'] },
-            { title: 'Campagne BERGHOF', file: 'BERGHOF.png', tags: ['Marque', 'Corporate'] },
-            { title: 'BERGHOF #2', file: 'BERGHOF2.png', tags: ['Marque', 'Corporate'] },
-            { title: 'Crazynuts', file: 'CRAZY NUTS EDITED.jpg', tags: ['Produit', 'Commercial'] },
-            { title: 'Najat Boutique', file: 'Najat Boutique.jpg', tags: ['Portrait', 'Marque'] },
-            { title: 'Tiara B', file: 'Tiara_B1.JPG', tags: ['Portrait', 'Événement'] },
-            { title: 'Vida360', file: 'vida360.png', tags: ['Marque', 'Digital'] },
           ],
           videos: [
             { title: 'Crazy Video', file: 'Crazyvideo.mp4', category: 'Commercial de Marque', tags: ['Commercial', 'Marque'] },
@@ -1354,24 +1339,21 @@ function renderAll() {
         heroCta.href = '#portfolio';
       }
       
-      // Typewriter roles
-      roles = currentView === 'tech' ? c.hero.techRoles : c.hero.creativeRoles;
-      roleIndex = 0; charIndex = 0; isDeleting = false;
-      const typedEl = document.getElementById('typed-text');
-      if (typedEl) typedEl.textContent = '';
-      
-      // Update About
+      // Update About bio
       const bioEl = document.getElementById('about-bio');
       if (bioEl) bioEl.textContent = currentView === 'tech' ? c.about.techBio : c.about.creativeBio;
       
       renderServicesSection();
-      renderSkills();
       renderPortfolio();
       renderCreativePortfolio();
-}</span><span>${item.value}</span></li>`
+
+      // Render about info list
+      const c = CONTENT[currentLang];
+      document.getElementById('about-info-list').innerHTML = c.about.items.map(item =>
+        `<li><span class="info-label">${item.label}</span><span>${item.value}</span></li>`
       ).join('');
-      
-      document.getElementById('about-lang-list').innerHTML = c.about.languages.map(lang => 
+
+      document.getElementById('about-lang-list').innerHTML = c.about.languages.map(lang =>
         `<div class="lang-item">
           <div class="lang-item-header"><strong>${lang.name}</strong><span class="lang-level">${lang.level}</span></div>
         </div>`
@@ -1390,19 +1372,8 @@ function renderAll() {
           `).join('')}
         </div>
       `).join('');
-      
-      // Trigger skill animation if visible
-      setTimeout(triggerSkillAnimation, 100);
 
-      // Services
-      const services = currentView === 'tech' ? c.services.tech : c.services.creative;
-      document.getElementById('services-grid').innerHTML = services.map(s => `
-        <div class="service-card">
-          <div class="service-icon">${s.icon}</div>
-          <h3 class="service-title">${s.title}</h3>
-          <p class="service-desc">${s.desc}</p>
-        </div>
-      `).join('');
+      setTimeout(triggerSkillAnimation, 100);
     }
 
     // Render static complex sections
@@ -1462,11 +1433,11 @@ function renderAll() {
 
     function renderPortfolio() {
       const c = CONTENT[currentLang];
-      
+
       document.getElementById('tech-projects-grid').innerHTML = c.portfolio.techProjects.map(p => `
         <div class="portfolio-card">
           <div class="card-content">
-            <div class="card-icon">${p.icon}</div>
+            <div class="card-icon" style="color:var(--accent-color);">${ICONS[p.icon] || ''}</div>
             <h4 class="card-title">${p.title}</h4>
             <p class="card-desc">${p.desc}</p>
             <div class="card-tags">
@@ -1477,33 +1448,7 @@ function renderAll() {
         </div>
       `).join('');
 
-      document.getElementById('creative-photo-grid').innerHTML = c.portfolio.photos.map(p => `
-        <div class="photo-item">
-          <img src="assets/img/portfolio/${p.file}" alt="${p.title}" loading="lazy">
-          <div class="photo-overlay">
-            <h4 class="photo-title">${p.title}</h4>
-            <div class="card-tags" style="margin-top:10px;">
-              ${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('creative-video-grid').innerHTML = c.portfolio.videos.map(v => `
-        <div class="video-item">
-          <div class="video-container">
-            <video controls preload="metadata">
-              <source src="assets/img/portfolio/${v.file}" type="video/mp4">
-            </video>
-          </div>
-          <div class="video-info">
-            <h4 class="card-title" style="margin-bottom:5px;">${v.title}</h4>
-            <div class="card-tags">
-              ${v.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
-            </div>
-          </div>
-        </div>
-      `).join('');
+      renderCreativePortfolio();
     }
 
     function renderCertifications() {
@@ -1517,14 +1462,7 @@ function renderAll() {
       </div>
     `).join('');
   }
-}</div>
-          <div class="cert-info">
-            <h4>${cert.title}</h4>
-            <p>${cert.issuer} • ${cert.date}</p>
-          </div>
-        </div>
-      `).join('');
-    }
+}
 
     function renderTestimonials() {
       const c = CONTENT[currentLang];
@@ -1548,7 +1486,7 @@ function renderAll() {
       
       document.getElementById('contact-info-list').innerHTML = c.contact.items.map(item => `
         <div class="contact-info-item">
-          <div class="contact-icon">${item.icon}</div>
+          <div class="contact-icon">${ICONS[item.icon] || ''}</div>
           <div class="contact-details">
             <h4>${item.label}</h4>
             <p>${item.value}</p>
