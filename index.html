@@ -86,17 +86,29 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 60px;
-      background: rgba(17, 17, 24, 0.9);
+      background: rgba(17, 17, 24, 0.95);
       backdrop-filter: blur(10px);
       z-index: 99;
       border-bottom: 1px solid var(--border-color);
+      flex-direction: column;
+      padding: 0;
+    }
+    #mobile-header-top {
+      height: 56px;
+      display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 20px;
     }
     #mobile-header .logo { font-family: var(--font-serif); font-size: 1.2rem; }
     #hamburger { font-size: 1.5rem; }
+    #mobile-toggles {
+      display: flex;
+      gap: 10px;
+      padding: 8px 16px 10px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    #mobile-toggles .pill-group { margin-bottom: 0; flex: 1; }
 
     /* Sidebar */
     #sidebar {
@@ -164,10 +176,10 @@
       margin-left: var(--sidebar-width);
       position: relative;
     }
-    .section { padding: 100px 40px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+    .section { padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; }
     .section-inner { max-width: 960px; margin: 0 auto; width: 100%; }
     
-    .section-header { margin-bottom: 50px; }
+    .section-header { margin-bottom: 36px; }
     .section-label { font-family: var(--font-mono); color: var(--accent-color); font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
     .section-title { font-family: var(--font-serif); font-size: 3rem; }
 
@@ -303,7 +315,8 @@
       #sidebar.open { transform: translateX(0); }
       #main { margin-left: 0; }
       #mobile-header { display: flex; }
-      .section { padding: 100px 20px 60px; }
+      #main { padding-top: 104px; }
+      .section { padding: 70px 20px 40px; }
       
       .about-content, .skills-grid, .services-grid, .cert-grid, .contact-wrap { grid-template-columns: 1fr; }
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
@@ -442,8 +455,20 @@ html[data-view="creative"] body::before {
 <body>
 
   <div id="mobile-header">
-    <div class="logo">MHA</div>
-    <button id="hamburger">☰</button>
+    <div id="mobile-header-top">
+      <div class="logo">Mohamad Ali</div>
+      <button id="hamburger">☰</button>
+    </div>
+    <div id="mobile-toggles">
+      <div class="pill-group" id="view-toggle-mobile">
+        <button class="pill-btn active" data-val="tech">Tech</button>
+        <button class="pill-btn" data-val="creative">Creative</button>
+      </div>
+      <div class="pill-group" id="lang-toggle-mobile">
+        <button class="pill-btn active" data-val="en">EN</button>
+        <button class="pill-btn" data-val="fr">FR</button>
+      </div>
+    </div>
   </div>
 
   <div id="app">
@@ -1220,8 +1245,8 @@ html[data-view="creative"] body::before {
 
     // ─── SETUP ───────────────────────────────────────────────────────────────
     function setupToggles() {
-      document.querySelectorAll('#view-toggle .pill-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.val)));
-      document.querySelectorAll('#lang-toggle .pill-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.val)));
+      document.querySelectorAll('#view-toggle .pill-btn, #view-toggle-mobile .pill-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.val)));
+      document.querySelectorAll('#lang-toggle .pill-btn, #lang-toggle-mobile .pill-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.val)));
     }
     function setupMobileMenu() {
       const h = document.getElementById('hamburger'); if (h) h.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
