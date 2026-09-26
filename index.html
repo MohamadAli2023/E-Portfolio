@@ -314,7 +314,7 @@
       #sidebar { transform: translateX(-100%); }
       #sidebar.open { transform: translateX(0); }
       #main { margin-left: 0; }
-      #mobile-header { display: flex; }
+      #mobile-header { display: flex; flex-direction: column; }
       #main { padding-top: 104px; }
       .section { padding: 70px 20px 40px; }
       
@@ -1084,7 +1084,7 @@ html[data-view="creative"] body::before {
       if (currentView === v) return;
       currentView = v;
       htmlEl.setAttribute('data-view', v); updateUrl();
-      document.querySelectorAll('#view-toggle .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === v));
+      document.querySelectorAll('#view-toggle .pill-btn, #view-toggle-mobile .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === v));
       const c = CONTENT[currentLang];
       const heroCta = document.getElementById('hero-cta-primary');
       if (heroCta) heroCta.innerText = v === 'tech' ? c.hero.techCta : c.hero.creativeCta;
@@ -1098,7 +1098,7 @@ html[data-view="creative"] body::before {
     function setLang(l) {
       if (currentLang === l) return;
       currentLang = l; localStorage.setItem('portfolio-lang', l); updateUrl();
-      document.querySelectorAll('#lang-toggle .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === l));
+      document.querySelectorAll('#lang-toggle .pill-btn, #lang-toggle-mobile .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === l));
       renderAll();
     }
 
