@@ -104,26 +104,11 @@
     #hamburger { font-size: 1.5rem; }
     #mobile-toggles {
       display: flex;
-      gap: 6px;
-      padding: 6px 10px 8px;
+      gap: 10px;
+      padding: 8px 16px 10px;
       border-top: 1px solid rgba(255,255,255,0.05);
-      width: 100%;
     }
-    #mobile-toggles .pill-group { 
-      margin-bottom: 0; 
-      flex: 1; 
-      min-width: 0;
-      padding: 3px;
-    }
-    #mobile-toggles .pill-btn {
-      padding: 4px 2px;
-      font-size: 0.75rem;
-      border-radius: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: -0.2px;
-    }
+    #mobile-toggles .pill-group { margin-bottom: 0; flex: 1; }
 
     /* Sidebar */
     #sidebar {
@@ -476,12 +461,12 @@ html[data-view="creative"] body::before {
     </div>
     <div id="mobile-toggles">
       <div class="pill-group" id="view-toggle-mobile">
-        <button class="pill-btn active" data-val="tech" data-i18n="viewToggle.tech">Tech</button>
-        <button class="pill-btn" data-val="creative" data-i18n="viewToggle.creative">Creative</button>
+        <button class="pill-btn active" data-val="tech">Tech</button>
+        <button class="pill-btn" data-val="creative">Creative</button>
       </div>
       <div class="pill-group" id="lang-toggle-mobile">
-        <button class="pill-btn active" data-val="en" data-i18n="langToggle.en">EN</button>
-        <button class="pill-btn" data-val="fr" data-i18n="langToggle.fr">FR</button>
+        <button class="pill-btn active" data-val="en">EN</button>
+        <button class="pill-btn" data-val="fr">FR</button>
       </div>
     </div>
   </div>
@@ -1091,7 +1076,7 @@ html[data-view="creative"] body::before {
       updateUrl();
       htmlEl.setAttribute('data-view', currentView);
       setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut();
-      renderAll(); reorderSections(); setupScrollSpy();
+      renderAll(); reorderSections(false); setupScrollSpy();
     }
 
     function updateUrl() {
@@ -1241,14 +1226,8 @@ html[data-view="creative"] body::before {
     // ─── SECTION REORDER ─────────────────────────────────────────────────────
     function reorderSections(animate) {
       const order = currentView === 'tech' ? TECH_ORDER : CREATIVE_ORDER;
-      if (animate) {
-        setTimeout(() => {
-          doReorder(order);
-          window.scrollTo(0, 0);
-        }, 50);
-      } else {
-        doReorder(order);
-      }
+      if (animate) { sectionsContainer.style.opacity = '0'; setTimeout(() => { doReorder(order); sectionsContainer.style.opacity = '1'; }, 300); }
+      else doReorder(order);
     }
     function doReorder(order) {
       order.forEach(id => { const s = document.getElementById(id); if (s) sectionsContainer.appendChild(s); });
