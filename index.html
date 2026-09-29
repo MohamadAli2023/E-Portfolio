@@ -1111,8 +1111,7 @@ html[data-view="creative"] body::before {
       if (heroCta) heroCta.innerText = v === 'tech' ? c.hero.techCta : c.hero.creativeCta;
       clearTimeout(typeTimeout); typeTimeout = null; typeRoleIndex = 0; typeCharIndex = 0; isDeleting = false;
       if (typedTextEl) typedTextEl.textContent = '';
-      typeWriter(); reorderSections(); renderViewSpecific();
-      window.scrollTo(0, 0);
+      typeWriter(); reorderSections(true); renderViewSpecific();
       const tab = document.querySelector('.portfolio-tab[data-tab="' + v + '"]');
       if (tab) tab.click();
     }
@@ -1240,9 +1239,16 @@ html[data-view="creative"] body::before {
     }
 
     // ─── SECTION REORDER ─────────────────────────────────────────────────────
-    function reorderSections() {
+    function reorderSections(animate) {
       const order = currentView === 'tech' ? TECH_ORDER : CREATIVE_ORDER;
-      doReorder(order);
+      if (animate) {
+        setTimeout(() => {
+          doReorder(order);
+          window.scrollTo(0, 0);
+        }, 50);
+      } else {
+        doReorder(order);
+      }
     }
     function doReorder(order) {
       order.forEach(id => { const s = document.getElementById(id); if (s) sectionsContainer.appendChild(s); });
