@@ -1091,7 +1091,7 @@ html[data-view="creative"] body::before {
       updateUrl();
       htmlEl.setAttribute('data-view', currentView);
       setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut();
-      renderAll(); reorderSections(false); setupScrollSpy();
+      renderAll(); reorderSections(); setupScrollSpy();
     }
 
     function updateUrl() {
@@ -1111,7 +1111,8 @@ html[data-view="creative"] body::before {
       if (heroCta) heroCta.innerText = v === 'tech' ? c.hero.techCta : c.hero.creativeCta;
       clearTimeout(typeTimeout); typeTimeout = null; typeRoleIndex = 0; typeCharIndex = 0; isDeleting = false;
       if (typedTextEl) typedTextEl.textContent = '';
-      typeWriter(); reorderSections(true); renderViewSpecific();
+      typeWriter(); reorderSections(); renderViewSpecific();
+      window.scrollTo(0, 0);
       const tab = document.querySelector('.portfolio-tab[data-tab="' + v + '"]');
       if (tab) tab.click();
     }
@@ -1239,10 +1240,9 @@ html[data-view="creative"] body::before {
     }
 
     // ─── SECTION REORDER ─────────────────────────────────────────────────────
-    function reorderSections(animate) {
+    function reorderSections() {
       const order = currentView === 'tech' ? TECH_ORDER : CREATIVE_ORDER;
-      if (animate) { sectionsContainer.style.opacity = '0'; setTimeout(() => { doReorder(order); sectionsContainer.style.opacity = '1'; }, 300); }
-      else doReorder(order);
+      doReorder(order);
     }
     function doReorder(order) {
       order.forEach(id => { const s = document.getElementById(id); if (s) sectionsContainer.appendChild(s); });
