@@ -88,7 +88,7 @@
       top: 0; left: 0; right: 0;
       background: rgba(17, 17, 24, 0.95);
       backdrop-filter: blur(10px);
-      z-index: 99;
+      z-index: 200;
       border-bottom: 1px solid var(--border-color);
       flex-direction: column;
       padding: 0;
@@ -107,8 +107,11 @@
       gap: 10px;
       padding: 8px 16px 10px;
       border-top: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 201;
     }
     #mobile-toggles .pill-group { margin-bottom: 0; flex: 1; }
+    #mobile-toggles .pill-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
 
     /* Sidebar */
     #sidebar {
@@ -1226,8 +1229,7 @@ html[data-view="creative"] body::before {
     // ─── SECTION REORDER ─────────────────────────────────────────────────────
     function reorderSections(animate) {
       const order = currentView === 'tech' ? TECH_ORDER : CREATIVE_ORDER;
-      if (animate) { sectionsContainer.style.opacity = '0'; setTimeout(() => { doReorder(order); sectionsContainer.style.opacity = '1'; }, 300); }
-      else doReorder(order);
+      doReorder(order);
     }
     function doReorder(order) {
       order.forEach(id => { const s = document.getElementById(id); if (s) sectionsContainer.appendChild(s); });
