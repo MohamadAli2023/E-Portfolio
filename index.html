@@ -314,8 +314,10 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
-      #sidebar { transform: translateX(-100%); top: 104px; box-shadow: 4px 0 20px rgba(0,0,0,0.4); }
+      #sidebar { transform: translateX(-100%); top: 104px; bottom: 0; box-shadow: 4px 0 24px rgba(0,0,0,0.5); overflow-y: auto; }
       #sidebar.open { transform: translateX(0); }
+      #sidebar-overlay { display: none; position: fixed; inset: 0; top: 104px; background: rgba(0,0,0,0.6); z-index: 99; backdrop-filter: blur(2px); }
+      #sidebar-overlay.open { display: block; }
       #main { margin-left: 0; }
       #mobile-header { display: flex; flex-direction: column; }
       #main { padding-top: 104px; }
@@ -570,6 +572,7 @@ html[data-view="creative"] body::before {
 </head>
 <body>
 
+  <div id="sidebar-overlay"></div>
   <div id="mobile-header">
     <div id="mobile-header-top">
       <div class="logo">Mohamad Ali</div>
@@ -1387,7 +1390,25 @@ html[data-view="creative"] body::before {
       document.querySelectorAll('#lang-toggle .pill-btn, #lang-toggle-mobile .pill-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.val)));
     }
     function setupMobileMenu() {
-      const h = document.getElementById('hamburger'); if (h) h.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      function openSidebar() {
+        sidebar.classList.add('open');
+        if (overlay) overlay.classList.add('open');
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (overlay) overlay.classList.remove('open');
+      }
+      const h = document.getElementById('hamburger');
+      if (h) h.addEventListener('click', function() {
+        if (sidebar.classList.contains('open')) { closeSidebar(); } else { openSidebar(); }
+      });
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+      // Close sidebar on nav link click (mobile UX)
+      document.querySelectorAll('#nav-menu a').forEach(function(a) {
+        a.addEventListener('click', closeSidebar);
+      });
     }
     function setupPortfolioTabs() {
       document.querySelectorAll('.portfolio-tab').forEach(tab => {
