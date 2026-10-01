@@ -1,0 +1,362 @@
+{
+  "videos": [
+    {
+      "id": "paid_ad_jewellery_reel",
+      "title": "Jewellery Brand \u2014 Instagram Ad Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/paid_ad_jewellery_reel.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/paid_ad_jewellery_reel.jpg",
+      "categories": [
+        "Paid Ads",
+        "Social Media Shorts"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "paid_ad_fashion_commercial",
+      "title": "Fashion Brand \u2014 Short-Form Ad",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/paid_ad_fashion_commercial.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/paid_ad_fashion_commercial.jpg",
+      "categories": [
+        "Paid Ads",
+        "Social Media Shorts"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "paid_ad_steel_brand",
+      "title": "Industrial Brand \u2014 Product Commercial",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/paid_ad_steel_brand.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/paid_ad_steel_brand.jpg",
+      "categories": [
+        "Paid Ads",
+        "Corporate Promos"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "paid_ad_accessories_brand",
+      "title": "Accessories Brand \u2014 Reels Ad",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/paid_ad_accessories_brand.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/paid_ad_accessories_brand.jpg",
+      "categories": [
+        "Paid Ads",
+        "Social Media Shorts"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "social_artisan_crafts",
+      "title": "Artisan Brand \u2014 Social Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/social_artisan_crafts.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/social_artisan_crafts.jpg",
+      "categories": [
+        "Social Media Shorts"
+      ],
+      "insights": null
+    },
+    {
+      "id": "social_skincare_collage",
+      "title": "Skincare Brand \u2014 Product Showcase Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/social_skincare_collage.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/social_skincare_collage.jpg",
+      "categories": [
+        "Social Media Shorts",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "social_logo_animation",
+      "title": "Brand Identity \u2014 Animated Logo Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/social_logo_animation.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/social_logo_animation.jpg",
+      "categories": [
+        "Social Media Shorts",
+        "Websites & Mobile Apps"
+      ],
+      "insights": null
+    },
+    {
+      "id": "social_vr_experience",
+      "title": "Tech & VR Product \u2014 Social Showcase",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/social_vr_experience.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/social_vr_experience.jpg",
+      "categories": [
+        "Social Media Shorts"
+      ],
+      "insights": null
+    },
+    {
+      "id": "social_multilingual_brand",
+      "title": "SaaS / Tech Platform \u2014 Bilingual Campaign Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/social_multilingual_brand.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/social_multilingual_brand.jpg",
+      "categories": [
+        "Social Media Shorts",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "web_app_onboarding",
+      "title": "AI App \u2014 App Store Onboarding Video",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/web_app_onboarding.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/web_app_onboarding.jpg",
+      "categories": [
+        "Websites & Mobile Apps",
+        "AI Videos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "web_hero_luxury_timepiece",
+      "title": "Luxury E-Commerce \u2014 Website Hero Video",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/web_hero_luxury_timepiece.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/web_hero_luxury_timepiece.jpg",
+      "categories": [
+        "Websites & Mobile Apps"
+      ],
+      "insights": null
+    },
+    {
+      "id": "web_hero_luxury_2",
+      "title": "Luxury E-Commerce \u2014 Website Header Loop",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/web_hero_luxury_2.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/web_hero_luxury_2.jpg",
+      "categories": [
+        "Websites & Mobile Apps"
+      ],
+      "insights": null
+    },
+    {
+      "id": "corp_saas_platform_en",
+      "title": "Healthcare SaaS \u2014 Corporate Platform Demo",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/corp_saas_platform_en.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/corp_saas_platform_en.jpg",
+      "categories": [
+        "Corporate Promos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "corp_tech_company_reel",
+      "title": "Tech Company \u2014 Brand Promo Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/corp_tech_company_reel.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/corp_tech_company_reel.jpg",
+      "categories": [
+        "Corporate Promos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "corp_ai_platform",
+      "title": "AI Marketing Platform \u2014 Corporate Explainer",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/corp_ai_platform.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/corp_ai_platform.jpg",
+      "categories": [
+        "Corporate Promos",
+        "AI Videos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "corp_journey_brand",
+      "title": "FinTech Platform \u2014 Brand Launch Video",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/corp_journey_brand.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/corp_journey_brand.jpg",
+      "categories": [
+        "Corporate Promos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "corp_realestate_showcase",
+      "title": "Real Estate Platform \u2014 Property Showcase Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/corp_realestate_showcase.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/corp_realestate_showcase.jpg",
+      "categories": [
+        "Corporate Promos"
+      ],
+      "insights": null
+    },
+    {
+      "id": "event_restaurant_grand_opening",
+      "title": "Restaurant Venue \u2014 Grand Opening Aftermovie",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/event_restaurant_grand_opening.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/event_restaurant_grand_opening.jpg",
+      "categories": [
+        "Events"
+      ],
+      "insights": null
+    },
+    {
+      "id": "event_restaurant_atmosphere",
+      "title": "Restaurant Venue \u2014 Atmosphere & Dining Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/event_restaurant_atmosphere.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/event_restaurant_atmosphere.jpg",
+      "categories": [
+        "Events",
+        "Food Videography"
+      ],
+      "insights": null
+    },
+    {
+      "id": "food_crepes_closeup",
+      "title": "Food Close-Up \u2014 Artisan Cr\u00eape Preparation",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/food_crepes_closeup.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/food_crepes_closeup.jpg",
+      "categories": [
+        "Food Videography",
+        "Social Media Shorts"
+      ],
+      "insights": null
+    },
+    {
+      "id": "food_meat_grill",
+      "title": "Food Close-Up \u2014 Grilled Meat Plating",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/food_meat_grill.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/food_meat_grill.jpg",
+      "categories": [
+        "Food Videography",
+        "Social Media Shorts"
+      ],
+      "insights": null
+    },
+    {
+      "id": "food_fast_food_reel",
+      "title": "Fast-Casual Restaurant \u2014 Brand Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/food_fast_food_reel.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/food_fast_food_reel.jpg",
+      "categories": [
+        "Food Videography",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "ai_luxury_watch_ad",
+      "title": "Luxury Timepiece \u2014 AI-Generated Ad (Full Version)",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/ai_luxury_watch_ad.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/ai_luxury_watch_ad.jpg",
+      "categories": [
+        "AI Videos",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "ai_beauty_reel",
+      "title": "Beauty Brand \u2014 AI-Enhanced Campaign Reel",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/ai_beauty_reel.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/ai_beauty_reel.jpg",
+      "categories": [
+        "AI Videos",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "ai_mobile_operator_ad",
+      "title": "Telecom Operator \u2014 AI Video Ad (World Cup Edition)",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/ai_mobile_operator_ad.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/ai_mobile_operator_ad.jpg",
+      "categories": [
+        "AI Videos",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    },
+    {
+      "id": "ai_luxury_watch_ksa",
+      "title": "Luxury Brand \u2014 AI KSA Market Campaign",
+      "mediaType": "video",
+      "mediaSrc": "portfolio-selects/videos/ai_luxury_watch_ksa.mp4",
+      "thumbnail": "portfolio-selects/thumbnails/ai_luxury_watch_ksa.jpg",
+      "categories": [
+        "AI Videos",
+        "Paid Ads"
+      ],
+      "insights": {
+        "platform": "",
+        "context": "",
+        "stats": [],
+        "screenshot": ""
+      }
+    }
+  ]
+}
