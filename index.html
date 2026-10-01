@@ -453,7 +453,120 @@ html[data-view="creative"] body::before {
   .controls-area { position:sticky; bottom:0; background:var(--surface-color); border-top:1px solid rgba(255,255,255,0.06); }
   .dc-controls { grid-template-columns:1fr; }
 }
-</style>
+
+    /* ─── VIDEO GALLERY SECTION ─────────────────────────────────── */
+    #videography-gallery { display: none; }
+    .vg-filter-bar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 32px;
+    }
+    .vg-pill {
+      padding: 7px 18px; border-radius: 20px;
+      font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+      background: var(--elevated-color); color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      cursor: pointer; transition: var(--transition);
+      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    }
+    .vg-pill:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .vg-pill.active { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+    .vg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .vg-card {
+      background: var(--elevated-color); border-radius: 12px;
+      overflow: hidden; border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      cursor: pointer; position: relative;
+    }
+    .vg-card:hover { transform: translateY(-4px); border-color: var(--accent-color); }
+    .vg-thumb-wrap {
+      position: relative; padding-top: 56.25%; overflow: hidden; background: #08080E;
+    }
+    .vg-thumb-wrap.portrait { padding-top: 177.78%; }
+    .vg-thumb-wrap img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; transition: transform 0.3s ease;
+    }
+    .vg-card:hover .vg-thumb-wrap img { transform: scale(1.05); }
+    .vg-play-btn {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.35);
+      transition: background 0.2s ease;
+    }
+    .vg-card:hover .vg-play-btn { background: rgba(0,0,0,0.55); }
+    .vg-play-btn svg {
+      width: 52px; height: 52px; color: rgba(255,255,255,0.92);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+    .vg-results-badge {
+      position: absolute; bottom: 10px; right: 10px;
+      background: var(--accent-color); color: #fff;
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px; cursor: pointer;
+      z-index: 2; transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    }
+    .vg-results-badge:hover { background: var(--accent-hover, #4f46e5); }
+    .vg-info { padding: 14px 16px 16px; }
+    .vg-title { font-family: var(--font-serif); font-size: 1rem; color: #fff; margin-bottom: 8px; line-height: 1.35; }
+    .vg-cats { display: flex; flex-wrap: wrap; gap: 6px; }
+    .vg-cat { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-color);
+      background: var(--accent-light, rgba(99,102,241,0.12)); padding: 3px 8px; border-radius: 10px; }
+    /* Inline video player */
+    .vg-player-wrap {
+      position: absolute; inset: 0; background: #000; z-index: 3; display: none;
+      align-items: center; justify-content: center;
+    }
+    .vg-player-wrap.open { display: flex; }
+    .vg-player-wrap video { width: 100%; height: 100%; object-fit: contain; }
+    .vg-close-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(0,0,0,0.7); color: #fff; border: none;
+      border-radius: 50%; width: 32px; height: 32px; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 4;
+    }
+    /* Insights popup */
+    #vg-insights-popup {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8); z-index: 9998;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    #vg-insights-popup.open { display: flex; }
+    .vg-popup-box {
+      background: var(--surface-color); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 32px; max-width: 520px; width: 92%;
+      position: relative;
+    }
+    .vg-popup-platform {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-color);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+    }
+    .vg-popup-context {
+      font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;
+    }
+    .vg-popup-stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 16px;
+    }
+    .vg-stat { text-align: center; }
+    .vg-stat-value { font-family: var(--font-serif); font-size: 2rem; color: #fff; }
+    .vg-stat-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+    .vg-popup-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.08); border: none; color: #fff;
+      border-radius: 8px; padding: 6px 12px; cursor: pointer;
+      font-family: var(--font-sans); font-size: 0.85rem;
+    }
+    .vg-empty { text-align: center; color: var(--text-muted); padding: 60px 0; font-family: var(--font-mono); }
+    @media (max-width: 600px) {
+      .vg-grid { grid-template-columns: 1fr; }
+    }
+
+    </style>
 </head>
 <body>
 
@@ -594,6 +707,23 @@ html[data-view="creative"] body::before {
 
   <h3 class="skill-category-title" style="margin:40px 0 16px;" id="video-strip-heading">Videography</h3>
   <div class="filmstrip" id="creative-filmstrip"></div>
+
+
+  <!-- ── VIDEO GALLERY ──────────────────────────────────── -->
+  <div id="videography-gallery" style="margin-top:48px;">
+    <div class="vg-filter-bar" id="vg-filter-bar"></div>
+    <div class="vg-grid" id="vg-grid"></div>
+  </div>
+
+  <!-- Insights Popup -->
+  <div id="vg-insights-popup">
+    <div class="vg-popup-box">
+      <button class="vg-popup-close" onclick="document.getElementById('vg-insights-popup').classList.remove('open')">✕ Close</button>
+      <div class="vg-popup-platform" id="vg-popup-platform"></div>
+      <div class="vg-popup-context" id="vg-popup-context"></div>
+      <div class="vg-popup-stats" id="vg-popup-stats"></div>
+    </div>
+  </div>
 
   <div id="directors-cut">
     <p class="dc-label" id="dc-label-text">Interactive Experience</p>
@@ -1195,7 +1325,7 @@ html[data-view="creative"] body::before {
       if (ps) ps.innerHTML = c.portfolio.photos.map(p => '<div class="photo-strip-card"><img src="assets/img/portfolio/' + p.file + '" alt="' + p.title + '" loading="lazy"><div class="photo-strip-overlay"><div class="photo-strip-title">' + p.title + '</div></div></div>').join('');
       const fs2 = document.getElementById('creative-filmstrip');
       if (fs2) fs2.innerHTML = c.portfolio.videos.map(v => '<div class="film-card" onclick="openVideoModal(\'assets/img/portfolio/' + v.file.replace(/'/g, "\\'") + '\',\'' + v.title.replace(/'/g, "\\'") + '\')"><div class="film-thumb-placeholder">' + ICONS.film + '</div><div class="film-play-btn">' + ICONS.play + '</div><div class="film-info"><div class="film-category">' + v.category + '</div><div class="film-title">' + v.title + '</div><div class="film-tags">' + v.tags.map(t => '<span class="film-tag">' + t + '</span>').join('') + '</div></div></div>').join('');
-      setupFilmstripDrag(); renderDCLabels();
+      setupFilmstripDrag(); renderDCLabels(); loadVideoGallery();
       const dcv = document.getElementById('dc-video'); if (dcv && dcv.paused) dcv.play().catch(() => {});
     }
 
@@ -1328,6 +1458,156 @@ html[data-view="creative"] body::before {
       const cb = document.getElementById('modal-close-btn'); if (cb) cb.addEventListener('click', closeVideoModal);
       const mm = document.getElementById('media-modal'); if (mm) mm.addEventListener('click', e => { if(e.target===mm) closeVideoModal(); });
     }
+
+    
+    // ─── VIDEO GALLERY ────────────────────────────────────────────────────────
+    let VG_DATA = [];
+    let VG_ACTIVE_FILTERS = new Set(['All']);
+
+    const ALL_CATEGORIES = [
+      'All', 'Paid Ads', 'Social Media Shorts', 'Websites & Mobile Apps',
+      'Corporate Promos', 'Events', 'Food Videography', 'AI Videos'
+    ];
+
+    async function loadVideoGallery() {
+      const galleryEl = document.getElementById('videography-gallery');
+      if (!galleryEl) return;
+      if (VG_DATA.length > 0) { renderVideoGallery(); return; }
+      try {
+        const r = await fetch('portfolio-selects/portfolio-data.json');
+        const d = await r.json();
+        VG_DATA = d.videos || [];
+        renderVideoGallery();
+      } catch(e) {
+        console.warn('Video gallery data not found:', e);
+      }
+    }
+
+    function renderVideoGallery() {
+      const galleryEl = document.getElementById('videography-gallery');
+      if (!galleryEl) return;
+      galleryEl.style.display = 'block';
+      renderVGFilterBar();
+      renderVGGrid();
+    }
+
+    function renderVGFilterBar() {
+      const bar = document.getElementById('vg-filter-bar');
+      if (!bar) return;
+      bar.innerHTML = ALL_CATEGORIES.map(cat => {
+        const isActive = VG_ACTIVE_FILTERS.has(cat);
+        return '<button class="vg-pill' + (isActive ? ' active' : '') + '" data-cat="' + cat + '" onclick="toggleVGFilter(this)">' + cat + '</button>';
+      }).join('');
+    }
+
+    function toggleVGFilter(btn) {
+      const cat = btn.dataset.cat;
+      if (cat === 'All') {
+        VG_ACTIVE_FILTERS.clear();
+        VG_ACTIVE_FILTERS.add('All');
+      } else {
+        VG_ACTIVE_FILTERS.delete('All');
+        if (VG_ACTIVE_FILTERS.has(cat)) {
+          VG_ACTIVE_FILTERS.delete(cat);
+          if (VG_ACTIVE_FILTERS.size === 0) VG_ACTIVE_FILTERS.add('All');
+        } else {
+          VG_ACTIVE_FILTERS.add(cat);
+        }
+      }
+      renderVGFilterBar();
+      renderVGGrid();
+    }
+
+    function renderVGGrid() {
+      const grid = document.getElementById('vg-grid');
+      if (!grid) return;
+      const active = VG_ACTIVE_FILTERS;
+      const filtered = active.has('All')
+        ? VG_DATA
+        : VG_DATA.filter(v => v.categories.some(c => active.has(c)));
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="vg-empty">No videos match the selected filters.</div>';
+        return;
+      }
+      grid.innerHTML = filtered.map(v => buildVGCard(v)).join('');
+    }
+
+    function buildVGCard(v) {
+      const hasInsights = v.insights && (v.insights.platform || v.insights.stats.length > 0);
+      const badgeHTML = hasInsights
+        ? '<div class="vg-results-badge" onclick="event.stopPropagation(); openVGInsights('' + v.id + '')" title="View campaign results">📊 Results</div>'
+        : '';
+      const cats = v.categories.map(c => '<span class="vg-cat">' + c + '</span>').join('');
+      // Detect portrait videos (mobile-shot: most are 1080x1920)
+      const isPortrait = v.mediaSrc.includes('social_') || v.mediaSrc.includes('food_') ||
+        v.mediaSrc.includes('paid_ad_jew') || v.mediaSrc.includes('paid_ad_fashion') ||
+        v.mediaSrc.includes('paid_ad_steel') || v.mediaSrc.includes('paid_ad_hook') ||
+        v.mediaSrc.includes('paid_ad_acc') || v.mediaSrc.includes('web_app') ||
+        v.mediaSrc.includes('event_') || v.mediaSrc.includes('corp_realestate');
+      const thumbClass = isPortrait ? 'vg-thumb-wrap portrait' : 'vg-thumb-wrap';
+      return '<div class="vg-card" onclick="vgPlayInline(this)" data-src="' + v.mediaSrc + '" data-id="' + v.id + '">' +
+        '<div class="' + thumbClass + '">' +
+          '<img src="' + v.thumbnail + '" alt="' + v.title + '" loading="lazy">' +
+          '<div class="vg-play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>' +
+          badgeHTML +
+          '<div class="vg-player-wrap" onclick="event.stopPropagation()">' +
+            '<button class="vg-close-btn" onclick="vgCloseInline(this.closest('.vg-card'))">✕</button>' +
+            '<video preload="none" controls playsinline></video>' +
+          '</div>' +
+        '</div>' +
+        '<div class="vg-info">' +
+          '<div class="vg-title">' + v.title + '</div>' +
+          '<div class="vg-cats">' + cats + '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function vgPlayInline(card) {
+      const playerWrap = card.querySelector('.vg-player-wrap');
+      if (!playerWrap) return;
+      // Close any other open players first
+      document.querySelectorAll('.vg-player-wrap.open').forEach(pw => {
+        if (pw !== playerWrap) {
+          pw.querySelector('video').pause();
+          pw.querySelector('video').src = '';
+          pw.classList.remove('open');
+        }
+      });
+      const video = playerWrap.querySelector('video');
+      const src = card.dataset.src;
+      if (!video.src || !video.src.includes(src.replace(/.*\//, ''))) {
+        video.src = src;
+      }
+      playerWrap.classList.add('open');
+      video.play().catch(() => {});
+    }
+
+    function vgCloseInline(card) {
+      const playerWrap = card.querySelector('.vg-player-wrap');
+      const video = playerWrap.querySelector('video');
+      video.pause();
+      video.src = '';
+      playerWrap.classList.remove('open');
+    }
+
+    function openVGInsights(id) {
+      const v = VG_DATA.find(x => x.id === id);
+      if (!v || !v.insights) return;
+      document.getElementById('vg-popup-platform').textContent = v.insights.platform || '';
+      document.getElementById('vg-popup-context').textContent = v.insights.context || '';
+      const statsEl = document.getElementById('vg-popup-stats');
+      statsEl.innerHTML = v.insights.stats.map(s =>
+        '<div class="vg-stat"><div class="vg-stat-value">' + s.value + '</div><div class="vg-stat-label">' + s.label + '</div></div>'
+      ).join('');
+      document.getElementById('vg-insights-popup').classList.add('open');
+    }
+
+    // Close popup on backdrop click
+    document.addEventListener('click', e => {
+      const popup = document.getElementById('vg-insights-popup');
+      if (popup && e.target === popup) popup.classList.remove('open');
+    });
+
 
     document.addEventListener('DOMContentLoaded', init);
   </script>
