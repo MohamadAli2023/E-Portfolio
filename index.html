@@ -1461,30 +1461,26 @@ html[data-view="creative"] body::before {
 
     
     // ─── VIDEO GALLERY ────────────────────────────────────────────────────────
-    let VG_DATA = [];
-    let VG_ACTIVE_FILTERS = new Set(['All']);
+    var VG_DATA = [];
+    var VG_ACTIVE_FILTERS = new Set(['All']);
 
-    const ALL_CATEGORIES = [
+    var ALL_CATEGORIES = [
       'All', 'Paid Ads', 'Social Media Shorts', 'Websites & Mobile Apps',
       'Corporate Promos', 'Events', 'Food Videography', 'AI Videos'
     ];
 
-    async function loadVideoGallery() {
-      const galleryEl = document.getElementById('videography-gallery');
+    function loadVideoGallery() {
+      var galleryEl = document.getElementById('videography-gallery');
       if (!galleryEl) return;
       if (VG_DATA.length > 0) { renderVideoGallery(); return; }
-      try {
-        const r = await fetch('portfolio-selects/portfolio-data.json');
-        const d = await r.json();
-        VG_DATA = d.videos || [];
-        renderVideoGallery();
-      } catch(e) {
-        console.warn('Video gallery data not found:', e);
-      }
+      fetch('portfolio-selects/portfolio-data.json')
+        .then(function(r) { return r.json(); })
+        .then(function(d) { VG_DATA = d.videos || []; renderVideoGallery(); })
+        .catch(function(e) { console.warn('Video gallery data not found:', e); });
     }
 
     function renderVideoGallery() {
-      const galleryEl = document.getElementById('videography-gallery');
+      var galleryEl = document.getElementById('videography-gallery');
       if (!galleryEl) return;
       galleryEl.style.display = 'block';
       renderVGFilterBar();
@@ -1492,16 +1488,19 @@ html[data-view="creative"] body::before {
     }
 
     function renderVGFilterBar() {
-      const bar = document.getElementById('vg-filter-bar');
+      var bar = document.getElementById('vg-filter-bar');
       if (!bar) return;
-      bar.innerHTML = ALL_CATEGORIES.map(cat => {
-        const isActive = VG_ACTIVE_FILTERS.has(cat);
-        return '<button class="vg-pill' + (isActive ? ' active' : '') + '" data-cat="' + cat + '" onclick="toggleVGFilter(this)">' + cat + '</button>';
+      bar.innerHTML = ALL_CATEGORIES.map(function(cat) {
+        var active = VG_ACTIVE_FILTERS.has(cat) ? ' active' : '';
+        return '<button class="vg-pill' + active + '" data-cat="' + cat + '">' + cat + '</button>';
       }).join('');
+      bar.querySelectorAll('.vg-pill').forEach(function(btn) {
+        btn.addEventListener('click', function() { toggleVGFilter(btn); });
+      });
     }
 
     function toggleVGFilter(btn) {
-      const cat = btn.dataset.cat;
+      var cat = btn.dataset.cat;
       if (cat === 'All') {
         VG_ACTIVE_FILTERS.clear();
         VG_ACTIVE_FILTERS.add('All');
@@ -1519,39 +1518,50 @@ html[data-view="creative"] body::before {
     }
 
     function renderVGGrid() {
-      const grid = document.getElementById('vg-grid');
+      var grid = document.getElementById('vg-grid');
       if (!grid) return;
-      const active = VG_ACTIVE_FILTERS;
-      const filtered = active.has('All')
+      var filtered = VG_ACTIVE_FILTERS.has('All')
         ? VG_DATA
-        : VG_DATA.filter(v => v.categories.some(c => active.has(c)));
+        : VG_DATA.filter(function(v) {
+            return v.categories.some(function(c) { return VG_ACTIVE_FILTERS.has(c); });
+          });
       if (filtered.length === 0) {
         grid.innerHTML = '<div class="vg-empty">No videos match the selected filters.</div>';
         return;
       }
-      grid.innerHTML = filtered.map(v => buildVGCard(v)).join('');
+      grid.innerHTML = filtered.map(function(v) { return buildVGCard(v); }).join('');
+      // Event delegation — no inline onclicks
+      grid.onclick = function(e) {
+        var closeBtn = e.target.closest('[data-action="close-video"]');
+        if (closeBtn) { e.stopPropagation(); vgCloseInline(closeBtn.closest('.vg-card')); return; }
+        var badge = e.target.closest('[data-insights-id]');
+        if (badge) { e.stopPropagation(); openVGInsights(badge.dataset.insightsId); return; }
+        if (e.target.closest('.vg-player-wrap')) { e.stopPropagation(); return; }
+        var card = e.target.closest('.vg-card');
+        if (card) vgPlayInline(card);
+      };
     }
 
     function buildVGCard(v) {
-      const hasInsights = v.insights && (v.insights.platform || v.insights.stats.length > 0);
-      const badgeHTML = hasInsights
-        ? '<div class="vg-results-badge" onclick="event.stopPropagation(); openVGInsights('' + v.id + '')" title="View campaign results">📊 Results</div>'
+      var hasInsights = v.insights && v.insights.stats && v.insights.stats.length > 0;
+      var badgeHTML = hasInsights
+        ? '<div class="vg-results-badge" data-insights-id="' + v.id + '" title="View results">&#x1F4CA; Results</div>'
         : '';
-      const cats = v.categories.map(c => '<span class="vg-cat">' + c + '</span>').join('');
-      // Detect portrait videos (mobile-shot: most are 1080x1920)
-      const isPortrait = v.mediaSrc.includes('social_') || v.mediaSrc.includes('food_') ||
-        v.mediaSrc.includes('paid_ad_jew') || v.mediaSrc.includes('paid_ad_fashion') ||
-        v.mediaSrc.includes('paid_ad_steel') || v.mediaSrc.includes('paid_ad_hook') ||
-        v.mediaSrc.includes('paid_ad_acc') || v.mediaSrc.includes('web_app') ||
-        v.mediaSrc.includes('event_') || v.mediaSrc.includes('corp_realestate');
-      const thumbClass = isPortrait ? 'vg-thumb-wrap portrait' : 'vg-thumb-wrap';
-      return '<div class="vg-card" onclick="vgPlayInline(this)" data-src="' + v.mediaSrc + '" data-id="' + v.id + '">' +
+      var cats = v.categories.map(function(c) { return '<span class="vg-cat">' + c + '</span>'; }).join('');
+      var src = v.mediaSrc;
+      var isPortrait = src.indexOf('social_') !== -1 || src.indexOf('food_') !== -1 ||
+        src.indexOf('paid_ad_jew') !== -1 || src.indexOf('paid_ad_fashion') !== -1 ||
+        src.indexOf('paid_ad_steel') !== -1 || src.indexOf('paid_ad_acc') !== -1 ||
+        src.indexOf('web_app') !== -1 || src.indexOf('event_') !== -1 ||
+        src.indexOf('corp_realestate') !== -1;
+      var thumbClass = isPortrait ? 'vg-thumb-wrap portrait' : 'vg-thumb-wrap';
+      return '<div class="vg-card" data-src="' + v.mediaSrc + '" data-id="' + v.id + '">' +
         '<div class="' + thumbClass + '">' +
           '<img src="' + v.thumbnail + '" alt="' + v.title + '" loading="lazy">' +
           '<div class="vg-play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>' +
           badgeHTML +
-          '<div class="vg-player-wrap" onclick="event.stopPropagation()">' +
-            '<button class="vg-close-btn" onclick="vgCloseInline(this.closest('.vg-card'))">✕</button>' +
+          '<div class="vg-player-wrap">' +
+            '<button class="vg-close-btn" data-action="close-video">&#x2715;</button>' +
             '<video preload="none" controls playsinline></video>' +
           '</div>' +
         '</div>' +
@@ -1563,48 +1573,52 @@ html[data-view="creative"] body::before {
     }
 
     function vgPlayInline(card) {
-      const playerWrap = card.querySelector('.vg-player-wrap');
-      if (!playerWrap) return;
-      // Close any other open players first
-      document.querySelectorAll('.vg-player-wrap.open').forEach(pw => {
-        if (pw !== playerWrap) {
-          pw.querySelector('video').pause();
-          pw.querySelector('video').src = '';
+      var allWraps = document.querySelectorAll('.vg-player-wrap.open');
+      allWraps.forEach(function(pw) {
+        if (pw !== card.querySelector('.vg-player-wrap')) {
+          var vid = pw.querySelector('video');
+          vid.pause(); vid.src = '';
           pw.classList.remove('open');
         }
       });
-      const video = playerWrap.querySelector('video');
-      const src = card.dataset.src;
-      if (!video.src || !video.src.includes(src.replace(/.*\//, ''))) {
-        video.src = src;
-      }
+      var playerWrap = card.querySelector('.vg-player-wrap');
+      if (!playerWrap) return;
+      var video = playerWrap.querySelector('video');
+      var src = card.dataset.src;
+      if (!video.src || video.src === window.location.href) { video.src = src; }
       playerWrap.classList.add('open');
-      video.play().catch(() => {});
+      video.play().catch(function() {});
     }
 
     function vgCloseInline(card) {
-      const playerWrap = card.querySelector('.vg-player-wrap');
-      const video = playerWrap.querySelector('video');
-      video.pause();
-      video.src = '';
+      if (!card) return;
+      var playerWrap = card.querySelector('.vg-player-wrap');
+      if (!playerWrap) return;
+      var video = playerWrap.querySelector('video');
+      video.pause(); video.src = '';
       playerWrap.classList.remove('open');
     }
 
     function openVGInsights(id) {
-      const v = VG_DATA.find(x => x.id === id);
+      var v = VG_DATA.find(function(x) { return x.id === id; });
       if (!v || !v.insights) return;
+      var popup = document.getElementById('vg-insights-popup');
       document.getElementById('vg-popup-platform').textContent = v.insights.platform || '';
       document.getElementById('vg-popup-context').textContent = v.insights.context || '';
-      const statsEl = document.getElementById('vg-popup-stats');
-      statsEl.innerHTML = v.insights.stats.map(s =>
-        '<div class="vg-stat"><div class="vg-stat-value">' + s.value + '</div><div class="vg-stat-label">' + s.label + '</div></div>'
-      ).join('');
-      document.getElementById('vg-insights-popup').classList.add('open');
+      var statsEl = document.getElementById('vg-popup-stats');
+      if (v.insights.stats && v.insights.stats.length > 0) {
+        statsEl.innerHTML = v.insights.stats.map(function(s) {
+          return '<div class="vg-stat"><div class="vg-stat-value">' + s.value + '</div><div class="vg-stat-label">' + s.label + '</div></div>';
+        }).join('');
+      } else {
+        statsEl.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Campaign stats coming soon.</p>';
+      }
+      if (popup) popup.classList.add('open');
     }
 
-    // Close popup on backdrop click
-    document.addEventListener('click', e => {
-      const popup = document.getElementById('vg-insights-popup');
+    // Close insights popup on backdrop click
+    document.addEventListener('click', function(e) {
+      var popup = document.getElementById('vg-insights-popup');
       if (popup && e.target === popup) popup.classList.remove('open');
     });
 
