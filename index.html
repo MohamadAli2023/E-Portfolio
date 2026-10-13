@@ -195,6 +195,122 @@
       z-index: -1; filter: blur(50px); animation: pulse 6s infinite alternate;
     }
     @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.1); } }
+    /* Hero Scroll Cue */
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .hero-scroll-cue:hover {
+      opacity: 1;
+      color: var(--accent-color);
+    }
+    .scroll-cue-chevron {
+      animation: cueBounce 2s infinite ease-in-out;
+    }
+    @keyframes cueBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(4px); }
+      60% { transform: translateY(2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-cue-chevron { animation: none; }
+    }
+
+    /* Hero Video Showcase Section */
+    .hero-showcase-section {
+      padding: 0 40px 60px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+    @media (max-width: 1024px) {
+      .hero-showcase-section { padding: 0 20px 40px; }
+    }
+    .hero-showcase-inner {
+      width: 100%;
+      max-width: 960px;
+    }
+    .hero-showcase-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--surface-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-light);
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .hero-showcase-frame:hover {
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-light);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .hero-showcase-video {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      background-color: #000;
+      transition: opacity 0.25s ease;
+    }
+    .hero-showcase-video.is-fading {
+      opacity: 0;
+    }
+    .hero-video-pill-btn {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: rgba(17, 17, 24, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hero-video-pill-btn:hover {
+      background: rgba(26, 26, 38, 0.9);
+      border-color: var(--accent-color);
+      transform: scale(1.03);
+    }
+    .hero-video-pill-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+    .hero-video-pill-btn svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+      fill: currentColor;
+    }
+
     
     .hero-greeting { font-family: var(--font-mono); color: var(--accent-color); font-size: 1.1rem; margin-bottom: 15px; }
     .hero-name { font-family: var(--font-serif); font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; }
@@ -641,6 +757,29 @@ html[data-view="creative"] body::before {
               <a href="#contact" class="btn btn-outline" data-i18n="nav.contact">Contact Me</a>
             </div>
           </div>
+          <a href="#hero-showcase" class="hero-scroll-cue" aria-label="Scroll down">
+            <span class="scroll-cue-text" data-i18n="hero.scrollCue">Scroll</span>
+            <svg class="scroll-cue-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+        </section>
+
+        <!-- Hero Video Showcase -->
+        <section id="hero-showcase" class="hero-showcase-section">
+          <div class="hero-showcase-inner">
+            <div class="hero-showcase-frame">
+              <video id="hero-showcase-video" class="hero-showcase-video"
+                     muted loop playsinline preload="none"
+                     aria-label="I test. I code. I shoot. I edit. Tech × Creative."></video>
+              <button type="button" id="hero-video-toggle-btn" class="hero-video-pill-btn" aria-label="Play">
+                <span id="hero-video-btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                </span>
+                <span id="hero-video-btn-text">Play</span>
+              </button>
+            </div>
+          </div>
         </section>
 
         <section id="about" class="section">
@@ -889,6 +1028,10 @@ html[data-view="creative"] body::before {
           creativeRoles: ['Photographer', 'Videographer', 'Multimedia Specialist', 'Creative Director'],
           techCta: 'Explore Tech Work',
           creativeCta: 'View Creative Portfolio',
+          scrollCue: 'Scroll',
+          videoMessage: 'I test. I code. I shoot. I edit. Tech × Creative.',
+          videoPlay: 'Play',
+          videoPause: 'Pause',
         },
         about: {
           sectionTitle: 'About Me',
@@ -1043,6 +1186,10 @@ html[data-view="creative"] body::before {
           creativeRoles: ['Photographe', 'Vid\u00e9aste', 'Sp\u00e9cialiste Multim\u00e9dia', 'Directeur Cr\u00e9atif'],
           techCta: 'Voir le travail tech',
           creativeCta: 'Voir le portfolio cr\u00e9atif',
+          scrollCue: 'D\u00e9filer',
+          videoMessage: 'Je teste. Je code. Je filme. Je monte. Tech \u00d7 Cr\u00e9atif.',
+          videoPlay: 'Lecture',
+          videoPause: 'Pause',
         },
         about: {
           sectionTitle: '\u00c0 Propos',
@@ -1194,8 +1341,8 @@ html[data-view="creative"] body::before {
     const sectionsContainer = document.getElementById('sections-container');
     const navMenu = document.getElementById('nav-menu');
     const typedTextEl = document.getElementById('typed-text');
-    const TECH_ORDER     = ['hero','about','skills','resume','portfolio','services','certifications','testimonials','contact'];
-    const CREATIVE_ORDER = ['hero','about','portfolio','services','skills','testimonials','resume','certifications','contact'];
+    const TECH_ORDER     = ['hero','hero-showcase','about','skills','resume','portfolio','services','certifications','testimonials','contact'];
+    const CREATIVE_ORDER = ['hero','hero-showcase','about','portfolio','services','skills','testimonials','resume','certifications','contact'];
     let typeRoleIndex = 0, typeCharIndex = 0, isDeleting = false, typeTimeout = null;
     const DC_ANSWER = { lut: 'cinematic', ar: '2.35:1' };
     let dcState = { lut: null, ar: null };
@@ -1211,7 +1358,7 @@ html[data-view="creative"] body::before {
       else if (savedLang === 'en' || savedLang === 'fr') currentLang = savedLang;
       updateUrl();
       htmlEl.setAttribute('data-view', currentView);
-      setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut();
+      setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut(); setupHeroShowcase();
       renderAll(); reorderSections(false); setupScrollSpy();
     }
 
@@ -1242,6 +1389,210 @@ html[data-view="creative"] body::before {
       currentLang = l; localStorage.setItem('portfolio-lang', l); updateUrl();
       document.querySelectorAll('#lang-toggle .pill-btn, #lang-toggle-mobile .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === l));
       renderAll();
+      syncHeroShowcaseLang(l);
+    }
+
+    // ─── HERO VIDEO SHOWCASE CONFIG & CONTROLLER ─────────────────────────────
+    const HERO_VIDEO_AVAILABLE_LANGS = ['en', 'fr'];
+    let heroVideoLoadedLang = null;
+    let heroUserPaused = false;
+    let heroLazyObserver = null;
+    let heroPlaybackObserver = null;
+
+    function getHeroBtnLabels(lang) {
+      const c = CONTENT[lang] || CONTENT.en;
+      return {
+        play: (c.hero && c.hero.videoPlay) || 'Play',
+        pause: (c.hero && c.hero.videoPause) || 'Pause'
+      };
+    }
+
+    function updateHeroBtnUI(isPlaying) {
+      const btn = document.getElementById('hero-video-toggle-btn');
+      const icon = document.getElementById('hero-video-btn-icon');
+      const text = document.getElementById('hero-video-btn-text');
+      if (!btn) return;
+
+      const labels = getHeroBtnLabels(currentLang);
+      const actionText = isPlaying ? labels.pause : labels.play;
+      btn.setAttribute('aria-label', actionText);
+      if (text) text.textContent = actionText;
+
+      if (icon) {
+        if (isPlaying) {
+          icon.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+        } else {
+          icon.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
+        }
+      }
+    }
+
+    function swapHeroVideo(lang) {
+      const video = document.getElementById('hero-showcase-video');
+      if (!video) return;
+
+      const posterUrl = 'assets/hero/hero-poster-' + lang + '.jpg';
+      const videoUrl = 'assets/hero/hero-' + lang + '.mp4';
+      const wasPlaying = !video.paused;
+
+      video.classList.add('is-fading');
+
+      setTimeout(function() {
+        video.poster = posterUrl;
+        video.src = videoUrl;
+        video.dataset.loadedLang = lang;
+        heroVideoLoadedLang = lang;
+        video.load();
+
+        const onReady = function() {
+          video.classList.remove('is-fading');
+          if (wasPlaying && !heroUserPaused) {
+            video.currentTime = 0;
+            video.play().then(function() {
+              updateHeroBtnUI(true);
+            }).catch(function() {
+              updateHeroBtnUI(false);
+            });
+          } else {
+            updateHeroBtnUI(!video.paused);
+          }
+          video.removeEventListener('loadeddata', onReady);
+          video.removeEventListener('canplay', onReady);
+        };
+
+        video.addEventListener('loadeddata', onReady);
+        video.addEventListener('canplay', onReady);
+
+        video.onerror = function() {
+          video.classList.remove('is-fading');
+          updateHeroBtnUI(false);
+        };
+      }, 200);
+    }
+
+    function loadHeroVideoForLang(lang) {
+      const video = document.getElementById('hero-showcase-video');
+      if (!video) return;
+      if (!HERO_VIDEO_AVAILABLE_LANGS.includes(lang)) return;
+      if (heroVideoLoadedLang === lang && video.src) return;
+
+      const posterUrl = 'assets/hero/hero-poster-' + lang + '.jpg';
+      const videoUrl = 'assets/hero/hero-' + lang + '.mp4';
+      video.poster = posterUrl;
+      video.src = videoUrl;
+      video.dataset.loadedLang = lang;
+      heroVideoLoadedLang = lang;
+      video.load();
+    }
+
+    function setupHeroShowcase() {
+      const section = document.getElementById('hero-showcase');
+      const video = document.getElementById('hero-showcase-video');
+      const btn = document.getElementById('hero-video-toggle-btn');
+      if (!section || !video) return;
+
+      // Toggle button click listener
+      if (btn && !btn._hasClick) {
+        btn._hasClick = true;
+        btn.addEventListener('click', function() {
+          if (video.paused) {
+            heroUserPaused = false;
+            if (!video.src) loadHeroVideoForLang(currentLang);
+            video.play().then(function() {
+              updateHeroBtnUI(true);
+            }).catch(function() {
+              updateHeroBtnUI(false);
+            });
+          } else {
+            heroUserPaused = true;
+            video.pause();
+            updateHeroBtnUI(false);
+          }
+        });
+      }
+
+      // Lazy load observer (~300px before viewport)
+      if (!heroLazyObserver && 'IntersectionObserver' in window) {
+        heroLazyObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              loadHeroVideoForLang(currentLang);
+            }
+          });
+        }, { rootMargin: '300px 0px 300px 0px' });
+        heroLazyObserver.observe(section);
+      }
+
+      // Playback observer (plays when at least ~50% visible, resets to 0)
+      if (!heroPlaybackObserver && 'IntersectionObserver' in window) {
+        heroPlaybackObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (entry.isIntersecting) {
+              // At least 50% in view
+              if (!isReducedMotion && !heroUserPaused) {
+                if (!video.src) loadHeroVideoForLang(currentLang);
+                video.currentTime = 0;
+                video.play().then(function() {
+                  updateHeroBtnUI(true);
+                }).catch(function() {
+                  updateHeroBtnUI(false);
+                });
+              } else {
+                updateHeroBtnUI(!video.paused);
+              }
+            } else {
+              // Left viewport (< 50% visible)
+              if (!video.paused) {
+                video.pause();
+              }
+              heroUserPaused = false;
+              updateHeroBtnUI(false);
+            }
+          });
+        }, { threshold: 0.5 });
+        heroPlaybackObserver.observe(video);
+      }
+
+      syncHeroShowcaseLang(currentLang);
+    }
+
+    function syncHeroShowcaseLang(lang) {
+      const section = document.getElementById('hero-showcase');
+      const video = document.getElementById('hero-showcase-video');
+      const scrollCue = document.querySelector('.hero-scroll-cue');
+      if (!section || !video) return;
+
+      const isAvailable = HERO_VIDEO_AVAILABLE_LANGS.includes(lang);
+
+      // If language has no video, hide the whole section
+      if (!isAvailable) {
+        section.style.display = 'none';
+        if (!video.paused) video.pause();
+        video.removeAttribute('src');
+        video.removeAttribute('poster');
+        delete video.dataset.loadedLang;
+        heroVideoLoadedLang = null;
+        if (scrollCue) scrollCue.setAttribute('href', '#about');
+        return;
+      }
+
+      // Language is available
+      section.style.display = '';
+      if (scrollCue) scrollCue.setAttribute('href', '#hero-showcase');
+
+      // Update accessibility aria-label with translated message
+      const c = CONTENT[lang] || CONTENT.en;
+      if (c.hero && c.hero.videoMessage) {
+        video.setAttribute('aria-label', c.hero.videoMessage);
+      }
+
+      // If already lazy loaded previously, crossfade to the new language file
+      if (heroVideoLoadedLang !== null && heroVideoLoadedLang !== lang) {
+        swapHeroVideo(lang);
+      }
+
+      updateHeroBtnUI(!video.paused);
     }
 
     // ─── RENDER ALL ──────────────────────────────────────────────────────────
