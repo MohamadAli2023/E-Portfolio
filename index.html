@@ -1165,7 +1165,595 @@ html[data-view="creative"] body::before {
       .vg-grid { grid-template-columns: 1fr; }
     }
 
-    </style>
+  
+    /* ── Feature #5: About Impact Counter Strip ── */
+    .about-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 42px;
+    }
+    @media (max-width: 900px) {
+      .about-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .about-stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+    .about-stat-card {
+      position: relative;
+      background: rgba(17, 17, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 22px 18px;
+      text-align: center;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .about-stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-color);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 22px var(--accent-light);
+    }
+    .about-stat-num {
+      font-family: var(--font-serif);
+      font-size: 2.35rem;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .about-stat-num span {
+      color: var(--accent-color);
+    }
+    .about-stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    /* ── Feature #1: 3D Flip Project Cards (rotateY 180deg) ── */
+    .portfolio-card.flip-card {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+      perspective: 1100px;
+      min-height: 330px;
+      cursor: pointer;
+    }
+    .portfolio-card.flip-card:hover {
+      transform: none !important;
+    }
+    .pcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 330px;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .portfolio-card.flip-card.is-flipped .pcard-inner {
+      transform: rotateY(180deg);
+    }
+    .pcard-front,
+    .pcard-back {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pcard-front {
+      background: #0d0d14;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 28px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .portfolio-card.flip-card:hover .pcard-front {
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-light);
+    }
+    .pcard-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .pcard-icon-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+    }
+    .pcard-index {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      color: rgba(255, 255, 255, 0.28);
+    }
+    .pcard-front-body {
+      position: relative;
+      z-index: 2;
+      margin: 16px 0;
+    }
+    .pcard-front-body .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .pcard-front-teaser {
+      color: rgba(243, 244, 246, 0.55);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .pcard-front-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      z-index: 2;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .pcard-mini-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pcard-flip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #08080E;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      transition: transform 0.25s ease, background-color 0.25s ease;
+      flex-shrink: 0;
+    }
+    .pcard-flip-btn svg {
+      width: 13px;
+      height: 13px;
+      transition: transform 0.25s ease;
+    }
+    .portfolio-card.flip-card:hover .pcard-flip-btn svg {
+      transform: translateX(3px);
+    }
+
+    .pcard-back {
+      background: #101018;
+      border: 1px solid var(--accent-color);
+      padding: 24px 26px;
+      transform: rotateY(180deg);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.7), 0 0 28px var(--accent-light);
+    }
+    .pcard-back-waves {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .pcard-back-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .pcard-back-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+    }
+    .pcard-close-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+    .pcard-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+    .pcard-back-body {
+      position: relative;
+      z-index: 2;
+      overflow-y: auto;
+      margin: 12px 0;
+      padding-right: 4px;
+    }
+    .pcard-back-desc {
+      color: rgba(243, 244, 246, 0.85);
+      font-size: 0.86rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .pcard-back-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .pcard-ext-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .pcard-ext-link:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    /* ── Feature #2: Luxury Service Cards with Hover-Drawing Signature & Index Badges ── */
+    .service-card {
+      position: relative !important;
+      background: #0b0b12 !important;
+      padding: 36px 32px !important;
+      border-radius: 26px !important;
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      text-align: left !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 295px;
+      overflow: hidden;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.45s ease, box-shadow 0.45s ease !important;
+    }
+    .service-card:hover {
+      transform: translateY(-6px) !important;
+      border-color: rgba(255, 255, 255, 0.32) !important;
+      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.55), 0 0 28px var(--accent-light) !important;
+    }
+    .service-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+    }
+    .service-card .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0 !important;
+      color: var(--accent-color);
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+    .service-card:hover .service-icon {
+      transform: scale(1.08);
+      border-color: var(--accent-color);
+    }
+    .service-card-idx {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.25);
+    }
+    .service-card-body {
+      position: relative;
+      z-index: 2;
+    }
+    .service-card .service-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem !important;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 12px !important;
+      line-height: 1.25;
+    }
+    .service-card .service-desc {
+      color: rgba(243, 244, 246, 0.52) !important;
+      font-size: 0.92rem !important;
+      font-weight: 300;
+      line-height: 1.65;
+    }
+    .service-card-footer {
+      position: relative;
+      z-index: 2;
+      margin-top: 24px;
+    }
+    .service-pill-badge {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.02);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      color: rgba(255, 255, 255, 0.55);
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: border-color 0.4s ease, color 0.4s ease, background-color 0.4s ease;
+    }
+    .service-card:hover .service-pill-badge {
+      border-color: var(--accent-color);
+      color: #ffffff;
+      background: var(--accent-light);
+    }
+    .card-sig-wrap {
+      position: absolute;
+      bottom: -6px;
+      right: -24px;
+      width: 230px;
+      height: 80px;
+      transform: rotate(-6deg);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .card-sig-wrap svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .card-sig-bg-path {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .card-sig-fg-path {
+      fill: none;
+      stroke: var(--accent-color);
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 650;
+      stroke-dashoffset: 650;
+      transition: stroke-dashoffset 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .service-card:hover .card-sig-fg-path {
+      stroke-dashoffset: 0;
+    }
+
+    /* ── Feature #3: Mouse-Tracking Glass Spotlight (--mouse-x, --mouse-y) ── */
+    .cert-item,
+    .testimonial-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .cert-item:hover,
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    }
+    .service-card::after,
+    .cert-item::after,
+    .testimonial-card::after,
+    .pcard-front::after,
+    .about-stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        var(--accent-light),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .service-card:hover::after,
+    .cert-item:hover::after,
+    .testimonial-card:hover::after,
+    .pcard-front:hover::after,
+    .about-stat-card:hover::after {
+      opacity: 1;
+    }
+
+    /* ── Feature #4: Fullscreen Glass Lightbox for Photography ── */
+    .photo-strip-card {
+      cursor: pointer;
+    }
+    .photo-zoom-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(8, 8, 14, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+    .photo-strip-card:hover .photo-zoom-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+    #photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 8, 14, 0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 10001;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      user-select: none;
+    }
+    #photo-lightbox.open {
+      display: flex;
+    }
+    .plb-topbar {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      right: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+    }
+    .plb-counter {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(17, 17, 24, 0.7);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .plb-close {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 8px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .plb-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--accent-color);
+    }
+    .plb-stage {
+      position: relative;
+      max-width: 88vw;
+      max-height: 76vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .plb-img {
+      max-width: 88vw;
+      max-height: 76vh;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+    }
+    .plb-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(17, 17, 24, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+    .plb-nav-btn:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .plb-prev { left: 24px; }
+    .plb-next { right: 24px; }
+    @media (max-width: 768px) {
+      .plb-prev { left: 12px; width: 40px; height: 40px; }
+      .plb-next { right: 12px; width: 40px; height: 40px; }
+    }
+    .plb-caption-bar {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .plb-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      color: #ffffff;
+    }
+    .plb-sub {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      margin-top: 4px;
+    }
+
+  </style>
 </head>
 <body>
 
@@ -1298,6 +1886,8 @@ html[data-view="creative"] body::before {
                 <div class="lang-list" id="about-lang-list"></div>
               </div>
             </div>
+            <!-- Feature #5: Animated Impact Counter Strip -->
+            <div class="about-stats-grid" id="about-stats-grid"></div>
           </div>
         </section>
 
@@ -2235,9 +2825,56 @@ html[data-view="creative"] body::before {
           '</div>';
         }).join('');
       }
+      // Feature #5: Render About Impact Counter Strip
+      const statsGrid = document.getElementById('about-stats-grid');
+      if (statsGrid) {
+        const isFr = currentLang === 'fr';
+        const statsData = [
+          { target: 4, suffix: '+', label: isFr ? "Ann\u00e9es d'Exp\u00e9rience" : 'Years of Experience' },
+          { target: 50, suffix: '+', label: isFr ? 'Projets & Suites QA' : 'Projects & Test Suites' },
+          { target: 180, suffix: '+', label: isFr ? 'Productions Vid\u00e9o & Photo' : 'Video & Photo Productions' },
+          { target: 10, suffix: '+', label: isFr ? 'Certifications & Prix' : 'Certifications & Awards' }
+        ];
+        statsGrid.innerHTML = statsData.map(function(st) {
+          return '<div class="about-stat-card">' +
+            '<div class="about-stat-num"><strong class="stat-count-val" data-target="' + st.target + '">' + st.target + '</strong><span>' + st.suffix + '</span></div>' +
+            '<div class="about-stat-label">' + st.label + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      // Feature #2: Render Luxury Service Cards with Hover-Drawing Signature & Index Badges
       const svcs = currentView === 'tech' ? c.services.tech : c.services.creative;
       const svgrid = document.getElementById('services-grid');
-      if (svgrid) svgrid.innerHTML = svcs.map(s => '<div class="service-card"><div class="service-icon">' + (ICONS[s.icon] || '') + '</div><h3 class="service-title">' + s.title + '</h3><p class="service-desc">' + s.desc + '</p></div>').join('');
+      if (svgrid) {
+        const badgePrefix = currentView === 'tech'
+          ? (currentLang === 'fr' ? 'ING\u00c9NIERIE & QA' : 'ENGINEERING & QA')
+          : (currentLang === 'fr' ? 'DIRECTION CR\u00c9ATIVE' : 'CREATIVE DIRECTION');
+        svgrid.innerHTML = svcs.map(function(s, idx) {
+          const numStr = idx < 9 ? '0' + (idx + 1) : '' + (idx + 1);
+          return '<div class="service-card">' +
+            '<div class="card-sig-wrap" aria-hidden="true">' +
+              '<svg viewBox="0 0 500 140">' +
+                '<path class="card-sig-bg-path" d="M 45 108 L 72 28 L 105 84 L 138 26 L 164 108 C 178 108, 198 62, 224 28 L 254 108 M 196 76 C 220 72, 255 68, 286 72 C 315 76, 338 56, 355 48 C 368 42, 372 78, 392 78 C 414 78, 434 52, 462 44" />' +
+                '<path class="card-sig-fg-path" d="M 45 108 L 72 28 L 105 84 L 138 26 L 164 108 C 178 108, 198 62, 224 28 L 254 108 M 196 76 C 220 72, 255 68, 286 72 C 315 76, 338 56, 355 48 C 368 42, 372 78, 392 78 C 414 78, 434 52, 462 44" />' +
+              '</svg>' +
+            '</div>' +
+            '<div>' +
+              '<div class="service-card-top">' +
+                '<div class="service-icon">' + (ICONS[s.icon] || '') + '</div>' +
+                '<span class="service-card-idx">' + numStr + '</span>' +
+              '</div>' +
+              '<div class="service-card-body">' +
+                '<h3 class="service-title">' + s.title + '</h3>' +
+                '<p class="service-desc">' + s.desc + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="service-card-footer">' +
+              '<span class="service-pill-badge">' + numStr + ' \u00b7 ' + badgePrefix + '</span>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
       renderCreativePortfolio();
     }
 
@@ -2319,21 +2956,99 @@ html[data-view="creative"] body::before {
       }
     }
 
-    // ─── RENDER PORTFOLIO ────────────────────────────────────────────────────
+    // ─── RENDER PORTFOLIO (FEATURE #1: 3D FLIP PROJECT CARDS) ────────────────
     function renderPortfolio() {
       const c = CONTENT[currentLang];
       const tg = document.getElementById('tech-projects-grid');
-      if (tg) tg.innerHTML = c.portfolio.techProjects.map(p => '<div class="portfolio-card"><div class="card-content"><div class="card-icon" style="color:var(--accent-color);">' + (ICONS[p.icon] || '') + '</div><h4 class="card-title">' + p.title + '</h4><p class="card-desc">' + p.desc + '</p><div class="card-tags">' + p.tags.map(t => '<span class="card-tag">' + t + '</span>').join('') + '</div>' + (p.link ? '<a href="' + p.link + '" target="_blank" style="display:inline-block;margin-top:15px;color:var(--accent-color);font-size:0.9rem;text-decoration:underline;">View Project \u2197</a>' : '') + '</div></div>').join('');
+      if (tg) {
+        const isFr = currentLang === 'fr';
+        const detailsTxt = isFr ? 'D\u00e9tails' : 'Details';
+        const stackLabel = isFr ? 'Architecture & Technologies' : 'Architecture & Technologies';
+        const viewProjTxt = isFr ? 'Voir le Projet \u2197' : 'View Project \u2197';
+
+        tg.innerHTML = c.portfolio.techProjects.map(function(p, idx) {
+          const numStr = idx < 9 ? '0' + (idx + 1) : '' + (idx + 1);
+          const miniTags = p.tags.slice(0, 2).map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('');
+          const allTags = p.tags.map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('');
+          const extLinkHtml = p.link
+            ? '<a href="' + p.link + '" target="_blank" rel="noopener" class="pcard-ext-link" data-no-flip="true">' + viewProjTxt + '</a>'
+            : '<span class="card-tag" style="opacity:0.7;">' + (isFr ? 'Projet Interne / QA' : 'Internal / QA Suite') + '</span>';
+
+          return '<div class="portfolio-card flip-card" tabindex="0" role="button" aria-label="' + p.title + '">' +
+            '<div class="pcard-inner">' +
+              '<div class="pcard-front">' +
+                '<div class="pcard-top-row">' +
+                  '<div class="pcard-icon-box">' + (ICONS[p.icon] || '') + '</div>' +
+                  '<span class="pcard-index">' + numStr + '</span>' +
+                '</div>' +
+                '<div class="pcard-front-body">' +
+                  '<h4 class="card-title">' + p.title + '</h4>' +
+                  '<p class="pcard-front-teaser">' + p.desc + '</p>' +
+                '</div>' +
+                '<div class="pcard-front-footer">' +
+                  '<div class="pcard-mini-tags">' + miniTags + '</div>' +
+                  '<span class="pcard-flip-btn"><span>' + detailsTxt + '</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="pcard-back">' +
+                '<svg class="pcard-back-waves" viewBox="0 0 300 400" preserveAspectRatio="none">' +
+                  '<path d="M-50,450 L-50,180 C60,220 160,110 350,170 L350,450 Z" fill="var(--accent-light)" />' +
+                  '<path d="M-50,450 L-50,240 C90,260 190,160 350,220 L350,450 Z" fill="rgba(255,255,255,0.04)" />' +
+                '</svg>' +
+                '<div class="pcard-back-header">' +
+                  '<span class="pcard-back-label">' + stackLabel + '</span>' +
+                  '<button type="button" class="pcard-close-btn" data-flip-close="true" aria-label="Close details">\u2715</button>' +
+                '</div>' +
+                '<div class="pcard-back-body">' +
+                  '<p class="pcard-back-desc">' + p.desc + '</p>' +
+                  '<div class="card-tags">' + allTags + '</div>' +
+                '</div>' +
+                '<div class="pcard-back-footer">' +
+                  extLinkHtml +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+
+        // Event delegation for 3D card flipping
+        tg.onclick = function(e) {
+          if (e.target.closest('[data-no-flip="true"]')) return;
+          const closeBtn = e.target.closest('[data-flip-close="true"]');
+          const card = e.target.closest('.portfolio-card.flip-card');
+          if (!card) return;
+          if (closeBtn) {
+            e.stopPropagation();
+            card.classList.remove('is-flipped');
+          } else {
+            card.classList.toggle('is-flipped');
+          }
+        };
+      }
       renderCreativePortfolio();
     }
 
-    // ─── RENDER CREATIVE PORTFOLIO ───────────────────────────────────────────
+    // ─── RENDER CREATIVE PORTFOLIO (WITH FEATURE #4 PHOTO LIGHTBOX) ──────────
     function renderCreativePortfolio() {
       const c = CONTENT[currentLang];
       const ph = document.getElementById('photo-strip-heading'); if (ph) ph.textContent = currentLang === 'fr' ? 'Photographie' : 'Photography';
       const vh2 = document.getElementById('video-strip-heading'); if (vh2) vh2.textContent = currentLang === 'fr' ? 'Vid\u00e9ographie' : 'Videography';
       const ps = document.getElementById('creative-photo-strip');
-      if (ps) ps.innerHTML = c.portfolio.photos.map(p => '<div class="photo-strip-card"><img src="assets/img/portfolio/' + p.file + '" alt="' + p.title + '" loading="lazy"><div class="photo-strip-overlay"><div class="photo-strip-title">' + p.title + '</div></div></div>').join('');
+      if (ps) {
+        ps.innerHTML = c.portfolio.photos.map(function(p, idx) {
+          return '<div class="photo-strip-card" data-photo-idx="' + idx + '">' +
+            '<img src="assets/img/portfolio/' + p.file + '" alt="' + p.title + '" loading="lazy">' +
+            '<div class="photo-zoom-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>' +
+            '<div class="photo-strip-overlay"><div class="photo-strip-title">' + p.title + '</div></div>' +
+          '</div>';
+        }).join('');
+        ps.onclick = function(e) {
+          const card = e.target.closest('.photo-strip-card');
+          if (card && card.dataset.photoIdx !== undefined) {
+            openPhotoLightbox(parseInt(card.dataset.photoIdx, 10));
+          }
+        };
+      }
       const fs2 = document.getElementById('creative-filmstrip');
       if (fs2) fs2.innerHTML = c.portfolio.videos.map(v => '<div class="film-card" onclick="openVideoModal(\'assets/img/portfolio/' + v.file.replace(/'/g, "\\'") + '\',\'' + v.title.replace(/'/g, "\\'") + '\')"><div class="film-thumb-placeholder">' + ICONS.film + '</div><div class="film-play-btn">' + ICONS.play + '</div><div class="film-info"><div class="film-category">' + v.category + '</div><div class="film-title">' + v.title + '</div><div class="film-tags">' + v.tags.map(t => '<span class="film-tag">' + t + '</span>').join('') + '</div></div></div>').join('');
       setupFilmstripDrag(); renderDCLabels(); loadVideoGallery();
@@ -2911,7 +3626,7 @@ html[data-view="creative"] body::before {
           }
         });
 
-        // 5. About Section Reveal
+        // 5. About Section Reveal & Feature #5 Impact Counter Count-Up
         const aboutItems = document.querySelectorAll('#about .about-bio, #about #about-resume-btn, #about #about-info-list li, #about #about-lang-list .lang-item');
         if (aboutItems.length) {
           gsap.fromTo(aboutItems,
@@ -2926,6 +3641,39 @@ html[data-view="creative"] body::before {
               scrollTrigger: {
                 trigger: '#about .about-content',
                 start: 'top 84%'
+              }
+            }
+          );
+        }
+        const statCards = document.querySelectorAll('#about-stats-grid .about-stat-card');
+        if (statCards.length) {
+          gsap.fromTo(statCards,
+            { y: 32, opacity: 0, scale: 0.95 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.75,
+              stagger: 0.08,
+              ease: 'back.out(1.4)',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#about-stats-grid',
+                start: 'top 88%',
+                onEnter: function() {
+                  document.querySelectorAll('#about-stats-grid .stat-count-val').forEach(function(el) {
+                    const targetVal = parseInt(el.dataset.target || '0', 10);
+                    const counterObj = { val: 0 };
+                    gsap.to(counterObj, {
+                      val: targetVal,
+                      duration: 1.6,
+                      ease: 'power3.out',
+                      onUpdate: function() {
+                        el.textContent = Math.round(counterObj.val);
+                      }
+                    });
+                  });
+                }
               }
             }
           );
@@ -3199,6 +3947,112 @@ html[data-view="creative"] body::before {
       ScrollTrigger.refresh();
     }
 
+
+    // ─── FEATURE #3: MOUSE-TRACKING GLASS SPOTLIGHT CONTROLLER ───────────────
+    function setupCardSpotlightTracking() {
+      if (document.body._spotlightBound) return;
+      document.body._spotlightBound = true;
+      window.addEventListener('mousemove', function(e) {
+        if (window.innerWidth <= 1024) return;
+        const card = e.target.closest('.service-card, .cert-item, .testimonial-card, .pcard-front, .about-stat-card');
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+        card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+      }, { passive: true });
+    }
+
+    // ─── FEATURE #4: FULLSCREEN PHOTOGRAPHY LIGHTBOX CONTROLLER ──────────────
+    let currentPhotoIdx = 0;
+
+    function openPhotoLightbox(idx) {
+      const c = CONTENT[currentLang] || CONTENT.en;
+      const photos = (c.portfolio && c.portfolio.photos) || [];
+      if (!photos.length) return;
+
+      currentPhotoIdx = ((idx % photos.length) + photos.length) % photos.length;
+      const lb = document.getElementById('photo-lightbox');
+      if (!lb) return;
+
+      updatePhotoLightboxSlide(true);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePhotoLightbox() {
+      const lb = document.getElementById('photo-lightbox');
+      if (!lb) return;
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function stepPhotoLightbox(dir) {
+      const c = CONTENT[currentLang] || CONTENT.en;
+      const photos = (c.portfolio && c.portfolio.photos) || [];
+      if (!photos.length) return;
+      currentPhotoIdx = ((currentPhotoIdx + dir) % photos.length + photos.length) % photos.length;
+      updatePhotoLightboxSlide(false);
+    }
+
+    function updatePhotoLightboxSlide(isInitial) {
+      const c = CONTENT[currentLang] || CONTENT.en;
+      const photos = (c.portfolio && c.portfolio.photos) || [];
+      const item = photos[currentPhotoIdx];
+      if (!item) return;
+
+      const img = document.getElementById('plb-img');
+      const title = document.getElementById('plb-title');
+      const sub = document.getElementById('plb-sub');
+      const counter = document.getElementById('plb-counter');
+      const closeBtn = document.getElementById('plb-close-btn');
+
+      const curStr = currentPhotoIdx < 9 ? '0' + (currentPhotoIdx + 1) : '' + (currentPhotoIdx + 1);
+      const totStr = photos.length < 10 ? '0' + photos.length : '' + photos.length;
+
+      if (counter) counter.textContent = curStr + ' / ' + totStr;
+      if (title) title.textContent = item.title;
+      if (sub) sub.textContent = currentLang === 'fr' ? 'Portfolio Photographie \u00b7 Mohamad Ali' : 'Photography Portfolio \u00b7 Mohamad Ali';
+      if (closeBtn) closeBtn.textContent = currentLang === 'fr' ? '\u2715 Fermer' : '\u2715 Close';
+
+      if (img) {
+        img.src = 'assets/img/portfolio/' + item.file;
+        img.alt = item.title;
+        if (window.gsap && !isReducedMotionPreferred()) {
+          gsap.fromTo(img,
+            { scale: isInitial ? 0.9 : 0.96, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.38, ease: 'power3.out' }
+          );
+        }
+      }
+    }
+
+    function setupPhotoLightboxEvents() {
+      const lb = document.getElementById('photo-lightbox');
+      if (!lb || lb._bound) return;
+      lb._bound = true;
+
+      const closeBtn = document.getElementById('plb-close-btn');
+      const prevBtn = document.getElementById('plb-prev-btn');
+      const nextBtn = document.getElementById('plb-next-btn');
+
+      if (closeBtn) closeBtn.addEventListener('click', closePhotoLightbox);
+      if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); stepPhotoLightbox(-1); });
+      if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); stepPhotoLightbox(1); });
+
+      lb.addEventListener('click', function(e) {
+        if (e.target === lb || e.target.classList.contains('plb-stage')) {
+          closePhotoLightbox();
+        }
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') closePhotoLightbox();
+        else if (e.key === 'ArrowLeft') stepPhotoLightbox(-1);
+        else if (e.key === 'ArrowRight') stepPhotoLightbox(1);
+      });
+    }
+
     function initMotionEngine() {
       if (motionInitialized) return;
       if (!window.gsap || !window.ScrollTrigger) return;
@@ -3223,6 +4077,8 @@ html[data-view="creative"] body::before {
 
       setupInternalSmoothLinks();
       setupCursorGlowAndMagnetics();
+      setupCardSpotlightTracking();
+      setupPhotoLightboxEvents();
       playSignatureIntroLoader();
       buildScrollAnimations();
     }
@@ -3289,6 +4145,25 @@ html[data-view="creative"] body::before {
   <div style="position:relative; max-width:900px; width:95%; max-height:90vh;">
     <button id="modal-close-btn" style="position:absolute; top:-44px; right:0; color:#fff; background:rgba(255,255,255,0.1); border:none; cursor:pointer; border-radius:8px; padding:8px 16px; font-size:0.9rem; font-family:var(--font-sans);">✕ Close</button>
     <video id="modal-video" controls style="width:100%; border-radius:12px; max-height:80vh;"></video>
+  </div>
+</div>
+<div id="photo-lightbox" data-lenis-prevent aria-modal="true" role="dialog">
+  <div class="plb-topbar">
+    <div class="plb-counter" id="plb-counter">01 / 08</div>
+    <button type="button" class="plb-close" id="plb-close-btn">✕ Close</button>
+  </div>
+  <button type="button" class="plb-nav-btn plb-prev" id="plb-prev-btn" aria-label="Previous photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="plb-stage">
+    <img src="" alt="" class="plb-img" id="plb-img">
+  </div>
+  <button type="button" class="plb-nav-btn plb-next" id="plb-next-btn" aria-label="Next photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="plb-caption-bar">
+    <div class="plb-title" id="plb-title"></div>
+    <div class="plb-sub" id="plb-sub">Photography Portfolio · Mohamad Ali</div>
   </div>
 </div>
 </body>
