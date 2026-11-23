@@ -33,6 +33,11 @@
   }
   </script>
 
+  <!-- Lenis Smooth Scroll & GSAP Motion Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+
   <style>
     /* CSS Variables & Reset */
     :root {
@@ -71,6 +76,76 @@
     a { color: inherit; text-decoration: none; transition: var(--transition); }
     ul { list-style: none; }
     button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; }
+
+
+    /* ── Lenis Smooth Scroll & GSAP Motion Engine Styles ── */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    #scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-color), #a855f7);
+      transform-origin: 0% 50%;
+      transform: scaleX(0);
+      z-index: 9998;
+      pointer-events: none;
+      box-shadow: 0 0 12px var(--accent-color);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    html[data-view="creative"] #scroll-progress-bar {
+      background: linear-gradient(90deg, var(--accent-color), #ef4444);
+    }
+
+    #cursor-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-light) 0%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      filter: blur(45px);
+      opacity: 0.7;
+      transition: background 0.4s ease, opacity 0.4s ease;
+      will-change: transform;
+    }
+    @media (max-width: 1024px), (prefers-reduced-motion: reduce) {
+      #cursor-glow { display: none !important; }
+    }
+
+    .section-header {
+      margin-bottom: 42px;
+      position: relative;
+    }
+    .section-heading-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-color) 0%, rgba(255, 255, 255, 0.1) 65%, transparent 100%);
+      margin-top: 14px;
+      transform-origin: left center;
+    }
+
+    .split-word {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: 0.08em;
+      margin-bottom: -0.08em;
+    }
+    .split-char {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
@@ -688,6 +763,8 @@ html[data-view="creative"] body::before {
 </head>
 <body>
 
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
+  <div id="cursor-glow" aria-hidden="true"></div>
   <div id="sidebar-overlay"></div>
   <div id="mobile-header">
     <div id="mobile-header-top">
@@ -708,7 +785,7 @@ html[data-view="creative"] body::before {
 
   <div id="app">
     <!-- Sidebar -->
-    <aside id="sidebar">
+    <aside id="sidebar" data-lenis-prevent>
       <div class="profile-area">
         <div class="profile-img-container">
           <img src="assets/img/new-profile.jpg" alt="Mohamad Ali" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
@@ -858,7 +935,7 @@ html[data-view="creative"] body::before {
   </div>
 
   <!-- Insights Popup -->
-  <div id="vg-insights-popup">
+  <div id="vg-insights-popup" data-lenis-prevent>
     <div class="vg-popup-box">
       <button class="vg-popup-close" onclick="document.getElementById('vg-insights-popup').classList.remove('open')">✕ Close</button>
       <div class="vg-popup-platform" id="vg-popup-platform"></div>
@@ -1359,7 +1436,7 @@ html[data-view="creative"] body::before {
       updateUrl();
       htmlEl.setAttribute('data-view', currentView);
       setupToggles(); setupMobileMenu(); setupPortfolioTabs(); setupContactForm(); setupDirectorsCut(); setupHeroShowcase();
-      renderAll(); reorderSections(false); setupScrollSpy();
+      renderAll(); reorderSections(false); setupScrollSpy(); initMotionEngine();
     }
 
     function updateUrl() {
@@ -1382,6 +1459,7 @@ html[data-view="creative"] body::before {
       typeWriter(); reorderSections(true); renderViewSpecific();
       const tab = document.querySelector('.portfolio-tab[data-tab="' + v + '"]');
       if (tab) tab.click();
+      refreshMotionEngine(false);
     }
 
     function setLang(l) {
@@ -1390,6 +1468,7 @@ html[data-view="creative"] body::before {
       document.querySelectorAll('#lang-toggle .pill-btn, #lang-toggle-mobile .pill-btn').forEach(b => b.classList.toggle('active', b.dataset.val === l));
       renderAll();
       syncHeroShowcaseLang(l);
+      refreshMotionEngine(true);
     }
 
     // ─── HERO VIDEO SHOWCASE CONFIG & CONTROLLER ─────────────────────────────
@@ -1643,8 +1722,16 @@ html[data-view="creative"] body::before {
       navMenu.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', e => {
           e.preventDefault();
-          const t = document.querySelector(a.getAttribute('href'));
-          if (t) { t.scrollIntoView({ behavior: 'smooth' }); if (window.innerWidth <= 1024) document.getElementById('sidebar').classList.remove('open'); }
+          const href = a.getAttribute('href');
+          const t = document.querySelector(href);
+          if (t) {
+            smoothScrollToTarget(t);
+            if (window.innerWidth <= 1024) {
+              document.getElementById('sidebar').classList.remove('open');
+              const ov = document.getElementById('sidebar-overlay');
+              if (ov) ov.classList.remove('open');
+            }
+          }
         });
       });
     }
@@ -1768,6 +1855,7 @@ html[data-view="creative"] body::before {
           const tv = e.target.dataset.tab;
           const te = document.getElementById('portfolio-tech-content'); if (te) te.style.display = tv === 'tech' ? 'block' : 'none';
           const ce = document.getElementById('portfolio-creative-content'); if (ce) ce.style.display = tv === 'creative' ? 'block' : 'none';
+          animatePortfolioTabSwitch(tv);
         });
       });
     }
@@ -1912,6 +2000,7 @@ html[data-view="creative"] body::before {
         var card = e.target.closest('.vg-card');
         if (card) vgPlayInline(card);
       };
+      animateVGGalleryCards();
     }
 
     function buildVGCard(v) {
@@ -1995,9 +2084,522 @@ html[data-view="creative"] body::before {
     });
 
 
+
+    // ─── LENIS + GSAP MOTION ENGINE (BENCHMARK ANIMATION SUITE) ──────────────
+    let lenisInstance = null;
+    let gsapDynamicCtx = null;
+    let motionInitialized = false;
+
+    function isReducedMotionPreferred() {
+      return Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+
+    function smoothScrollToTarget(targetEl) {
+      if (!targetEl) return;
+      const offset = window.innerWidth <= 1024 ? -104 : 0;
+      if (lenisInstance && !isReducedMotionPreferred()) {
+        lenisInstance.scrollTo(targetEl, { offset: offset, duration: 1.2 });
+      } else {
+        targetEl.scrollIntoView({ behavior: isReducedMotionPreferred() ? 'auto' : 'smooth' });
+      }
+    }
+
+    function splitElementText(el) {
+      if (!el) return [];
+      const rawText = (el.textContent || '').trim();
+      if (!rawText) return [];
+      el.setAttribute('aria-label', rawText);
+      const words = rawText.split(/\s+/);
+      el.innerHTML = words.map(function(word) {
+        const charsHtml = Array.from(word).map(function(ch) {
+          const safe = ch === '&' ? '&amp;' : ch === '<' ? '&lt;' : ch === '>' ? '&gt;' : ch;
+          return '<span class="split-char" aria-hidden="true">' + safe + '</span>';
+        }).join('');
+        return '<span class="split-word" aria-hidden="true">' + charsHtml + '</span>';
+      }).join(' ');
+      return Array.from(el.querySelectorAll('.split-char'));
+    }
+
+    function ensureSectionHeadingLines() {
+      document.querySelectorAll('.section-header').forEach(function(header) {
+        if (!header.querySelector('.section-heading-line')) {
+          const line = document.createElement('div');
+          line.className = 'section-heading-line';
+          header.appendChild(line);
+        }
+      });
+    }
+
+    function setupInternalSmoothLinks() {
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        if (link._smoothBound || link.closest('#nav-menu')) return;
+        link._smoothBound = true;
+        link.addEventListener('click', function(e) {
+          const href = link.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            smoothScrollToTarget(target);
+          }
+        });
+      });
+    }
+
+    function setupCursorGlowAndMagnetics() {
+      if (!window.gsap || isReducedMotionPreferred() || window.innerWidth <= 1024) return;
+
+      const glow = document.getElementById('cursor-glow');
+      if (glow && !glow._bound) {
+        glow._bound = true;
+        const xTo = gsap.quickTo(glow, 'left', { duration: 0.65, ease: 'power3.out' });
+        const yTo = gsap.quickTo(glow, 'top', { duration: 0.65, ease: 'power3.out' });
+        window.addEventListener('mousemove', function(e) {
+          xTo(e.clientX);
+          yTo(e.clientY);
+        }, { passive: true });
+      }
+
+      document.querySelectorAll('.btn, .hero-video-pill-btn').forEach(function(btn) {
+        if (btn._magneticBound) return;
+        btn._magneticBound = true;
+        btn.addEventListener('mousemove', function(e) {
+          if (window.innerWidth <= 1024 || isReducedMotionPreferred()) return;
+          const rect = btn.getBoundingClientRect();
+          const dx = e.clientX - (rect.left + rect.width / 2);
+          const dy = e.clientY - (rect.top + rect.height / 2);
+          gsap.to(btn, { x: dx * 0.22, y: dy * 0.22, duration: 0.3, ease: 'power2.out' });
+        });
+        btn.addEventListener('mouseleave', function() {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+        });
+      });
+    }
+
+    function playHeroEntranceAnimation() {
+      if (!window.gsap || isReducedMotionPreferred()) return;
+      const heroName = document.querySelector('#hero .hero-name');
+      const chars = splitElementText(heroName);
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      tl.fromTo('#hero .hero-greeting',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 }, 0.05
+      );
+      if (chars.length) {
+        tl.fromTo(chars,
+          { yPercent: 115, opacity: 0, rotateZ: 3 },
+          { yPercent: 0, opacity: 1, rotateZ: 0, duration: 0.85, stagger: 0.032 }, 0.15
+        );
+      }
+      tl.fromTo('#hero .hero-type-wrap',
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out' }, 0.42
+      );
+      tl.fromTo('#hero .btn-group .btn',
+        { y: 26, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out', clearProps: 'transform' }, 0.52
+      );
+      tl.fromTo('#hero .hero-scroll-cue',
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 0.75, duration: 0.7, ease: 'power2.out' }, 0.75
+      );
+    }
+
+    function animatePortfolioTabSwitch(tabName) {
+      if (!window.gsap || isReducedMotionPreferred()) return;
+      if (tabName === 'tech') {
+        const cards = document.querySelectorAll('#tech-projects-grid .portfolio-card');
+        if (cards.length) {
+          gsap.fromTo(cards,
+            { y: 35, opacity: 0, scale: 0.97 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.65, stagger: 0.07, ease: 'power3.out', clearProps: 'transform' }
+          );
+        }
+      } else {
+        const items = document.querySelectorAll('#portfolio-creative-content .photo-strip-card, #portfolio-creative-content .film-card, #videography-gallery .vg-card');
+        if (items.length) {
+          gsap.fromTo(items,
+            { y: 30, opacity: 0, scale: 0.97 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.035, ease: 'power3.out', clearProps: 'transform' }
+          );
+        }
+      }
+      if (window.ScrollTrigger) {
+        setTimeout(function() { ScrollTrigger.refresh(); }, 60);
+      }
+    }
+
+    function animateVGGalleryCards() {
+      if (!window.gsap || isReducedMotionPreferred()) return;
+      const cards = document.querySelectorAll('#vg-grid .vg-card');
+      if (cards.length) {
+        gsap.fromTo(cards,
+          { y: 28, opacity: 0, scale: 0.96 },
+          { y: 0, opacity: 1, scale: 1, duration: 0.55, stagger: 0.035, ease: 'power3.out', clearProps: 'transform' }
+        );
+      }
+      if (window.ScrollTrigger) {
+        setTimeout(function() { ScrollTrigger.refresh(); }, 60);
+      }
+    }
+
+    function buildScrollAnimations() {
+      if (!window.gsap || !window.ScrollTrigger || isReducedMotionPreferred()) return;
+
+      if (gsapDynamicCtx) {
+        gsapDynamicCtx.revert();
+        gsapDynamicCtx = null;
+      }
+
+      ensureSectionHeadingLines();
+
+      // Split all section titles for staggered character reveal
+      const sectionTitleCharsMap = new Map();
+      document.querySelectorAll('.section-header .section-title').forEach(function(titleEl) {
+        sectionTitleCharsMap.set(titleEl, splitElementText(titleEl));
+      });
+
+      gsapDynamicCtx = gsap.context(function() {
+        // 1. Top Scroll Progress Bar
+        gsap.to('#scroll-progress-bar', {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.25
+          }
+        });
+
+        // 2. Hero Parallax on Scroll
+        gsap.to('#hero .blob', {
+          yPercent: 28,
+          scale: 1.18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+
+        // 3. Hero Video Showcase Scrubbed Cinema Scale-In
+        const showcaseFrame = document.querySelector('#hero-showcase .hero-showcase-frame');
+        if (showcaseFrame) {
+          gsap.fromTo(showcaseFrame,
+            { scale: 0.91, y: 44, opacity: 0.45 },
+            {
+              scale: 1,
+              y: 0,
+              opacity: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: '#hero-showcase',
+                start: 'top 92%',
+                end: 'top 38%',
+                scrub: 0.8
+              }
+            }
+          );
+        }
+
+        // 4. Section Headers (Label + Split Title + Animated Accent Line)
+        document.querySelectorAll('.section-header').forEach(function(header) {
+          const label = header.querySelector('.section-label');
+          const title = header.querySelector('.section-title');
+          const line = header.querySelector('.section-heading-line');
+          const chars = sectionTitleCharsMap.get(title) || [];
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: header,
+              start: 'top 86%',
+              toggleActions: 'play none none none'
+            }
+          });
+
+          if (label) {
+            tl.fromTo(label,
+              { x: -18, opacity: 0 },
+              { x: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, 0
+            );
+          }
+          if (chars.length) {
+            tl.fromTo(chars,
+              { yPercent: 115, opacity: 0 },
+              { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.024, ease: 'power4.out' }, 0.08
+            );
+          }
+          if (line) {
+            tl.fromTo(line,
+              { scaleX: 0 },
+              { scaleX: 1, duration: 1.05, ease: 'power3.inOut' }, 0.15
+            );
+          }
+        });
+
+        // 5. About Section Reveal
+        const aboutItems = document.querySelectorAll('#about .about-bio, #about #about-resume-btn, #about #about-info-list li, #about #about-lang-list .lang-item');
+        if (aboutItems.length) {
+          gsap.fromTo(aboutItems,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.75,
+              stagger: 0.06,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#about .about-content',
+                start: 'top 84%'
+              }
+            }
+          );
+        }
+
+        // 6. Skills Section Stagger & Animated Progress Bars
+        const skillCols = document.querySelectorAll('#skills-grid > div');
+        if (skillCols.length) {
+          gsap.fromTo(skillCols,
+            { y: 36, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.12,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#skills-grid',
+                start: 'top 84%'
+              }
+            }
+          );
+        }
+        const skillBars = document.querySelectorAll('#skills-grid .skill-bar-fill');
+        if (skillBars.length) {
+          ScrollTrigger.create({
+            trigger: '#skills-grid',
+            start: 'top 82%',
+            onEnter: function() {
+              skillBars.forEach(function(bar, i) {
+                gsap.fromTo(bar,
+                  { width: '0%' },
+                  { width: bar.dataset.level || '0%', duration: 1.2, delay: i * 0.04, ease: 'power3.out' }
+                );
+              });
+            }
+          });
+        }
+
+        // 7. Resume Timeline Items
+        document.querySelectorAll('#resume .timeline-item').forEach(function(item) {
+          gsap.fromTo(item,
+            { x: -24, y: 22, opacity: 0 },
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 87%'
+              }
+            }
+          );
+        });
+
+        // 8. Portfolio Grids & Cards (Tech & Creative)
+        const techCards = document.querySelectorAll('#tech-projects-grid .portfolio-card');
+        if (techCards.length && currentView === 'tech') {
+          gsap.fromTo(techCards,
+            { y: 40, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#portfolio',
+                start: 'top 82%'
+              }
+            }
+          );
+        }
+        const creativeStripItems = document.querySelectorAll('#creative-photo-strip .photo-strip-card, #creative-filmstrip .film-card');
+        if (creativeStripItems.length && currentView === 'creative') {
+          gsap.fromTo(creativeStripItems,
+            { y: 32, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.75,
+              stagger: 0.06,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#portfolio',
+                start: 'top 82%'
+              }
+            }
+          );
+        }
+        const dcEl = document.getElementById('directors-cut');
+        if (dcEl && currentView === 'creative') {
+          gsap.fromTo(dcEl,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.85,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: dcEl,
+                start: 'top 86%'
+              }
+            }
+          );
+        }
+
+        // 9. Services Cards
+        const serviceCards = document.querySelectorAll('#services-grid .service-card');
+        if (serviceCards.length) {
+          gsap.fromTo(serviceCards,
+            { y: 40, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.09,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#services-grid',
+                start: 'top 85%'
+              }
+            }
+          );
+        }
+
+        // 10. Certifications Items
+        const certItems = document.querySelectorAll('#certs-grid .cert-item');
+        if (certItems.length) {
+          gsap.fromTo(certItems,
+            { y: 32, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.75,
+              stagger: 0.07,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#certs-grid',
+                start: 'top 86%'
+              }
+            }
+          );
+        }
+
+        // 11. Testimonials Cards
+        const testimonialCards = document.querySelectorAll('#testimonials-grid .testimonial-card');
+        if (testimonialCards.length) {
+          gsap.fromTo(testimonialCards,
+            { y: 36, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#testimonials-grid',
+                start: 'top 85%'
+              }
+            }
+          );
+        }
+
+        // 12. Contact Section Items & Form
+        const contactItems = document.querySelectorAll('#contact .contact-info-item, #contact .contact-form .form-group, #contact #form-submit');
+        if (contactItems.length) {
+          gsap.fromTo(contactItems,
+            { y: 28, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.75,
+              stagger: 0.06,
+              ease: 'power3.out',
+              clearProps: 'transform',
+              scrollTrigger: {
+                trigger: '#contact .contact-wrap',
+                start: 'top 85%'
+              }
+            }
+          );
+        }
+      });
+
+      ScrollTrigger.refresh();
+    }
+
+    function initMotionEngine() {
+      if (motionInitialized) return;
+      if (!window.gsap || !window.ScrollTrigger) return;
+      motionInitialized = true;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      if (window.Lenis && !isReducedMotionPreferred()) {
+        lenisInstance = new Lenis({
+          lerp: 0.085,
+          duration: 1.15,
+          smoothWheel: true,
+          wheelMultiplier: 1,
+          touchMultiplier: 1.5
+        });
+        lenisInstance.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(function(time) {
+          lenisInstance.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      setupInternalSmoothLinks();
+      setupCursorGlowAndMagnetics();
+      playHeroEntranceAnimation();
+      buildScrollAnimations();
+    }
+
+    function refreshMotionEngine(withHeroEntrance) {
+      if (!window.gsap || !window.ScrollTrigger) return;
+      setupInternalSmoothLinks();
+      setupCursorGlowAndMagnetics();
+      if (withHeroEntrance) {
+        playHeroEntranceAnimation();
+      }
+      buildScrollAnimations();
+    }
+
     document.addEventListener('DOMContentLoaded', init);
   </script>
-<div id="media-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(12px);">
+<div id="media-modal" data-lenis-prevent style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(12px);">
   <div style="position:relative; max-width:900px; width:95%; max-height:90vh;">
     <button id="modal-close-btn" style="position:absolute; top:-44px; right:0; color:#fff; background:rgba(255,255,255,0.1); border:none; cursor:pointer; border-radius:8px; padding:8px 16px; font-size:0.9rem; font-family:var(--font-sans);">✕ Close</button>
     <video id="modal-video" controls style="width:100%; border-radius:12px; max-height:80vh;"></video>
