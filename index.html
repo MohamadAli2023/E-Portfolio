@@ -394,11 +394,58 @@
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
     .btn-group { display: flex; gap: 20px; justify-content: center; }
-    .btn { padding: 12px 30px; border-radius: 30px; font-weight: 600; font-size: 1rem; transition: var(--transition); display: inline-block; }
-    .btn-primary { background: var(--accent-color); color: #fff; box-shadow: 0 4px 15px var(--accent-light); }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
-    .btn-outline { border: 1px solid var(--accent-color); color: var(--accent-color); }
-    .btn-outline:hover { background: var(--accent-light); transform: translateY(-2px); }
+    .btn {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      z-index: 1;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.45s cubic-bezier(0.87, 0, 0.13, 1), border-color 0.45s cubic-bezier(0.87, 0, 0.13, 1), box-shadow 0.45s ease;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      transform: translateX(-101%);
+      transition: transform 0.5s cubic-bezier(0.87, 0, 0.13, 1);
+      z-index: -1;
+    }
+    .btn:hover::before {
+      transform: translateX(0);
+    }
+    .btn-primary {
+      background: var(--accent-color);
+      color: #ffffff;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 4px 20px var(--accent-light);
+    }
+    .btn-primary:hover {
+      color: #08080E;
+      border-color: #ffffff;
+      box-shadow: 0 8px 28px var(--accent-light);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+    }
+    .btn-outline:hover {
+      color: #08080E;
+      border-color: #ffffff;
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
+    }
 
     /* About */
     .about-content { display: grid; grid-template-columns: 3fr 2fr; gap: 50px; }
@@ -409,13 +456,191 @@
     .lang-item-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
     .lang-level { color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Skills */
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .skill-category-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 20px; color: #fff; }
-    .skill-item { margin-bottom: 20px; }
-    .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-family: var(--font-mono); font-size: 0.9rem; }
-    .skill-bar-bg { background: var(--elevated-color); height: 8px; border-radius: 4px; overflow: hidden; }
-    .skill-bar-fill { height: 100%; background: var(--accent-color); width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    /* Skills — Benchmark Brand-Glow Icon Grid */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      width: 100%;
+    }
+    .skill-category-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .skill-cat-block {
+      width: 100%;
+    }
+    .skill-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .skill-cat-name {
+      font-family: var(--font-sans);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #e4e4e7;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .skill-cat-line {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), transparent);
+    }
+    .skill-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .skill-tiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+    .skill-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 22px 14px;
+      border-radius: 16px;
+      background: rgba(17, 17, 24, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .skill-card-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 32px var(--brand-color, var(--accent-color));
+      transition: opacity 0.45s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--brand-color, var(--accent-color));
+      background: rgba(26, 26, 38, 0.78);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    }
+    .skill-card:hover .skill-card-glow {
+      opacity: 0.24;
+    }
+    .skill-card-icon {
+      width: 36px;
+      height: 36px;
+      color: #71717a;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+    }
+    .skill-card-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .skill-card:hover .skill-card-icon {
+      color: var(--brand-color, var(--accent-color));
+      transform: scale(1.13);
+      filter: drop-shadow(0 0 10px var(--brand-color, var(--accent-color)));
+    }
+    .skill-card-label {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #71717a;
+      text-align: center;
+      z-index: 2;
+      transition: color 0.35s ease;
+    }
+    .skill-card:hover .skill-card-label {
+      color: #ffffff;
+    }
+
+    /* #5: Fast Signature SVG Intro Curtain & Scroll-Drawn Watermark */
+    #signature-loader {
+      position: fixed;
+      inset: 0;
+      background: #08080E;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      will-change: transform, opacity;
+    }
+    .sig-loader-svg {
+      width: min(78vw, 380px);
+      height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 0 16px var(--accent-light));
+    }
+    .sig-loader-path {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .sig-loader-accent {
+      fill: none;
+      stroke: var(--accent-color);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    .sig-loader-sub {
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #signature-loader { display: none !important; }
+    }
+
+    .bg-signature-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(85vw, 760px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.055;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bg-signature-watermark svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .bg-sig-path {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     /* Resume — Benchmark Center-Spine Milestone Timeline */
     .resume-sub-heading {
@@ -695,7 +920,7 @@
       #main { padding-top: 104px; }
       .section { padding: 70px 20px 40px; }
       
-      .about-content, .skills-grid, .services-grid, .cert-grid, .contact-wrap { grid-template-columns: 1fr; }
+      .about-content, .services-grid, .cert-grid, .contact-wrap { grid-template-columns: 1fr; }
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
       .video-grid { grid-template-columns: 1fr; }
     }
@@ -944,6 +1169,16 @@ html[data-view="creative"] body::before {
 </head>
 <body>
 
+  <!-- Fast Signature Monogram Loader (#5) -->
+  <div id="signature-loader" aria-hidden="true">
+    <svg class="sig-loader-svg" viewBox="0 0 500 140">
+      <!-- Calligraphic 'M' + 'A' Monogram & Signature Sweep -->
+      <path class="sig-loader-path" d="M 45 108 L 72 28 L 105 84 L 138 26 L 164 108 C 178 108, 198 62, 224 28 L 254 108 M 196 76 C 220 72, 255 68, 286 72 C 315 76, 338 56, 355 48 C 368 42, 372 78, 392 78 C 414 78, 434 52, 462 44" />
+      <path class="sig-loader-accent" d="M 88 122 Q 260 104 452 116" />
+    </svg>
+    <div class="sig-loader-sub" id="sig-loader-sub">Mohamad Ali · Tech × Creative</div>
+  </div>
+
   <div id="scroll-progress-bar" aria-hidden="true"></div>
   <div id="cursor-glow" aria-hidden="true"></div>
   <div id="sidebar-overlay"></div>
@@ -1004,6 +1239,11 @@ html[data-view="creative"] body::before {
         
         <section id="hero" class="section">
           <div class="blob"></div>
+          <div class="bg-signature-watermark" aria-hidden="true">
+            <svg viewBox="0 0 500 140">
+              <path class="bg-sig-path" id="hero-bg-sig-path" d="M 45 108 L 72 28 L 105 84 L 138 26 L 164 108 C 178 108, 198 62, 224 28 L 254 108 M 196 76 C 220 72, 255 68, 286 72 C 315 76, 338 56, 355 48 C 368 42, 372 78, 392 78 C 414 78, 434 52, 462 44 M 88 122 Q 260 104 452 116" />
+            </svg>
+          </div>
           <div class="section-inner">
             <p class="hero-greeting" data-i18n="hero.greeting">Hello, I am</p>
             <h1 class="hero-name" data-i18n="hero.name">Mohamad Ali</h1>
@@ -1169,8 +1409,13 @@ html[data-view="creative"] body::before {
           </div>
         </section>
 
-        <section id="services" class="section">
-          <div class="section-inner">
+        <section id="services" class="section" style="position:relative; overflow:hidden;">
+          <div class="bg-signature-watermark" aria-hidden="true">
+            <svg viewBox="0 0 500 140">
+              <path class="bg-sig-path" id="services-bg-sig-path" d="M 45 108 L 72 28 L 105 84 L 138 26 L 164 108 C 178 108, 198 62, 224 28 L 254 108 M 196 76 C 220 72, 255 68, 286 72 C 315 76, 338 56, 355 48 C 368 42, 372 78, 392 78 C 414 78, 434 52, 462 44 M 88 122 Q 260 104 452 116" />
+            </svg>
+          </div>
+          <div class="section-inner" style="position:relative; z-index:2;">
             <div class="section-header">
               <p class="section-label" data-i18n="nav.services">Services</p>
               <h2 class="section-title" data-i18n="services.sectionTitle">Services</h2>
@@ -1873,6 +2118,91 @@ html[data-view="creative"] body::before {
       if (!typeTimeout) typeWriter();
     }
 
+    // ─── SKILL BRAND COLOR & SVG ICON REGISTRY (#1) ──────────────────────────
+    function getSkillBrandMeta(name) {
+      const n = (name || '').toLowerCase();
+      if (n.indexOf('selenium') !== -1) return {
+        color: '#43B02A',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'
+      };
+      if (n.indexOf('cypress') !== -1) return {
+        color: '#22C55E',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>'
+      };
+      if (n.indexOf('azure') !== -1) return {
+        color: '#0089D6',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L4 19h5l4-8 3 5h-5l-2 3h11L13 3z"/></svg>'
+      };
+      if (n.indexOf('aws') !== -1) return {
+        color: '#FF9900',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>'
+      };
+      if (n.indexOf('test') !== -1 || n.indexOf('cas') !== -1) return {
+        color: '#818CF8',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>'
+      };
+      if (n.indexOf('javascript') !== -1) return {
+        color: '#F7DF1E',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M10 15v-4"/><path d="M8 15a2 2 0 0 0 2 2"/><path d="M14 13a2 2 0 1 1 2 2 2 2 0 1 0 2 2"/></svg>'
+      };
+      if (n.indexOf('python') !== -1) return {
+        color: '#38BDF8',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-4 0-4 2-4 4v2h4v1H6c-2 0-4 1-4 4s2 4 4 4h2v-2c0-2 1-3 3-3h4c1.5 0 3-1 3-3V6c0-2-2-4-6-4z"/><path d="M12 22c4 0 4-2 4-4v-2h-4v-1h6c2 0 4-1 4-4s-2-4-4-4h-2v2c0 2-1 3-3 3H9c-1.5 0-3 1-3 3v3c0 2 2 4 6 4z"/></svg>'
+      };
+      if (n.indexOf('php') !== -1) return {
+        color: '#8892BF',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="6"/><path d="M8 14v-4h1.5a1.5 1.5 0 0 1 0 3H8"/><path d="M14 14v-4h1.5a1.5 1.5 0 0 1 0 3H14"/></svg>'
+      };
+      if (n.indexOf('c/') !== -1 || n.indexOf('c#') !== -1) return {
+        color: '#A855F7',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>'
+      };
+      if (n.indexOf('wordpress') !== -1) return {
+        color: '#21759B',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M5.5 7.5 9 18l3-8 3 8 3.5-10.5"/></svg>'
+      };
+      if (n.indexOf('oracle') !== -1 || n.indexOf('mssql') !== -1) return {
+        color: '#F43F5E',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>'
+      };
+      if (n.indexOf('html') !== -1) return {
+        color: '#F97316',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>'
+      };
+      if (n.indexOf('seo') !== -1) return {
+        color: '#34D399',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>'
+      };
+      if (n.indexOf('ux') !== -1 || n.indexOf('ui') !== -1) return {
+        color: '#F24E1E',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H8.5A3.5 3.5 0 0 0 5 5.5a3.5 3.5 0 0 0 3.5 3.5H12V2z"/><path d="M12 2h3.5A3.5 3.5 0 0 1 19 5.5 3.5 3.5 0 0 1 15.5 9H12V2z"/><path d="M12 9H8.5A3.5 3.5 0 0 0 5 12.5 3.5 3.5 0 0 0 8.5 16H12V9z"/><circle cx="15.5" cy="12.5" r="3.5"/><path d="M8.5 16A3.5 3.5 0 0 0 5 19.5 3.5 3.5 0 0 0 8.5 23 3.5 3.5 0 0 0 12 19.5V16H8.5z"/></svg>'
+      };
+      if (n.indexOf('lightroom') !== -1 || n.indexOf('photoshop') !== -1) return {
+        color: '#31A8FF',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
+      };
+      if (n.indexOf('portrait') !== -1 || n.indexOf('photographie') !== -1 || n.indexOf('photography') !== -1) return {
+        color: '#F59E0B',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>'
+      };
+      if (n.indexOf('premiere') !== -1) return {
+        color: '#9999FF',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><polygon points="10 9 15 12 10 15 10 9"/></svg>'
+      };
+      if (n.indexOf('after effects') !== -1 || n.indexOf('motion') !== -1) return {
+        color: '#D8B4FE',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"/></svg>'
+      };
+      if (n.indexOf('video') !== -1 || n.indexOf('vid') !== -1) return {
+        color: '#FB923C',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>'
+      };
+      return {
+        color: '#EC4899',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>'
+      };
+    }
+
     // ─── RENDER VIEW-SPECIFIC ────────────────────────────────────────────────
     function renderViewSpecific() {
       const c = CONTENT[currentLang];
@@ -1886,8 +2216,25 @@ html[data-view="creative"] body::before {
       if (langList) langList.innerHTML = c.about.languages.map(lang => '<div class="lang-item"><div class="lang-item-header"><strong>' + lang.name + '</strong><span class="lang-level">' + lang.level + '</span></div></div>').join('');
       const cats = currentView === 'tech' ? c.skills.techCategories : c.skills.creativeCategories;
       const sg = document.getElementById('skills-grid');
-      if (sg) sg.innerHTML = cats.map(cat => '<div><h3 class="skill-category-title">' + cat.name + '</h3>' + cat.skills.map(s => '<div class="skill-item"><div class="skill-info"><span>' + s.name + '</span><span>' + s.level + '%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-level="' + s.level + '%"></div></div></div>').join('') + '</div>').join('');
-      setTimeout(triggerSkillAnimation, 100);
+      if (sg) {
+        sg.innerHTML = cats.map(function(cat) {
+          const tilesHtml = cat.skills.map(function(s) {
+            const meta = getSkillBrandMeta(s.name);
+            return '<div class="skill-card" style="--brand-color: ' + meta.color + ';">' +
+              '<div class="skill-card-glow"></div>' +
+              '<div class="skill-card-icon">' + meta.svg + '</div>' +
+              '<span class="skill-card-label">' + s.name + '</span>' +
+            '</div>';
+          }).join('');
+          return '<div class="skill-cat-block">' +
+            '<div class="skill-cat-header">' +
+              '<h3 class="skill-cat-name">' + cat.name + '</h3>' +
+              '<div class="skill-cat-line"></div>' +
+            '</div>' +
+            '<div class="skill-tiles-grid">' + tilesHtml + '</div>' +
+          '</div>';
+        }).join('');
+      }
       const svcs = currentView === 'tech' ? c.services.tech : c.services.creative;
       const svgrid = document.getElementById('services-grid');
       if (svgrid) svgrid.innerHTML = svcs.map(s => '<div class="service-card"><div class="service-icon">' + (ICONS[s.icon] || '') + '</div><h3 class="service-title">' + s.title + '</h3><p class="service-desc">' + s.desc + '</p></div>').join('');
@@ -2584,40 +2931,66 @@ html[data-view="creative"] body::before {
           );
         }
 
-        // 6. Skills Section Stagger & Animated Progress Bars
-        const skillCols = document.querySelectorAll('#skills-grid > div');
-        if (skillCols.length) {
-          gsap.fromTo(skillCols,
-            { y: 36, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              stagger: 0.12,
-              ease: 'power3.out',
-              clearProps: 'transform',
-              scrollTrigger: {
-                trigger: '#skills-grid',
-                start: 'top 84%'
+        // 6. Skills Brand-Glow Icon Grid (Benchmark back.out(1.5) Stagger)
+        document.querySelectorAll('#skills-grid .skill-cat-block').forEach(function(block) {
+          const header = block.querySelector('.skill-cat-header');
+          const cards = block.querySelectorAll('.skill-card');
+          if (header) {
+            gsap.fromTo(header,
+              { y: 20, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.7,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: block,
+                  start: 'top 86%'
+                }
               }
-            }
-          );
-        }
-        const skillBars = document.querySelectorAll('#skills-grid .skill-bar-fill');
-        if (skillBars.length) {
-          ScrollTrigger.create({
-            trigger: '#skills-grid',
-            start: 'top 82%',
-            onEnter: function() {
-              skillBars.forEach(function(bar, i) {
-                gsap.fromTo(bar,
-                  { width: '0%' },
-                  { width: bar.dataset.level || '0%', duration: 1.2, delay: i * 0.04, ease: 'power3.out' }
-                );
-              });
-            }
-          });
-        }
+            );
+          }
+          if (cards.length) {
+            gsap.fromTo(cards,
+              { opacity: 0, y: 42, scale: 0.82 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.9,
+                stagger: 0.055,
+                ease: 'back.out(1.5)',
+                clearProps: 'transform',
+                scrollTrigger: {
+                  trigger: block,
+                  start: 'top 85%'
+                }
+              }
+            );
+          }
+        });
+
+        // 6b. Scroll-Drawn Background Signature Watermarks (#5)
+        ['hero-bg-sig-path', 'services-bg-sig-path'].forEach(function(pathId) {
+          const pathEl = document.getElementById(pathId);
+          if (!pathEl || typeof pathEl.getTotalLength !== 'function') return;
+          const totalLen = pathEl.getTotalLength();
+          pathEl.style.strokeDasharray = totalLen;
+          pathEl.style.strokeDashoffset = totalLen;
+          const parentSection = pathEl.closest('section');
+          if (parentSection) {
+            gsap.to(pathEl, {
+              strokeDashoffset: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: parentSection,
+                start: 'top 80%',
+                end: 'bottom 30%',
+                scrub: 1.2
+              }
+            });
+          }
+        });
 
         // 7. Resume Center-Spine Milestone Tracks (Scrubbed Line + Pop Nodes + Alternating Content)
         document.querySelectorAll('#resume .milestone-track').forEach(function(track) {
@@ -2850,8 +3223,54 @@ html[data-view="creative"] body::before {
 
       setupInternalSmoothLinks();
       setupCursorGlowAndMagnetics();
-      playHeroEntranceAnimation();
+      playSignatureIntroLoader();
       buildScrollAnimations();
+    }
+
+    function playSignatureIntroLoader() {
+      const loader = document.getElementById('signature-loader');
+      if (!loader || !window.gsap || isReducedMotionPreferred()) {
+        if (loader) loader.style.display = 'none';
+        playHeroEntranceAnimation();
+        return;
+      }
+
+      const paths = loader.querySelectorAll('path');
+      paths.forEach(function(p) {
+        if (typeof p.getTotalLength === 'function') {
+          const len = p.getTotalLength();
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        }
+      });
+
+      const tl = gsap.timeline({
+        onComplete: function() {
+          loader.style.display = 'none';
+        }
+      });
+
+      tl.to(paths, {
+        strokeDashoffset: 0,
+        duration: 0.85,
+        stagger: 0.12,
+        ease: 'power2.inOut'
+      }, 0)
+      .to('#sig-loader-sub', {
+        opacity: 1,
+        y: -4,
+        duration: 0.45,
+        ease: 'power2.out'
+      }, 0.35)
+      .add(function() {
+        playHeroEntranceAnimation();
+      }, 0.9)
+      .to(loader, {
+        yPercent: -100,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power4.inOut'
+      }, 0.95);
     }
 
     function refreshMotionEngine(withHeroEntrance) {
