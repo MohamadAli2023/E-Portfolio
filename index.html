@@ -417,17 +417,198 @@
     .skill-bar-bg { background: var(--elevated-color); height: 8px; border-radius: 4px; overflow: hidden; }
     .skill-bar-fill { height: 100%; background: var(--accent-color); width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
-    /* Resume */
-    .timeline { position: relative; padding-left: 30px; margin-bottom: 50px; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--elevated-color); }
-    .timeline-item { position: relative; margin-bottom: 40px; }
-    .timeline-item::before { content: ''; position: absolute; left: -35px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-color); box-shadow: 0 0 0 4px var(--bg-color); }
-    .timeline-period { font-family: var(--font-mono); color: var(--accent-color); font-size: 0.9rem; margin-bottom: 5px; }
-    .timeline-title { font-family: var(--font-serif); font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
-    .timeline-company { color: var(--text-muted); margin-bottom: 15px; font-weight: 500; }
-    .timeline-desc { color: var(--text-muted); font-size: 0.95rem; }
-    .timeline-bullets { padding-left: 20px; margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
-    .timeline-bullets li { margin-bottom: 5px; }
+    /* Resume — Benchmark Center-Spine Milestone Timeline */
+    .resume-sub-heading {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent-color);
+      margin: 12px 0 28px;
+    }
+    .milestone-track {
+      position: relative;
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto 64px;
+      padding: 28px 0;
+    }
+    .milestone-spine-bg {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .milestone-spine-active {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top center;
+      background: linear-gradient(180deg, var(--accent-color) 0%, #ffffff 100%);
+      box-shadow: 0 0 14px var(--accent-color);
+      z-index: 1;
+    }
+    .milestone-items {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+      z-index: 2;
+    }
+    .milestone-row {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .milestone-row.is-left { justify-content: flex-start; }
+    .milestone-row.is-right { justify-content: flex-end; }
+
+    .milestone-node {
+      position: absolute;
+      left: 50%;
+      top: 2px;
+      width: 44px;
+      height: 44px;
+      margin-left: -22px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: var(--bg-color);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+    }
+    .milestone-node-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: background-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .milestone-node.is-lit {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 22px var(--accent-light), inset 0 0 10px var(--accent-light);
+    }
+    .milestone-node.is-lit .milestone-node-dot {
+      background: var(--accent-color);
+      transform: scale(1.35);
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .milestone-content {
+      position: relative;
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .milestone-row.is-left .milestone-content {
+      padding-right: 40px;
+      text-align: right;
+      align-items: flex-end;
+    }
+    .milestone-row.is-right .milestone-content {
+      padding-left: 40px;
+      text-align: left;
+      align-items: flex-start;
+    }
+    .milestone-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .milestone-row.is-left .milestone-meta {
+      justify-content: flex-end;
+    }
+    .milestone-period {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 999px;
+      padding: 4px 13px;
+      display: inline-block;
+    }
+    .milestone-role {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+    .milestone-company {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--accent-color);
+    }
+    .milestone-desc {
+      color: rgba(243, 244, 246, 0.6);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      margin-top: 4px;
+    }
+    .milestone-bullets {
+      list-style: none;
+      padding: 0;
+      margin-top: 6px;
+      color: rgba(243, 244, 246, 0.6);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .milestone-bullets li {
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .resume-sub-heading { text-align: left; padding-left: 56px; }
+      .milestone-spine-bg,
+      .milestone-spine-active {
+        left: 20px;
+      }
+      .milestone-node {
+        left: 20px;
+        width: 38px;
+        height: 38px;
+        margin-left: -19px;
+      }
+      .milestone-row.is-left,
+      .milestone-row.is-right {
+        justify-content: flex-start;
+      }
+      .milestone-row.is-left .milestone-content,
+      .milestone-row.is-right .milestone-content {
+        width: 100%;
+        padding-left: 56px;
+        padding-right: 0;
+        text-align: left;
+        align-items: flex-start;
+      }
+      .milestone-row.is-left .milestone-meta {
+        justify-content: flex-start;
+      }
+    }
     .type-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-family: var(--font-mono); margin-left: 10px; vertical-align: middle; }
     .badge-tech { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
     .badge-creative { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
@@ -896,11 +1077,11 @@ html[data-view="creative"] body::before {
               <p class="section-label" data-i18n="nav.resume">Resume</p>
               <h2 class="section-title" data-i18n="resume.sectionTitle">Resume</h2>
             </div>
-            <h3 class="skill-category-title" data-i18n="resume.experienceLabel">Professional Experience</h3>
-            <div class="timeline" id="resume-experience"></div>
+            <h3 class="resume-sub-heading" data-i18n="resume.experienceLabel">Professional Experience</h3>
+            <div id="resume-experience"></div>
             
-            <h3 class="skill-category-title" style="margin-top:40px;" data-i18n="resume.educationLabel">Education</h3>
-            <div class="timeline" id="resume-education"></div>
+            <h3 class="resume-sub-heading" style="margin-top:48px;" data-i18n="resume.educationLabel">Education</h3>
+            <div id="resume-education"></div>
           </div>
         </section>
 
@@ -1736,17 +1917,59 @@ html[data-view="creative"] body::before {
       });
     }
 
-    // ─── RENDER RESUME ───────────────────────────────────────────────────────
+    // ─── RENDER RESUME (CENTER-SPINE MILESTONE TRACK) ────────────────────────
     function renderResume() {
       const c = CONTENT[currentLang];
       const expEl = document.getElementById('resume-experience');
-      if (expEl) expEl.innerHTML = c.resume.experience.map(exp => {
-        const cls = exp.type === 'tech' ? 'badge-tech' : exp.type === 'creative' ? 'badge-creative' : 'badge-both';
-        const txt = currentLang === 'en' ? exp.type.toUpperCase() : (exp.type === 'creative' ? 'CR\u00c9ATIF' : exp.type.toUpperCase());
-        return '<div class="timeline-item"><div class="timeline-period">' + exp.period + '</div><h4 class="timeline-title">' + exp.role + ' <span class="type-badge ' + cls + '">' + txt + '</span></h4><div class="timeline-company">' + exp.company + ' \u00b7 ' + exp.location + '</div><ul class="timeline-bullets">' + exp.bullets.map(b => '<li>' + b + '</li>').join('') + '</ul></div>';
-      }).join('');
+      if (expEl) {
+        const expRows = c.resume.experience.map(function(exp, idx) {
+          const isLeft = idx % 2 === 0;
+          const sideClass = isLeft ? 'is-left' : 'is-right';
+          const cls = exp.type === 'tech' ? 'badge-tech' : exp.type === 'creative' ? 'badge-creative' : 'badge-both';
+          const txt = currentLang === 'en' ? exp.type.toUpperCase() : (exp.type === 'creative' ? 'CR\u00c9ATIF' : exp.type.toUpperCase());
+          return '<div class="milestone-row ' + sideClass + '">' +
+            '<div class="milestone-node"><div class="milestone-node-dot"></div></div>' +
+            '<div class="milestone-content">' +
+              '<div class="milestone-meta">' +
+                '<span class="milestone-period">' + exp.period + '</span>' +
+                '<span class="type-badge ' + cls + '" style="margin-left:0;">' + txt + '</span>' +
+              '</div>' +
+              '<h4 class="milestone-role">' + exp.role + '</h4>' +
+              '<div class="milestone-company">' + exp.company + (exp.location ? ' \u00b7 ' + exp.location : '') + '</div>' +
+              '<ul class="milestone-bullets">' + exp.bullets.map(function(b) { return '<li>' + b + '</li>'; }).join('') + '</ul>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+        expEl.innerHTML = '<div class="milestone-track">' +
+          '<div class="milestone-spine-bg"></div>' +
+          '<div class="milestone-spine-active"></div>' +
+          '<div class="milestone-items">' + expRows + '</div>' +
+        '</div>';
+      }
+
       const eduEl = document.getElementById('resume-education');
-      if (eduEl) eduEl.innerHTML = c.resume.education.map(ed => '<div class="timeline-item"><div class="timeline-period">' + ed.period + '</div><h4 class="timeline-title">' + ed.degree + '</h4><div class="timeline-company">' + ed.institution + (ed.location ? ' \u00b7 ' + ed.location : '') + '</div><div class="timeline-desc">' + ed.desc + '</div></div>').join('');
+      if (eduEl) {
+        const eduRows = c.resume.education.map(function(ed, idx) {
+          const isLeft = idx % 2 === 0;
+          const sideClass = isLeft ? 'is-left' : 'is-right';
+          return '<div class="milestone-row ' + sideClass + '">' +
+            '<div class="milestone-node"><div class="milestone-node-dot"></div></div>' +
+            '<div class="milestone-content">' +
+              '<div class="milestone-meta">' +
+                '<span class="milestone-period">' + ed.period + '</span>' +
+              '</div>' +
+              '<h4 class="milestone-role">' + ed.degree + '</h4>' +
+              '<div class="milestone-company">' + ed.institution + (ed.location ? ' \u00b7 ' + ed.location : '') + '</div>' +
+              (ed.desc ? '<div class="milestone-desc">' + ed.desc + '</div>' : '') +
+            '</div>' +
+          '</div>';
+        }).join('');
+        eduEl.innerHTML = '<div class="milestone-track">' +
+          '<div class="milestone-spine-bg"></div>' +
+          '<div class="milestone-spine-active"></div>' +
+          '<div class="milestone-items">' + eduRows + '</div>' +
+        '</div>';
+      }
     }
 
     // ─── RENDER PORTFOLIO ────────────────────────────────────────────────────
@@ -2396,23 +2619,67 @@ html[data-view="creative"] body::before {
           });
         }
 
-        // 7. Resume Timeline Items
-        document.querySelectorAll('#resume .timeline-item').forEach(function(item) {
-          gsap.fromTo(item,
-            { x: -24, y: 22, opacity: 0 },
-            {
-              x: 0,
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              ease: 'power3.out',
-              clearProps: 'transform',
-              scrollTrigger: {
-                trigger: item,
-                start: 'top 87%'
+        // 7. Resume Center-Spine Milestone Tracks (Scrubbed Line + Pop Nodes + Alternating Content)
+        document.querySelectorAll('#resume .milestone-track').forEach(function(track) {
+          const activeLine = track.querySelector('.milestone-spine-active');
+          if (activeLine) {
+            gsap.fromTo(activeLine,
+              { scaleY: 0 },
+              {
+                scaleY: 1,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: track,
+                  start: 'top 70%',
+                  end: 'bottom 70%',
+                  scrub: 0.6
+                }
               }
+            );
+          }
+
+          track.querySelectorAll('.milestone-row').forEach(function(row) {
+            const node = row.querySelector('.milestone-node');
+            const contentBlock = row.querySelector('.milestone-content');
+            const isLeft = row.classList.contains('is-left');
+            const offsetX = window.innerWidth <= 768 ? 28 : (isLeft ? -36 : 36);
+
+            if (node) {
+              gsap.fromTo(node,
+                { scale: 0, opacity: 0 },
+                {
+                  scale: 1,
+                  opacity: 1,
+                  duration: 0.55,
+                  ease: 'back.out(2.2)',
+                  scrollTrigger: {
+                    trigger: row,
+                    start: 'top 74%',
+                    onEnter: function() { node.classList.add('is-lit'); },
+                    onLeaveBack: function() { node.classList.remove('is-lit'); }
+                  }
+                }
+              );
             }
-          );
+
+            if (contentBlock) {
+              gsap.fromTo(contentBlock,
+                { opacity: 0, x: offsetX, y: 14 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  duration: 0.85,
+                  ease: 'power3.out',
+                  clearProps: 'transform',
+                  scrollTrigger: {
+                    trigger: row,
+                    start: 'top 74%'
+                  }
+                }
+              );
+            }
+          });
         });
 
         // 8. Portfolio Grids & Cards (Tech & Creative)
